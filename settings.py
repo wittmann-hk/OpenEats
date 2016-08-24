@@ -161,6 +161,7 @@ INSTALLED_APPS = (
     'openeats.accounts',
     'openeats.news',
     'openeats.list',
+    'gunicorn',
 )
 
 
