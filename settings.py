@@ -107,7 +107,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
     'pagination.middleware.PaginationMiddleware',
     
 )
@@ -138,7 +138,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.flatpages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
+    #'debug_toolbar',
     'taggit', 
     'taggit_templatetags',
     'south',
@@ -172,10 +172,10 @@ OETITLE = 'OpenEats2 Dev'
 INTERNAL_IPS = ('127.0.0.1',)
 
 ### DEBUG-TOOLBAR SETTINGS
-DEBUG_TOOLBAR_PATCH_SETTINGS = False
-DEBUG_TOOLBAR_CONFIG = {
-'INTERCEPT_REDIRECTS': False,
-}
+#DEBUG_TOOLBAR_PATCH_SETTINGS = False
+#DEBUG_TOOLBAR_CONFIG = {
+#'INTERCEPT_REDIRECTS': False,
+#}
 
 #Email Server Settings
 DEFAULT_FROM_EMAIL = ''
