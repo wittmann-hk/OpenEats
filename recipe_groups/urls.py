@@ -1,4 +1,4 @@
-from django.conf.urls import *
+from django.conf.urls import patterns, url
 from recipe_groups.views import CourseList, CuisineList, CuisineCreate, CuisineUpdate, CourseCreate, CourseUpdate
 from models import Course, Cuisine
 

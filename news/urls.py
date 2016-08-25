@@ -1,4 +1,4 @@
-from django.conf.urls import *
+from django.conf.urls import patterns, url
 
 urlpatterns = patterns('',
     url(r'^list/$', 'news.views.list', name="news_list"),

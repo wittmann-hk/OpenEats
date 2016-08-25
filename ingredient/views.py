@@ -14,4 +14,4 @@ def autocomplete_ing(request):
     for ing_item in ing_list:
         results.append(" ".join(ing_item))
     json = simplejson.dumps(results)
-    return HttpResponse(json, mimetype="application/json")
+    return HttpResponse(json, content_type="application/json")

@@ -10,7 +10,6 @@ from models import Recipe, StoredRecipe, NoteRecipe, ReportedRecipe
 from ingredient.models import Ingredient
 from forms import RecipeForm,IngItemFormSet, RecipeSendMail
 from djangoratings.views import AddRatingView
-from django.utils import simplejson
 from django.conf import settings
 from django.db.models import F
 from reportlab.lib import colors
@@ -20,6 +19,7 @@ from reportlab.platypus import *
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase.pdfmetrics import registerFontFamily
+import json
 
 
 def index(request):
@@ -130,8 +130,8 @@ def recipeRate(request, object_id, score):
     avg = r.rating.score / r.rating.votes
     results['avg'] = avg
     results['votes'] = r.rating.votes
-    json = simplejson.dumps(results)
-    return HttpResponse(json, mimetype="application/json")
+    json = json.dumps(results)
+    return HttpResponse(json, content_type="application/json")
 
 
 @login_required
@@ -216,7 +216,7 @@ def exportPDF(request, slug):
     recipe = get_object_or_404(Recipe, slug=slug)
 
     # Create the HttpResponse object with the appropriate PDF headers.
-    response = HttpResponse(mimetype='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=' + recipe.slug + '.pdf'
 
     # Our container for 'Flowable' objects

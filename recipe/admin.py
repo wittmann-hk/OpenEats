@@ -17,7 +17,7 @@ class RecipeInline(admin.TabularInline):
 class RecipeAdmin(admin.ModelAdmin):
 
     def export_MealMaster(self, request, queryset):
-        response = render_to_response('recipe/mealmaster_export.txt', {'queryset': queryset}, mimetype='text/plain')
+        response = render_to_response('recipe/mealmaster_export.txt', {'queryset': queryset}, content_type='text/plain')
         response['Content-Disposition'] = 'attachment; filename=recipe.txt'
         return response
 
