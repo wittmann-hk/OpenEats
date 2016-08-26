@@ -58,7 +58,8 @@ class GroceryUserList(forms.Form):
 class GroceryAisleForm(ModelForm):
     """used by users to add a new aisle"""
     class Meta:
-        model = GroceryAisle
+        model = GroceryAisle()
+        fields = "__all__"
         widgets = {'author': HiddenInput()}
 
     def clean(self):

@@ -1,6 +1,6 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import  url
 
-urlpatterns = patterns('',
+urlpatterns = ('',
     url(r'^grocery/$', 'list.views.index', name="grocery_list"),
     url(r'^grocery/recipe/(?P<recipe_slug>[-\w]+)/$', 'list.views.groceryAddRecipe', name='grocery_addrecipe'),
     url(r'^grocery/mail/(?P<gid>\d+)/$', 'list.views.groceryMail', name='grocery_mail'),

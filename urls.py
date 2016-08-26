@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.conf import settings
 from django.views.generic import TemplateView
 from accounts.forms import ProfileForm
@@ -11,7 +11,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 
-urlpatterns = patterns('',
+urlpatterns = ('',
     (r'^admin/', include(admin.site.urls)),
     (r'^grappelli/', include('grappelli.urls')),
     (r'^accounts/logout/$', 'accounts.views.logout_page'),
@@ -40,7 +40,7 @@ urlpatterns = patterns('',
 
 
 if settings.SERVE_MEDIA:
-    urlpatterns += patterns('',
+    urlpatterns += ('',
         (r'^site-media/(?P<path>.*)$', 'django.views.static.serve',
             {'document_root': settings.MEDIA_ROOT}),
         )

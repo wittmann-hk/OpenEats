@@ -1,5 +1,5 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
-urlpatterns = patterns('',
+urlpatterns = ('',
     url(r'^recipe/(?P<tag>[-\w]+)/$', 'tags.views.recipeTags', name="recipe_tags"),
 )

@@ -1,6 +1,8 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
-urlpatterns = patterns('',
-    url(r'^following/(?P<username>[\w-]+)/$', 'friends.views.follow_list', name="friends_following"),
-    url(r'^feed/(?P<username>[\w-]+)/$', 'friends.views.feed', name="friends_feed"),
-)
+from . import views
+
+urlpatterns = [
+    url(r'^following/(?P<username>[\w-]+)/$', views.follow_list),
+    url(r'^feed/(?P<username>[\w-]+)/$', views.feed),
+]

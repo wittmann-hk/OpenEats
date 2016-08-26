@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as _
 from models import Recipe, StoredRecipe, NoteRecipe, ReportedRecipe
 from ingredient.models import Ingredient
 from forms import RecipeForm,IngItemFormSet, RecipeSendMail
-from djangoratings.views import AddRatingView
+#from djangoratings.views import AddRatingView
 from django.conf import settings
 from django.db.models import F
 from reportlab.lib import colors
@@ -116,7 +116,7 @@ def recipeUser(request, shared, user):
 @login_required
 def recipeRate(request, object_id, score):
     """ Used for users to rate recipes """
-    recipe_type = ContentType.objects.get(app_label="recipe", model="recipe")
+    '''recipe_type = ContentType.objects.get(app_label="recipe", model="recipe")
     params = {
         'content_type_id': recipe_type.id,  # this is the content type id of the recipe models per django.contrib.contentetype
         'object_id': object_id,
@@ -129,7 +129,15 @@ def recipeRate(request, object_id, score):
     r = Recipe.objects.get(pk=object_id)  # get recipe object so we can return the average rating
     avg = r.rating.score / r.rating.votes
     results['avg'] = avg
-    results['votes'] = r.rating.votes
+    results['votes'] = r.rating.votes'''
+
+    # This fucntion does not work any more since its been deprcated
+    # returning  junk for now
+    results = {
+        'message': 'Not working',
+        'avg': '3',
+        'votes': '3'
+    }
     json = json.dumps(results)
     return HttpResponse(json, content_type="application/json")
 

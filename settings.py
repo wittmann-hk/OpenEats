@@ -83,7 +83,7 @@ STATICFILES_FINDERS = (
 )
 
 LOCALE_PATHS = (
-  os.path.join(BASE_DIR, 'locale',)
+  os.path.join(BASE_DIR, 'locale',),
 )
 
 INSTALLED_APPS = (
@@ -99,11 +99,9 @@ INSTALLED_APPS = (
     'grappelli',
     'taggit',
     'taggit_templatetags',
-    'navbar',
     'registration',
     'rosetta',
     'imagekit',
-    'djangoratings',
     'haystack',
     'pagination',
     'django_extensions',
