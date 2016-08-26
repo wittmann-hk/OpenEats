@@ -9,8 +9,6 @@ SERVE_MEDIA = True
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-print PROJECT_PATH
-
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'tk1ig_pa_p9^muz4vw4%#q@0no$=ce1*b$#s343jouyq9lj)k33j('
 
@@ -42,7 +40,7 @@ AUTH_PROFILE_MODULE = 'accounts.UserProfiles'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_PATH, 'templates')],
+        'DIRS': [os.path.join(PROJECT_PATH, 'templates'),],
         'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
@@ -62,10 +60,8 @@ TEMPLATES = [
     },
 ]
 
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-    'django.template.loaders.eggs.Loader',
+TEMPLATE_DIRS = (
+   os.path.join(PROJECT_PATH, 'templates'),
 )
 
 MIDDLEWARE_CLASSES = (
@@ -88,10 +84,6 @@ STATICFILES_FINDERS = (
 
 LOCALE_PATHS = (
   os.path.join(BASE_DIR, 'locale',)
-)
-
-TEMPLATE_DIRS = (
-   os.path.join(BASE_DIR, 'templates'),
 )
 
 INSTALLED_APPS = (

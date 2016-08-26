@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load i18n %}
-{% load front_page %}
+{# load front_page #}
 {% load taggit_extras %}
 {% load imagekit %}
 
 {% block content %}
-   {% frontpage_news %}
+   {# frontpage_news #}
 
     <div class="row">
      {% for recipe in new_recipes|slice:"0:3" %}

@@ -4,8 +4,6 @@ from django.views.generic import TemplateView
 from accounts.forms import ProfileForm
 import helpers.signals  #needed to import the signal for when a user is saved their profile is created
 from registration.views import RegistrationView
-#from relationships.listeners import attach_relationship_listener
-#attach_relationship_listener()
 register = RegistrationView.as_view()
 
 # Uncomment the next two lines to enable the admin:
@@ -46,8 +44,3 @@ if settings.SERVE_MEDIA:
         (r'^site-media/(?P<path>.*)$', 'django.views.static.serve',
             {'document_root': settings.MEDIA_ROOT}),
         )
-#if settings.DEBUG:
-    #import debug_toolbar
-    #urlpatterns += patterns('',
-    #    url(r'^__debug__/', include(debug_toolbar.urls)),
-    #)
