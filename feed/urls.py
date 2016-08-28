@@ -1,6 +1,7 @@
+from django.conf.urls import url
 from views import RecentRecipesFeed,TopRecipesFeed
 
-urlpatterns = ('',
-    (r'^recent/$', RecentRecipesFeed()),
-    (r'^top/$', TopRecipesFeed()),
+urlpatterns = (
+    url(r'^recent/$', RecentRecipesFeed()),
+    url(r'^top/$', TopRecipesFeed()),
 )

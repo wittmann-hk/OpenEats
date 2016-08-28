@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {# load front_page #}
-{% load taggit_extras %}
+{# load taggit_extras #}
 {% load imagekit %}
 
 {% block content %}
@@ -43,7 +43,7 @@
           </button>
       </div>
       <div id="tagcloud" class="accordion-body collapse">
-        {% get_tagcloud as tags for 'recipe' %}
+        {# get_tagcloud as tags for 'recipe' #}
         <ul class="well">
           {% for tag in tags %}
             <li><a href="{% url 'recipe_tags' tag=tag.slug %}" class="tag{{ tag.weight|floatformat:0 }}">{{tag}}</a></li>

@@ -98,7 +98,7 @@ INSTALLED_APPS = (
     'grappelli.dashboard',
     'grappelli',
     'taggit',
-    'taggit_templatetags',
+    #'taggit_templatetags',
     'registration',
     'rosetta',
     'imagekit',

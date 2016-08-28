@@ -1,7 +1,7 @@
 from django.http import HttpResponse
-from django.utils import simplejson
 from models import Ingredient
 
+import json
 
 def autocomplete_ing(request):
     """Used to auto complete ingredient names on the recipe form. This view is called by a jquery script
@@ -13,5 +13,5 @@ def autocomplete_ing(request):
     results = []
     for ing_item in ing_list:
         results.append(" ".join(ing_item))
-    json = simplejson.dumps(results)
-    return HttpResponse(json, content_type="application/json")
+    json_obj = json.dumps(results)
+    return HttpResponse(json_obj, content_type="application/json")

@@ -27,7 +27,7 @@ class Recipe(models.Model):
     directions = models.TextField(_('directions'))
     shared = models.IntegerField(_('shared'), choices=SHARED_CHOCIES, default=SHARE_SHARED, help_text="share the recipe with the community or mark it private")
     tags = TaggableManager(_('tags'), help_text="separate with commas", blank=True)
-    rating = models.IntegerField(_('rating'), help_text="rating of the meal")
+    rating = models.IntegerField(_('rating'), help_text="rating of the meal", default=0)
     related = models.OneToOneField('Recipe', verbose_name=_('related'), related_name='RecipeRelated', blank=True, null=True, help_text="relate another recipe")
     pub_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
