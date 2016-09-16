@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Entry(models.Model):
-    title = models.CharField(_('title') ,max_length=255, unique=True)
+    title = models.CharField(_('title'), max_length=255, unique=True)
     slug = AutoSlugField(_('slug'), populate_from='title', unique=True)
     content = models.TextField(_('content'), blank=True)
     frontpage = models.BooleanField(_('frontpage'), default=False, help_text="determines if the story appears on the front page")

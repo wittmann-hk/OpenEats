@@ -22,20 +22,19 @@ urlpatterns = (
     url(r'^accounts/ajax-signIn/$', auth_views.login, {'template_name': 'accounts/ajax_signIn.html',}),
     url(r'^accounts/ajax-create/$', register, {'backend': 'registration.backends.default.DefaultBackend','template_name': 'accounts/ajax_create.html',}),
     url(r'^accounts/', include('registration.backends.default.urls')),
-    #('^profiles/edit', 'profiles.views.edit_profile', {'form_class': ProfileForm,}),
-    #(r'^profiles/', include('profiles.urls')),
-    url(r'^rosetta/', include('rosetta.urls')),
-    #(r'^follow/', include('relationships.urls')),
     url(r'^feed/', include('feed.urls')),
     url(r'^groups/', include('recipe_groups.urls')),
     url(r'^recipe/', include('recipe.urls')),
     url(r'^ingredient/', include('ingredient.urls')),
-    url(r'^list/', include('list.urls')),
     url(r'^search/', include('haystack.urls')),
     url(r'^news/', include('news.urls')),
     url(r'^robots.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
     url(r'^$', recipe_views.index),
-
+    #url('^profiles/edit', 'profiles.views.edit_profile', {'form_class': ProfileForm,}),
+    #url(r'^profiles/', include('profiles.urls')),
+    #url(r'^rosetta/', include('rosetta.urls')),
+    #url(r'^follow/', include('relationships.urls')),
+    #url(r'^list/', include('list.urls')),
 )
 
 
