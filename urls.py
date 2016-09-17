@@ -30,11 +30,11 @@ urlpatterns = (
     url(r'^news/', include('news.urls')),
     url(r'^robots.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
     url(r'^$', recipe_views.index),
+    url(r'^list/', include('list.urls')),
     #url('^profiles/edit', 'profiles.views.edit_profile', {'form_class': ProfileForm,}),
     #url(r'^profiles/', include('profiles.urls')),
     #url(r'^rosetta/', include('rosetta.urls')),
     #url(r'^follow/', include('relationships.urls')),
-    #url(r'^list/', include('list.urls')),
 )
 
 

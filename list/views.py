@@ -8,41 +8,68 @@ from django.core.urlresolvers import reverse
 from django.forms.models import inlineformset_factory
 from django.utils.translation import ugettext as _
 from recipe.models import Recipe
-from models import GroceryList, GroceryItem, GroceryShared, GroceryAisle, GroceryRecipe
-from forms import GroceryListForm, GroceryItemFormSet, GroceryUserList, GrocerySendMail, GroceryShareTo, GroceryAisleForm
 from datetime import date
 
-
-@login_required
-def index(request):
-    """returns a list of grocery list for a user"""
-    glist = GroceryList.objects.filter(author=request.user).order_by('-pub_date')
-    gshared = GroceryShared.objects.filter(shared_to=request.user).order_by('-list__pub_date')
-    return render_to_response('list/grocery_index.html', {'glists': glist, 'gshared': gshared}, context_instance=RequestContext(request))
+from django.http import HttpResponse
+from models import GroceryList, GroceryShared, GroceryAisle, GroceryItem, GroceryRecipe
+from serializers import GroceryListSerializer, GrocerySharedSerializer, GroceryAisleSerializer, GroceryItemSerializer, GroceryRecipeSerializer
+from rest_framework import permissions
+from rest_framework import viewsets
 
 
-@login_required
-def groceryDelete(request, id):
-    """ takes the id of a list andremoves a users grocery list"""
-    list = get_object_or_404(GroceryList, author=request.user, id=id)
-    list.delete()
-    output = _('Your grocery list has been removed.')
-    messages.success(request, output)
-    return HttpResponseRedirect(reverse('list.views.index'))
+class GroceryListViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+    queryset = GroceryList.objects.all()
+    serializer_class = GroceryListSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
-@login_required
-def groceryAjaxDelete(request):
-    if request.method == 'POST':
-        if request.POST['id']:
-            try:
-                list = get_object_or_404(GroceryList, author=request.user, id=request.POST['id'])
-            except GroceryList.DoesNotExist:
-                raise Http404
-            list.delete()
-            return redirect("/list/grocery/grocery-ajax/")
+class GrocerySharedViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+    queryset = GroceryShared.objects.all()
+    serializer_class = GrocerySharedSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
+class GroceryAisleViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+    queryset = GroceryAisle.objects.all()
+    serializer_class = GroceryAisleSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
+class GroceryRecipeViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+    queryset = GroceryList.objects.all()
+    serializer_class = GroceryRecipeSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
+class GroceryItemViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+    queryset = GroceryItem.objects.all()
+    serializer_class = GroceryItemSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
+
+
+'''
 @login_required
 def groceryCreate(request, user=None, slug=None):
     """used to create and edit grocery list"""
@@ -231,3 +258,4 @@ def groceryAisleAjaxDelete(request):
                 raise Http404
             aisle.delete()
     return render_to_response("/list/_aisles.html", {'aisles': aisles}, context_instance=RequestContext(request))
+'''

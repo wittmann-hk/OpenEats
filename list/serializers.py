@@ -1,9 +1,6 @@
 from django.forms import ModelForm, forms
-import django.forms as forms
 from django.forms.widgets import HiddenInput
 from django.http import HttpResponse
-from models import GroceryList,GroceryShared,GroceryAisle
-from django.forms.models import BaseInlineFormSet
 from django.utils.translation import ugettext_lazy as _
 from django.core.mail import EmailMessage, BadHeaderError
 from django.conf import settings
@@ -11,26 +8,27 @@ from django.template import loader, RequestContext
 from django.contrib.sites.models import Site
 from django.db.models import Q
 
+from rest_framework import serializers
+from models import GroceryList, GroceryShared, GroceryAisle, GroceryItem, GroceryRecipe
 
-class GroceryListForm(ModelForm):
+
+class GroceryItemSerializer(serializers.ModelSerializer):
     """used to create a new grocery list for a user"""
     class Meta:
-        model = GroceryList
+        model = GroceryItem
         exclude = ('slug',)
-
-class GroceryItemFormSet(BaseInlineFormSet):
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)  # get the user passed to the form off of the keyword argument
-        super(GroceryItemFormSet, self).__init__(*args, **kwargs)
+        super(GroceryItemSerializer, self).__init__(*args, **kwargs)
 
     def add_fields(self, form, index):
-        super(GroceryItemFormSet, self).add_fields(form, index)
+        super(GroceryItemSerializer, self).add_fields(form, index)
         form.fields["aisle"] = forms.ModelChoiceField(queryset=GroceryAisle.objects.filter(Q(author__isnull=True) | Q( author=self.user)), required=False)
 
     def clean(self):
         """Require at least one form in the formset to be completed."""
-        super(GroceryItemFormSet, self).clean()
+        super(GroceryItemSerializer, self).clean()
         for error in self.errors:
             if error:
                 return
@@ -43,22 +41,24 @@ class GroceryItemFormSet(BaseInlineFormSet):
                                         self.model._meta.object_name.lower())
 
 
-class GroceryUserList(forms.Form):
-    """used to pull a list of a users grocery list and add them to a select box on a form"""
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)  # get the user passed to the form off of the keyword argument
-        super(GroceryUserList, self).__init__(*args, **kwargs)
-        lists = GroceryList.objects.filter(author=user)
-        choices = [ (o.id, str(o)) for o in lists]
-        choices.append((0, 'new'))
-        choices.sort()
-        self.fields['lists'] = forms.ChoiceField( widget=forms.Select(), choices=choices, initial=0)
-
-
-class GroceryAisleForm(ModelForm):
-    """used by users to add a new aisle"""
+class GroceryListSerializer(serializers.ModelSerializer):
+    """used to create a new grocery list for a user"""
     class Meta:
-        model = GroceryAisle()
+        model = GroceryList
+        exclude = ('slug',)
+
+
+class GrocerySharedSerializer(serializers.ModelSerializer):
+    """form object for the popup from the recipe_form to add a new course"""
+    class Meta:
+        model = GroceryShared
+        fields = ('shared_to',)
+
+
+class GroceryAisleSerializer(serializers.ModelSerializer):
+    """form object for the popup from the recipe_form to add a new course"""
+    class Meta:
+        model = GroceryAisle
         fields = "__all__"
         widgets = {'author': HiddenInput()}
 
@@ -72,15 +72,18 @@ class GroceryAisleForm(ModelForm):
         else:
             raise forms.ValidationError(_('Aisle with this name already exists for your account'))
         return cleaned_data
-        
 
-class GroceryShareTo(ModelForm):
+
+class GroceryRecipeSerializer(ModelForm):
     """grocery form to allow you to select a user from your friends to share a list with"""
     class Meta:
-        model = GroceryShared
-        fields = ('shared_to',)
+        model = GroceryRecipe
+        fields = "__all__"
 
 
+# This class isnt using any rest framework elements
+# I should change this later
+'''
 class GrocerySendMail(forms.Form):
     """Grocery form to send a grocery list to someone in email"""
     def __init__(self, data=None, files=None, request=None, *args, **kwargs):
@@ -129,3 +132,4 @@ class GrocerySendMail(forms.Form):
             return HttpResponse(_('Email Sent'))
         else:
             return HttpResponse('Make sure all fields are entered and valid.')
+'''

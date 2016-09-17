@@ -40,8 +40,9 @@ AUTH_PROFILE_MODULE = 'accounts.UserProfiles'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_PATH, 'templates'),],
-        'APP_DIRS': False,
+        #'DIRS': [os.path.join(PROJECT_PATH, 'templates'),],
+        'DIRS': [],
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -49,20 +50,21 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
 
-                "django.core.context_processors.i18n",
-                "django.core.context_processors.media",
-                'django.core.context_processors.static',
-                "navbar.context_processors.navbars",
-                "openeats.context_processors.oelogo",
-                "openeats.context_processors.oetitle",
+                #"django.core.context_processors.i18n",
+                #"django.core.context_processors.media",
+                #'django.core.context_processors.static',
+                #"navbar.context_processors.navbars",
+                #"openeats.context_processors.oelogo",
+                #"openeats.context_processors.oetitle",
             ],
         },
     },
 ]
 
+'''
 TEMPLATE_DIRS = (
    os.path.join(PROJECT_PATH, 'templates'),
-)
+)'''
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -95,6 +97,9 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.flatpages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
+    'coreapi',
 
     'pagination',
     'recipe',

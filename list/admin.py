@@ -1,15 +1,17 @@
 from django.contrib import admin
-from models import GroceryList, GroceryItem, GroceryAisle, GroceryShared,GroceryRecipe
-from forms import GroceryItemFormSet
+from models import GroceryList, GroceryItem, \
+                   GroceryAisle, GroceryShared, \
+                   GroceryRecipe
+from serializers import GroceryItemSerializer
 
 
 class GroceryListInline(admin.TabularInline):
     model = GroceryItem
-    formset = GroceryItemFormSet
-    
+    ser = GroceryItemSerializer
+
 
 class GroceryListAdmin(admin.ModelAdmin):
-    inlines = [GroceryListInline, ]
+    #inlines = [GroceryListInline, ]
     list_display = ['title', 'author']
     list_filter = ['author']
     search_fields = ['author__username', 'title']

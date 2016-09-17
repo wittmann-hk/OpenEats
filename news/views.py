@@ -1,15 +1,14 @@
-from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext
 from models import Entry
+from serializers import EntrySerializer
+from rest_framework import permissions
+from rest_framework import viewsets
 
 
-def entry(request, slug):
-    """returns one news entry"""
-    entry = get_object_or_404(Entry, slug=slug)
-    return render_to_response('news/entry.html', {'entry': entry}, context_instance=RequestContext(request))
-
-
-def list(request):
-    """returns a list of news stories"""
-    entry_list = Entry.objects.all().order_by('pub_date')
-    return render_to_response('news/entry_list.html', {'entry_list': entry_list}, context_instance=RequestContext(request))
+class EntryViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+    queryset = Entry.objects.all()
+    serializer_class = EntrySerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
