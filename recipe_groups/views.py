@@ -2,6 +2,7 @@ from models import Course, Cuisine
 from serializers import CourseSerializer, CuisineSerializer
 from rest_framework import permissions
 from rest_framework import viewsets
+from permissions import IsOwnerOrReadOnly
 
 
 class CourseViewSet(viewsets.ModelViewSet):
@@ -11,7 +12,8 @@ class CourseViewSet(viewsets.ModelViewSet):
     """
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly)
 
 
 class CuisineViewSet(viewsets.ModelViewSet):
@@ -21,4 +23,5 @@ class CuisineViewSet(viewsets.ModelViewSet):
     """
     queryset = Cuisine.objects.all()
     serializer_class = CuisineSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly)
