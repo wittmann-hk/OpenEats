@@ -2,16 +2,10 @@ from django.contrib import admin
 from models import Recipe, StoredRecipe, NoteRecipe, ReportedRecipe
 from imagekit.admin import AdminThumbnail
 from ingredient.models import Ingredient
-from forms import IngItemFormSet
 from django.shortcuts import render_to_response
 from django.contrib.flatpages.models import FlatPage
 from django.contrib.flatpages.admin import FlatPageAdmin
 from django.conf import settings
-
-
-class RecipeInline(admin.TabularInline):
-    model = Ingredient
-    formset = IngItemFormSet
 
 
 class RecipeAdmin(admin.ModelAdmin):
@@ -24,7 +18,6 @@ class RecipeAdmin(admin.ModelAdmin):
     export_MealMaster.short_description = "Export Meal Master"
 
     actions=[export_MealMaster]
-    inlines = [RecipeInline]
     list_display = ['title', 'admin_thumbnail', 'author', 'pub_date', 'shared']
     admin_thumbnail = AdminThumbnail(image_field='photo')
     list_filter = ['shared', 'author', 'course', 'cuisine']

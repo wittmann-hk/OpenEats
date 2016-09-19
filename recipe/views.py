@@ -8,7 +8,6 @@ from django.views.generic import DetailView
 from django.utils.translation import ugettext as _
 from models import Recipe, StoredRecipe, NoteRecipe, ReportedRecipe
 from ingredient.models import Ingredient
-from forms import RecipeForm,IngItemFormSet, RecipeSendMail
 #from djangoratings.views import AddRatingView
 from django.conf import settings
 from django.db.models import F
@@ -22,10 +21,29 @@ from reportlab.pdfbase.pdfmetrics import registerFontFamily
 from taggit.models import Tag, TaggedItem
 import json
 
+from serializers import RecipeSerializer, ReportedRecipeSerializer, RecipeSendMail
+from rest_framework import permissions
+from rest_framework import viewsets
 
-def index(request):
-    recipe_list = Recipe.objects.filter(shared=Recipe.SHARE_SHARED).exclude(photo='').order_by('-pub_date')[0:6]
-    return render_to_response('recipe/index.html', {'new_recipes': recipe_list})
+
+class RecipeViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+    queryset = Recipe.objects.all()
+    serializer_class = RecipeSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
+class ReportedRecipeViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+    queryset = ReportedRecipe.objects.all()
+    serializer_class = ReportedRecipeSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
 def recipeShow(request, slug):
@@ -69,39 +87,6 @@ def recipePrint(request, slug):
         return render_to_response('recipe/recipe_print.html', {'recipe': recipe, 'note': note})
 
 
-@login_required
-def recipe(request, user=None, slug=None):
-    """used to create or edit a recipe"""
-    IngFormSet = inlineformset_factory(Recipe, Ingredient, extra=15, formset=IngItemFormSet)  # create the ingredient form with 15 empty fields
-
-    if user and slug:  # must be editing a recipe
-        recipe_inst = get_object_or_404(Recipe, author__username=request.user.username, slug=slug)
-    else:
-        recipe_inst = Recipe()
-
-    if request.method == 'POST':
-        form = RecipeForm(data=request.POST, files=request.FILES, instance=recipe_inst)
-        formset = IngFormSet(request.POST, instance=recipe_inst)
-        if form.is_valid() and formset.is_valid():
-            new_recipe = form.save()
-            instances = formset.save(commit=False)  # save the ingredients seperatly
-            for instance in instances:
-                instance.recipe_id = new_recipe.id   # set the recipe id foregin key to the this recipe id
-                instance.save()
-            form.save(commit=False)
-            return redirect(new_recipe.get_absolute_url())
-    else:
-        form = RecipeForm(instance=recipe_inst)
-        if not recipe_inst.related:  # if the related field has not been set on a recipe or it is a new recipe populate the drop down otherwise use the value that is already set
-            form.fields['related'].queryset = Recipe.objects.filter(author__username=request.user.username).exclude(related=F('id')).filter(related__isnull=True).order_by('-pub_date')
-
-        if recipe_inst.id:   # if we are editing an existing recipe disable the title field so it can't be changed
-            form.fields['title'].widget.attrs['readonly'] = True
-        
-        formset = IngFormSet(instance=recipe_inst)
-    return render_to_response('recipe/recipe_form.html', {'form': form, 'formset': formset, })
-
-
 def recipeUser(request, shared, user):
     """Returns a list of recipes for a giving user if shared is set to share then it will show the shared recipes if it is set to private
        then only the private recipes will be shown this is mostly used for the users profile to display the users recipes
@@ -110,37 +95,8 @@ def recipeUser(request, shared, user):
         recipe_list = Recipe.objects.filter(author__username=user, shared=Recipe.SHARE_SHARED).order_by('-pub_date')
     else:
         recipe_list = Recipe.objects.filter(author__username=user, shared=Recipe.PRIVATE_SHARED).order_by('-pub_date')
-       
+
     return render_to_response('recipe/recipe_userlist.html', {'recipe_list': recipe_list, 'user': user, 'shared': shared})
-
-
-@login_required
-def recipeRate(request, object_id, score):
-    """ Used for users to rate recipes """
-    '''recipe_type = ContentType.objects.get(app_label="recipe", model="recipe")
-    params = {
-        'content_type_id': recipe_type.id,  # this is the content type id of the recipe models per django.contrib.contentetype
-        'object_id': object_id,
-        'field_name': 'rating',  # this should match the field name defined in your model
-        'score': score,
-    }
-    results = {}
-    response = AddRatingView()(request, **params)
-    results['message'] = response.content
-    r = Recipe.objects.get(pk=object_id)  # get recipe object so we can return the average rating
-    avg = r.rating.score / r.rating.votes
-    results['avg'] = avg
-    results['votes'] = r.rating.votes'''
-
-    # This fucntion does not work any more since its been deprcated
-    # returning  junk for now
-    results = {
-        'message': 'Not working',
-        'avg': '3',
-        'votes': '3'
-    }
-    json_obj = json.dumps(results)
-    return HttpResponse(json_obj, content_type="application/json")
 
 
 @login_required
@@ -158,7 +114,7 @@ def recipeStore(request, object_id):
         new_store.save()
         output = _("Recipe added to your favorites!")
         return HttpResponse(output)
-        
+
 
 @login_required
 def recipeUnStore(request):
@@ -281,23 +237,6 @@ def exportPDF(request, slug):
 
 
 @login_required
-def recipeReport(request, slug):
-    """Take the recipe id and the user id passed via the url check that the recipe is not
-       already reported if it isn't it will be reported
-    """
-    recipe = get_object_or_404(Recipe, slug=slug)
-    reported = ReportedRecipe.objects.filter(recipe=recipe.pk)
-    if reported:
-        output = _("Recipe has already been reported!")
-        return HttpResponse(output)
-    else:  # report the recipe
-        new_reported = ReportedRecipe(recipe=recipe, reported_by=request.user)
-        new_reported.save()
-        output = _("Recipe reported to the moderators!")
-        return HttpResponse(output)
-
-
-@login_required
 def recipeMail(request, id):
     """this view creates a form used to send a recipe to someone via email"""
     if request.method == 'POST':
@@ -308,11 +247,6 @@ def recipeMail(request, id):
     else:
         form = RecipeSendMail(request=request)
     return render_to_response('recipe/recipe_email.html', {'form': form, 'id': id})
-
-
-class CookList(DetailView):
-    model = Recipe
-    template_name = "recipe/recipe_cook.html"
 
 
 def recipeTags(request, tag):
