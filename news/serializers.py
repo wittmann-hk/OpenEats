@@ -6,7 +6,7 @@ class EntrySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Entry
-        exclude = ('slug',)
+        exclude = ('slug', 'pub_date',)
 
     def create(self, validated_data):
         """
