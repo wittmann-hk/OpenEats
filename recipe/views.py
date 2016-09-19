@@ -21,7 +21,7 @@ from reportlab.pdfbase.pdfmetrics import registerFontFamily
 from taggit.models import Tag, TaggedItem
 import json
 
-from serializers import RecipeSerializer, ReportedRecipeSerializer, RecipeSendMail
+from . import serializers
 from rest_framework import permissions
 from rest_framework import viewsets
 
@@ -32,7 +32,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     `update` and `destroy` actions.
     """
     queryset = Recipe.objects.all()
-    serializer_class = RecipeSerializer
+    serializer_class = serializers.RecipeSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
@@ -42,131 +42,28 @@ class ReportedRecipeViewSet(viewsets.ModelViewSet):
     `update` and `destroy` actions.
     """
     queryset = ReportedRecipe.objects.all()
-    serializer_class = ReportedRecipeSerializer
+    serializer_class = serializers.ReportedRecipeSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
-def recipeShow(request, slug):
-    recipe = get_object_or_404(Recipe, slug=slug)
-
-    # setting the four previously viewed recipes in the user session so they can be easily accessed on the sidebar
-    if 'recipe_history' in request.session:
-        sessionlist = request.session['recipe_history']
-        if [recipe.title, recipe.get_absolute_url()] not in sessionlist:
-            sessionlist.append(([recipe.title, recipe.get_absolute_url()]))
-            if len(sessionlist) > 4:
-                sessionlist.pop(0)
-            request.session['recipe_history'] = sessionlist
-    else:
-        request.session['recipe_history'] = [[recipe.title, recipe.get_absolute_url()]]
-
-    if request.user.is_authenticated():
-        note = request.user.noterecipe_set.filter(recipe=recipe, author=request.user)
-    else:
-        note = None
-    
-    if recipe.shared == Recipe.PRIVATE_SHARED and recipe.author != request.user:  # check if the recipe is a private recipe if so through a 404 error
-        output = _("Recipe %s is marked Private") % recipe.slug
-        raise Http404(output)
-    else:
-        return render_to_response('recipe/recipe_detail.html', {'recipe': recipe, 'note': note})
-
-
-def recipePrint(request, slug):
-    recipe = get_object_or_404(Recipe, slug=slug)
-
-    if request.user.is_authenticated():
-        note = request.user.noterecipe_set.filter(recipe=recipe, author=request.user)
-    else:
-        note = None
-     
-    if recipe.shared == Recipe.PRIVATE_SHARED and recipe.author != request.user:  # check if the recipe is a private recipe if so through a 404 error
-        output = _("Recipe %s is marked Private") % recipe.slug
-        raise Http404(output)
-    else:
-        return render_to_response('recipe/recipe_print.html', {'recipe': recipe, 'note': note})
-
-
-def recipeUser(request, shared, user):
-    """Returns a list of recipes for a giving user if shared is set to share then it will show the shared recipes if it is set to private
-       then only the private recipes will be shown this is mostly used for the users profile to display the users recipes
+class NoteRecipeViewSet(viewsets.ModelViewSet):
     """
-    if shared == 'share':
-        recipe_list = Recipe.objects.filter(author__username=user, shared=Recipe.SHARE_SHARED).order_by('-pub_date')
-    else:
-        recipe_list = Recipe.objects.filter(author__username=user, shared=Recipe.PRIVATE_SHARED).order_by('-pub_date')
-
-    return render_to_response('recipe/recipe_userlist.html', {'recipe_list': recipe_list, 'user': user, 'shared': shared})
-
-
-@login_required
-def recipeStore(request, object_id):
-    """Take the recipe id and the user id passed via the url check that the recipe is not
-       already stored for that user then store it if it is
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
     """
-    stored = StoredRecipe.objects.filter(recipe=object_id, user=request.user.id)
-    if stored:
-        output = _("Recipe already in your favorites!")
-        return HttpResponse(output)
-    else:  # save the recipe
-        r = get_object_or_404(Recipe, pk=object_id)
-        new_store = StoredRecipe(recipe=r, user=request.user)
-        new_store.save()
-        output = _("Recipe added to your favorites!")
-        return HttpResponse(output)
+    queryset = NoteRecipe.objects.all()
+    serializer_class = serializers.NoteRecipeSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
-@login_required
-def recipeUnStore(request):
-    """Take the recipe id via the url check that the recipe is not already
-       stored for that user then remove it if it is
+class StoredRecipeViewSet(viewsets.ModelViewSet):
     """
-    if request.method == 'POST':
-        if request.POST['recipe_id']:
-            try:
-                stored_recipe = StoredRecipe.objects.get(recipe=request.POST['recipe_id'], user=request.user.id)
-            except StoredRecipe.DoesNotExist:
-                raise Http404
-            stored_recipe.delete()
-            return redirect('/recipe/ajax-favrecipe/')
-    
-
-@login_required
-def recipeUserFavs(request):
-    """returns a list of a users favorite recipes"""
-    stored_list = StoredRecipe.objects.filter(user=request.user.id)
-    recipe_list = []
-    for stored in stored_list:
-        recipe_list.append(stored.recipe)
-    return render_to_response('recipe/recipe_userfav.html', {'recipe_list': recipe_list})
-
-
-@login_required
-def recipeNote(request):
-    """This is called by the jquery inline edit on the recipe detail template to allow users to add notes to recipes"""
-
-    user = request.user
-    
-    if request.POST['recipe']:
-        try:
-            recipe = Recipe.objects.get(pk=request.POST['recipe'])
-        except Recipe.DoesNotExist:
-            raise Http404
-        note = request.POST['note']
-
-    cur_note = NoteRecipe.objects.filter(author=user, recipe=recipe)
-
-    if cur_note:  # check to see if the user already has a note if so re-save it with the new text
-        if len(note) == 0 or note.isspace():  # they must want to delete the note so they sent nothing in the text field
-            cur_note[0].delete()
-        else:
-            cur_note[0].text = note
-            cur_note[0].save()
-    else:
-        if len(note) > 0 and not note.isspace():
-            new_note = NoteRecipe(recipe=recipe, author=user, text=note)
-            new_note.save()
-    return HttpResponse(note)
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+    queryset = StoredRecipe.objects.all()
+    serializer_class = serializers.StoredRecipeSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
 def exportPDF(request, slug):
@@ -240,12 +137,12 @@ def exportPDF(request, slug):
 def recipeMail(request, id):
     """this view creates a form used to send a recipe to someone via email"""
     if request.method == 'POST':
-        form = RecipeSendMail(data=request.POST, request=request)  # passing the request object so that in the form I can get the request post dict to save the form
+        form = serializers.RecipeSendMail(data=request.POST, request=request)  # passing the request object so that in the form I can get the request post dict to save the form
         if form.is_valid():
             form.save(fail_silently=False)
             return HttpResponse("recipe sent to " + request.POST['to_email'])
     else:
-        form = RecipeSendMail(request=request)
+        form = serializers.RecipeSendMail(request=request)
     return render_to_response('recipe/recipe_email.html', {'form': form, 'id': id})
 
 

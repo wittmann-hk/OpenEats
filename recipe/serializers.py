@@ -6,28 +6,59 @@ from django.template import loader, RequestContext
 from django.http import HttpResponse
 
 from rest_framework import serializers
-from models import Recipe, ReportedRecipe
-from recipe_groups.models import Course, Cuisine
+from models import Recipe, ReportedRecipe, StoredRecipe, NoteRecipe
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-    """ Used to create new recipes the course and cuisine field are created with a
-        speical widget that appends a link and graphic to the end of select field to allow
-        users to add new items via a popup form
-    """
-    #course = forms.ModelChoiceField(Course.objects, widget=SelectWithPop)
-    #cuisine = forms.ModelChoiceField(Cuisine.objects, widget=SelectWithPop)
-
+    """ Used to create new recipes"""
     class Meta:
         model = Recipe
-        exclude = ('slug', 'ingredient')
+        exclude = ('slug',)
+
+    def create(self, validated_data):
+        """
+        Create and return a new `Snippet` instance, given the validated data.
+        """
+        return Recipe.objects.create(**validated_data)
 
 
 class ReportedRecipeSerializer(serializers.ModelSerializer):
     """form object for the popup from the recipe_form to add a new cuisine"""
     class Meta:
         model = ReportedRecipe
-        exclude = ('slug',)
+        fields = '__all__'
+
+    def create(self, validated_data):
+        """
+        Create and return a new `Snippet` instance, given the validated data.
+        """
+        return ReportedRecipe.objects.create(**validated_data)
+
+
+class StoredRecipeSerializer(serializers.ModelSerializer):
+    """form object for the popup from the recipe_form to add a new cuisine"""
+    class Meta:
+        model = StoredRecipe
+        fields = '__all__'
+
+    def create(self, validated_data):
+        """
+        Create and return a new `Snippet` instance, given the validated data.
+        """
+        return StoredRecipe.objects.create(**validated_data)
+
+
+class NoteRecipeSerializer(serializers.ModelSerializer):
+    """form object for the popup from the recipe_form to add a new cuisine"""
+    class Meta:
+        model = NoteRecipe
+        fields = '__all__'
+
+    def create(self, validated_data):
+        """
+        Create and return a new `Snippet` instance, given the validated data.
+        """
+        return NoteRecipe.objects.create(**validated_data)
 
 
 class RecipeSendMail(forms.Form):
