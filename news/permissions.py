@@ -12,5 +12,5 @@ class IsAdminOrReadOnly(permissions.BasePermission):
         if request.method in permissions.IsAdminUser:
             return True
 
-        # Write permissions are only allowed to admins.
-        return obj.owner == request.user
+        # Write permissions are only allowed to owners.
+        return request.user.is_staff
