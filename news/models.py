@@ -11,6 +11,9 @@ class Entry(models.Model):
     image = models.ImageField(_('image'), upload_to='uploads/news/', blank=True)
     pub_date = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ('pub_date',)
+
     def __unicode__(self):
         return self.title
 

@@ -4,6 +4,8 @@ from accounts import views as account_views
 from django.contrib.auth import views as auth_views
 from registration.views import RegistrationView
 from rest_framework.routers import DefaultRouter
+from django.conf import settings
+from django.conf.urls.static import static
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -11,14 +13,16 @@ admin.autodiscover()
 
 register = RegistrationView.as_view()
 
-urlpatterns = (
-    url(r'^', include('recipe.urls')),
+urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^', include('recipe.urls')),
     url(r'^groups/', include('recipe_groups.urls')),
     url(r'^ingredient/', include('ingredient.urls')),
     url(r'^list/', include('list.urls')),
     url(r'^news/', include('news.urls')),
     url(r'^recipe/', include('recipe.urls')),
+
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     # Robots URL for Google
     url(r'^robots.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
@@ -39,12 +43,4 @@ urlpatterns = (
     # url(r'^profiles/', include('profiles.urls')),
     # url(r'^rosetta/', include('rosetta.urls')),
     # url(r'^follow/', include('relationships.urls')),
-)
-
-
-'''
-if settings.SERVE_MEDIA:
-    urlpatterns += ('',
-        url(r'^site-media/(?P<path>.*)$', 'django.views.static.serve',
-            {'document_root': settings.MEDIA_ROOT}),
-        )'''
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
