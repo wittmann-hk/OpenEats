@@ -3,7 +3,6 @@ from models import Entry
 
 
 class EntrySerializer(serializers.ModelSerializer):
-    #title = serializers.HyperlinkedIdentityField(view_name='entry-title', format='html')
 
     class Meta:
         model = Entry
