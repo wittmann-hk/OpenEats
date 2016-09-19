@@ -3,7 +3,6 @@ from serializers import EntrySerializer
 from rest_framework import renderers, permissions, viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
-from permissions import IsAdminOrReadOnly
 
 
 class EntryViewSet(viewsets.ModelViewSet):
@@ -13,8 +12,7 @@ class EntryViewSet(viewsets.ModelViewSet):
     """
     queryset = Entry.objects.all()
     serializer_class = EntrySerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsAdminOrReadOnly,)
+    permission_classes = (permissions.IsAdminUser,)
 
     @detail_route(renderer_classes=[renderers.StaticHTMLRenderer])
     def title(self, request, *args, **kwargs):
