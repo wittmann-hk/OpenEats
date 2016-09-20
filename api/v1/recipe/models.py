@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
-from recipe_groups.models import Course, Cuisine
+from api.v1.recipe_groups.models import Course, Cuisine
 #from djangoratings.fields import RatingField
 from django_extensions.db.fields import AutoSlugField
 from django.utils.translation import ugettext_lazy as _

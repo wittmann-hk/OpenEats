@@ -1,7 +1,6 @@
 from django.conf.urls import url, include
 from rest_framework.routers import DefaultRouter
 from . import views
-from helpers.recipe_views import RecentRecipeView, TopRecipeView
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter(schema_title='Recipes')

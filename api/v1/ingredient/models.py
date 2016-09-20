@@ -1,5 +1,5 @@
 from django.db import models
-from recipe.models import Recipe
+from api.v1.recipe.models import Recipe
 from django.utils.translation import ugettext_lazy as _
 
 

@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.forms.models import inlineformset_factory
 from django.utils.translation import ugettext as _
-from recipe.models import Recipe
+from api.v1.recipe.models import Recipe
 from datetime import date
 
 from django.http import HttpResponse

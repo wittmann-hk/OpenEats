@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.fields import AutoSlugField
-from recipe.models import Recipe
+from api.v1.recipe.models import Recipe
 
 
 class GroceryList(models.Model):

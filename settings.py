@@ -102,12 +102,12 @@ INSTALLED_APPS = (
     'coreapi',
 
     'pagination',
-    'recipe',
-    'recipe_groups',
-    'ingredient',
+    'api.v1.recipe',
+    'api.v1.recipe_groups',
+    'api.v1.ingredient',
     'accounts',
-    'news',
-    'list',
+    'api.v1.news',
+    'api.v1.list',
 
     'grappelli.dashboard',
     'grappelli',

@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='groceryrecipe',
             name='recipe',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='recipe.Recipe', verbose_name='recipe'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.recipe.Recipe', verbose_name='recipe'),
         ),
         migrations.AddField(
             model_name='grocerylist',
@@ -31,12 +31,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='groceryitem',
             name='aisle',
-            field=models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.SET_NULL, to='list.GroceryAisle'),
+            field=models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.SET_NULL, to='api.list.GroceryAisle'),
         ),
         migrations.AddField(
             model_name='groceryitem',
             name='list',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='items', to='list.GroceryList', verbose_name='grocery list'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='items', to='api.list.GroceryList', verbose_name='grocery list'),
         ),
         migrations.AddField(
             model_name='groceryaisle',

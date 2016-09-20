@@ -53,14 +53,14 @@ class Migration(migrations.Migration):
             name='GroceryRecipe',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('list', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='list.GroceryList', verbose_name='grocery list')),
+                ('list', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.list.GroceryList', verbose_name='grocery list')),
             ],
         ),
         migrations.CreateModel(
             name='GroceryShared',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('list', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='list.GroceryList', verbose_name='grocery list')),
+                ('list', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.list.GroceryList', verbose_name='grocery list')),
                 ('shared_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='shared_by', to=settings.AUTH_USER_MODEL, verbose_name='shared by')),
                 ('shared_to', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='shared_to', to=settings.AUTH_USER_MODEL, verbose_name='shared to')),
             ],

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from ingredient.models import Ingredient
+from api.v1.ingredient.models import Ingredient
 
 
 class IngredientAdmin(admin.ModelAdmin):

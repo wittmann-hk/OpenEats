@@ -10,16 +10,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 admin.autodiscover()
 
-api_urlpatterns = [
-    url(r'^groups/', include('recipe_groups.urls')),
-    url(r'^ingredient/', include('ingredient.urls')),
-    url(r'^list/', include('list.urls')),
-    url(r'^news/', include('news.urls')),
-    url(r'^recipe/', include('recipe.urls')),
-]
-
 urlpatterns = [
-    url(r'^api/', include(api_urlpatterns)),
+    url(r'^api/', include('api.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     url(r'^admin/', include(admin.site.urls)),

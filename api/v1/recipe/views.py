@@ -7,7 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.views.generic import DetailView
 from django.utils.translation import ugettext as _
 from models import Recipe, StoredRecipe, NoteRecipe, ReportedRecipe
-from ingredient.models import Ingredient
+from api.v1.ingredient.models import Ingredient
 #from djangoratings.views import AddRatingView
 from django.conf import settings
 from django.db.models import F

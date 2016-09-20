@@ -1,6 +1,6 @@
 from django_webtest import WebTest
 from django.core.urlresolvers import reverse
-from recipe.models import Recipe, StoredRecipe
+from api.v1.recipe.models import Recipe, StoredRecipe
 from django.contrib.auth.models import User
 
 class recipeViewsTestCase(WebTest):

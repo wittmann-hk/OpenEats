@@ -1,7 +1,7 @@
 from django.contrib import admin
 from models import Recipe, StoredRecipe, NoteRecipe, ReportedRecipe
 from imagekit.admin import AdminThumbnail
-from ingredient.models import Ingredient
+from api.v1.ingredient.models import Ingredient
 from django.shortcuts import render_to_response
 from django.contrib.flatpages.models import FlatPage
 from django.contrib.flatpages.admin import FlatPageAdmin
