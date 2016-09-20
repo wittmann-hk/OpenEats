@@ -101,7 +101,6 @@ INSTALLED_APPS = (
     'rest_framework',
     'coreapi',
 
-    'pagination',
     'api.v1.recipe',
     'api.v1.recipe_groups',
     'api.v1.ingredient',

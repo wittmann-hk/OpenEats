@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from models import Ingredient
+from measurement.measures import Volume
 
 
 class IngredientSerializer(serializers.ModelSerializer):
