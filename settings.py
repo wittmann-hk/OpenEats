@@ -39,10 +39,10 @@ AUTH_PROFILE_MODULE = 'accounts.UserProfiles'
 # List of callables that know how to import templates from various sources.
 TEMPLATES = [
     {
+        'NAME': 'Core Templates',
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        #'DIRS': [os.path.join(PROJECT_PATH, 'templates'),],
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [os.path.join(PROJECT_PATH, 'templates'),],
+        'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -59,12 +59,21 @@ TEMPLATES = [
             ],
         },
     },
+    {
+        'NAME': '3rd Party Templates',
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
 ]
-
-'''
-TEMPLATE_DIRS = (
-   os.path.join(PROJECT_PATH, 'templates'),
-)'''
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
