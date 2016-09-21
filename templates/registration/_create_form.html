@@ -6,7 +6,7 @@
     </div>
 {% endif %}
 
-<form class="well" method="post" action="/accounts/register/">{% csrf_token %}
+<form class="well" method="post" action="/api/v1/accounts/register/">{% csrf_token %}
     <div class="form-group">
         <p>{{ form.username.label_tag }}</p>
         {{ form.username.errors }}

@@ -1,12 +1,13 @@
-from django.conf.urls import include, url
-from django.views.generic import TemplateView
-from accounts import views as account_views
-from django.contrib.auth import views as auth_views
-from django.conf import settings
-from django.conf.urls.static import static
+#!/usr/bin/env python
+# encoding: utf-8
+from __future__ import unicode_literals
 
-# Uncomment the next two lines to enable the admin:
+from django.conf import settings
+from django.conf.urls import include, url
+from django.conf.urls.static import static
 from django.contrib import admin
+from django.views.generic import TemplateView
+
 admin.autodiscover()
 
 urlpatterns = [

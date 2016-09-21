@@ -113,7 +113,7 @@ INSTALLED_APPS = (
     'api.v1.recipe',
     'api.v1.recipe_groups',
     'api.v1.ingredient',
-    'accounts',
+    'api.v1.accounts',
     'api.v1.news',
     'api.v1.list',
 
