@@ -8,3 +8,4 @@ search_index/
 .idea/
 site-media/
 openeats.db
+*.css.map

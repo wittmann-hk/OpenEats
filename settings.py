@@ -94,7 +94,7 @@ STATICFILES_FINDERS = (
 )
 
 LOCALE_PATHS = (
-  os.path.join(BASE_DIR, 'locale',),
+  os.path.join(PROJECT_PATH, 'locale',),
 )
 
 INSTALLED_APPS = (
@@ -169,8 +169,12 @@ USE_L10N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(BASE_DIR, 'site-media')
-STATIC_ROOT = os.path.join(BASE_DIR, 'static-files')
+MEDIA_ROOT = os.path.join(PROJECT_PATH, 'site-media')
+STATIC_ROOT = os.path.join(PROJECT_PATH, 'static-files')
+
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_PATH, "static"),
+]
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -209,7 +213,7 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        'PATH':    os.path.join(BASE_DIR, 'search_index')
+        'PATH':    os.path.join(PROJECT_PATH, 'search_index')
     }
 }
 
