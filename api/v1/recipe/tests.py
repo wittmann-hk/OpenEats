@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# encoding: utf-8
+from __future__ import unicode_literals
+
 from django_webtest import WebTest
 from django.core.urlresolvers import reverse
 from api.v1.recipe.models import Recipe, StoredRecipe

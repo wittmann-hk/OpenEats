@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# encoding: utf-8
+from __future__ import unicode_literals
+
 from models import Entry
 from serializers import EntrySerializer
 from rest_framework import renderers, permissions, viewsets

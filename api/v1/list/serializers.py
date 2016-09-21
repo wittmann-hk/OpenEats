@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# encoding: utf-8
+from __future__ import unicode_literals
+
 from django.forms import ModelForm, forms
 from django.forms.widgets import HiddenInput
 from django.http import HttpResponse

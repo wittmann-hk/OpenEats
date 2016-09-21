@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# encoding: utf-8
+from __future__ import unicode_literals
+
 from imagekit import ImageSpec, register
 from imagekit.processors import SmartResize
 

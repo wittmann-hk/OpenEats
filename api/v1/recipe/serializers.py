@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# encoding: utf-8
+from __future__ import unicode_literals
+
 import django.forms as forms
 from django.core.mail import EmailMessage, BadHeaderError
 from django.utils.translation import ugettext_lazy as _

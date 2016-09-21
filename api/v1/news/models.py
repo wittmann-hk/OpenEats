@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# encoding: utf-8
+from __future__ import unicode_literals
+
 from django.db import models
 from django_extensions.db.fields import AutoSlugField
 from django.utils.translation import ugettext_lazy as _

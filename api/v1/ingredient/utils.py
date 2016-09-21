@@ -1,5 +1,6 @@
-# -*- coding:utf-8 -*-
-from __future__ import absolute_import, unicode_literals
+#!/usr/bin/env python
+# encoding: utf-8
+from __future__ import unicode_literals
 
 from measurement.measures import Volume, Weight
 

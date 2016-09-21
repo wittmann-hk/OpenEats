@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# encoding: utf-8
+from __future__ import unicode_literals
+
 from django.core.management.base import NoArgsCommand, CommandError
 from openeats.recipe.models import Recipe
 from django.template import Context, loader
