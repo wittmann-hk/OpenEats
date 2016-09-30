@@ -13,8 +13,19 @@ from rest_framework import serializers
 from models import Recipe, ReportedRecipe, StoredRecipe, NoteRecipe
 
 
+class MyImageField(serializers.ImageField):
+    def to_representation(self, value):
+        if not bool(value):
+            return "http://www.freeiconspng.com/uploads/chef-hat-food-restaurant-icon-31.png"
+        return super(MyImageField, self).to_representation(value)
+
+
 class RecipeSerializer(serializers.ModelSerializer):
     """ Used to create new recipes"""
+    photo = MyImageField(required=False)
+    # This is in the settings now, if I need different date tiem formats this could be a problem.
+    #pub_date = serializers.DateTimeField(format='%B %-d, %Y')
+
     class Meta:
         model = Recipe
         exclude = ('slug',)

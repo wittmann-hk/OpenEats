@@ -1,0 +1,28 @@
+{% extends 'base/base.html' %}
+{% load imagekit %}
+{% load pipeline %}
+
+{% block stylesheet %}
+  {% stylesheet 'recipe' %}
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="row">
+          <div id="similar"></div>
+        </div><!-- /.row -->
+      </div><!-- /.col -->
+      <div class="col-lg-9">
+        <div class="row">
+          <div id="recipe" class="col-lg-push-1 col-lg-10"></div>
+        </div><!-- /.row -->
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container -->
+{% endblock %}
+
+{% block javascript %}
+  {% javascript 'recipe' %}
+{% endblock %}

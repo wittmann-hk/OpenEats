@@ -25,6 +25,5 @@ class IngredientSerializer(serializers.ModelSerializer):
         instance.title = validated_data.get('title', instance.title)
         instance.quantity = validated_data.get('quantity', instance.quantity)
         instance.measurement = validated_data.get('measurement', instance.measurement)
-        instance.preparation = validated_data.get('preparation', instance.preparation)
         instance.save()
         return instance

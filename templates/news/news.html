@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+{% load pipeline %}
+
+{% block stylesheet %}
+  {% stylesheet 'news' %}
+{% endblock %}
+
+{% block content %}
+  <!-- Carousel -->
+  <div id="news" class="carousel slide" data-ride="carousel"></div>
+  <!-- /.carousel -->
+{% endblock %}
+
+{% block javascript %}
+  {% javascript 'news' %}
+{% endblock %}

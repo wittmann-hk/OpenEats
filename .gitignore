@@ -9,3 +9,5 @@ search_index/
 site-media/
 openeats.db
 *.css.map
+*.js.map
+templates/angular/

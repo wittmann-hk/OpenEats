@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+{% load imagekit %}
+{% load pipeline %}
+
+{% block stylesheet %}
+  {% stylesheet 'browse' %}
+{% endblock %}
+
+{% block content %}
+  <div id="browse" class="container"></div>
+{% endblock %}
+
+{% block javascript %}
+  {% javascript 'browse' %}
+{% endblock %}

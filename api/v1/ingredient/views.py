@@ -8,6 +8,7 @@ import json
 from serializers import IngredientSerializer
 from rest_framework import permissions, viewsets
 from permissions import IsOwnerOrReadOnly
+from rest_framework import filters
 
 
 class IngredientViewSet(viewsets.ModelViewSet):
@@ -19,3 +20,5 @@ class IngredientViewSet(viewsets.ModelViewSet):
     serializer_class = IngredientSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly)
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('recipe',)

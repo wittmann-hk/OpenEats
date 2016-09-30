@@ -28,6 +28,7 @@ import json
 from . import serializers
 from rest_framework import permissions
 from rest_framework import viewsets
+from rest_framework import filters
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
@@ -38,6 +39,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
     serializer_class = serializers.RecipeSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    filter_backends = (filters.DjangoFilterBackend,filters.SearchFilter)
+    filter_fields = ('course', 'cuisine', 'title')
+    search_fields = ('title',)
 
 
 class ReportedRecipeViewSet(viewsets.ModelViewSet):
