@@ -81,9 +81,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'pagination.middleware.PaginationMiddleware',
-    
+
 )
 
 INSTALLED_APPS = (
@@ -108,14 +106,9 @@ INSTALLED_APPS = (
     'api.v1.news',
     'api.v1.list',
 
-    'grappelli.dashboard',
-    'grappelli',
     'taggit',
-    'registration',
     'imagekit',
-    'haystack',
     'django_extensions',
-    'tastypie',
 )
 
 # Password validation
@@ -272,21 +265,6 @@ EMAIL_PORT =''
 #registration
 LOGIN_REDIRECT_URL = "/recipe/"
 ACCOUNT_ACTIVATION_DAYS = 7
-
-#Haystack config
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        'PATH':    os.path.join(PROJECT_PATH, 'search_index')
-    }
-}
-
-
-GRAPPELLI_ADMIN_TITLE = OETITLE
-GRAPPELLI_INDEX_DASHBOARD = 'openeats.dashboard.CustomIndexDashboard'
-
-PAGINATION_DEFAULT_PAGINATION = 10
 
 
 try:

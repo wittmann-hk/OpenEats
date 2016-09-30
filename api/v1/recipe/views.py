@@ -5,25 +5,13 @@ from __future__ import unicode_literals
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-from django.forms.models import inlineformset_factory
-from django.http import HttpResponse, Http404
-from django.contrib.contenttypes.models import ContentType
-from django.views.generic import DetailView
+from django.http import HttpResponse
 from django.utils.translation import ugettext as _
 from models import Recipe, StoredRecipe, NoteRecipe, ReportedRecipe
-from api.v1.ingredient.models import Ingredient
 #from djangoratings.views import AddRatingView
 from django.conf import settings
-from django.db.models import F
-from reportlab.lib import colors
-from reportlab.lib.units import cm
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.platypus import *
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.pdfbase.pdfmetrics import registerFontFamily
+#from django.db.models import F
 from taggit.models import Tag, TaggedItem
-import json
 
 from . import serializers
 from rest_framework import permissions
@@ -72,73 +60,6 @@ class StoredRecipeViewSet(viewsets.ModelViewSet):
     queryset = StoredRecipe.objects.all()
     serializer_class = serializers.StoredRecipeSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-
-
-def exportPDF(request, slug):
-    """Exports recipes to a pdf"""
-
-    pdfmetrics.registerFont(TTFont('Vera', 'Vera.ttf'))
-    pdfmetrics.registerFont(TTFont('VeraBd', 'VeraBd.ttf'))
-    pdfmetrics.registerFont(TTFont('VeraIt', 'VeraIt.ttf'))
-    pdfmetrics.registerFont(TTFont('VeraBI', 'VeraBI.ttf'))
-    registerFontFamily('Vera', normal='Vera', bold='VeraBd', italic='VeraIt', boldItalic='VeraBI')
-
-    recipe = get_object_or_404(Recipe, slug=slug)
-
-    # Create the HttpResponse object with the appropriate PDF headers.
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename=' + recipe.slug + '.pdf'
-
-    # Our container for 'Flowable' objects
-    elements = []
-
-    # set up our styles
-    styles = getSampleStyleSheet()
-    styleH1 = styles['Heading1']
-    styleH1.textColor = colors.green
-    styleH1.fontName = 'VeraBd'
-    styleH2 = styles['Heading2']
-    styleH2.textColor = colors.goldenrod
-    styleH2.fontName = 'Vera'
-    styleNormal = styles['Normal']
-    styleNormal.fontName='Vera'
-    styleBullet = styles['Bullet']
-    styleBullet.fontName = 'VeraIt'
-
-    # create the pdf doc
-    doc = SimpleDocTemplate(response)
-
-    # set the openeats logo
-    logo = settings.STATIC_ROOT + "/" + settings.OELOGO
-    I = Image(logo)
-    I.hAlign = 'LEFT'
-    elements.append(I)
-    elements.append(Spacer(0, 1 * cm))
-
-    # add the recipe photo if the recipe has one
-    if recipe.photo:
-        photo = settings.BASE_PATH + recipe.photo.url
-        I = Image(photo)
-        I.height = "CENTER"
-        elements.append(I)
-        elements.append(Spacer(0, 0.5 * cm))
-
-    # add the meat of the pdf
-    elements.append(Paragraph(recipe.title, styleH1))
-    elements.append(Paragraph('info', styleH2))
-    elements.append(Paragraph(recipe.info, styleNormal))
-    elements.append(Paragraph('ingredients', styleH2))
-
-    for ing in recipe.ingredients.all():
-        ing = "%s %s %s %s" % (ing.quantity, ing.measurement, ing.title, ing.preparation)
-        elements.append(Paragraph(ing, styleBullet))
-
-    elements.append(Paragraph('directions', styleH2))
-    elements.append(Paragraph(recipe.directions, styleNormal))
-
-    # build the pdf and return it
-    doc.build(elements)
-    return response
 
 
 @login_required
