@@ -83,14 +83,14 @@ var RecipeScheme = React.createClass({
 var Recipe = React.createClass({
   loadRecipeFromServer: function() {
     $.ajax({
-      url: this.props.url,
+      url: url,
       dataType: 'json',
       cache: false,
       success: function(data) {
         this.setState({data: data});
       }.bind(this),
       error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
+        console.error(url, status, err.toString());
       }.bind(this)
     });
   },
@@ -98,28 +98,29 @@ var Recipe = React.createClass({
     return {data: []};
   },
   componentDidMount: function() {
-    this.loadRecipeFromServer();
+    url = "/api/v1/recipe/recipes/"+ this.props.params.recipe_id + "/?format=json";
+    this.loadRecipeFromServer(url);
     console.log(this.props.params);
   },
   render: function() {
+    ing_url = "/api/v1/ingredient/ingredient/?format=json&recipe="+ this.props.params.recipe_id;
     return (
-      <RecipeScheme data={this.state.data} url={this.props.ing_url}/>
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-3">
+            <div className="row">
+              <div id="similar"></div>
+            </div>
+          </div>
+          <div className="col-lg-9">
+            <div className="row">
+              <div id="recipe" className="col-lg-push-1 col-lg-10">
+                <RecipeScheme data={this.state.data} url={ing_url}/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 });
-
-let url_parameter = {};
-const currLocation = window.location.href,
-    parArr = currLocation.split("?")[1].split("&");
-for (let i = 0; i < parArr.length; i++) {
-    const parr = parArr[i].split("=");
-    url_parameter[parr[0]] = parr[1];
-}
-recipe = "/api/v1/recipe/recipes/"+ url_parameter['q'] + "/?format=json";
-ing = "/api/v1/ingredient/ingredient/?format=json&recipe="+ url_parameter['q'];
-console.log(ing);
-
-ReactDOM.render(
-  <Recipe url={recipe} ing_url={ing}/>,
-  document.getElementById('recipe')
-);

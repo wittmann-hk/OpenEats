@@ -56,14 +56,14 @@ var CarouselItems = React.createClass({
 var NewsCarousel = React.createClass({
   loadNewsFromServer: function() {
     $.ajax({
-      url: this.props.url,
+      url: this.props.route.url,
       dataType: 'json',
       cache: false,
       success: function(data) {
         this.setState({data: data});
       }.bind(this),
       error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
+        console.error(this.props.route.url, status, err.toString());
       }.bind(this)
     });
   },
@@ -83,8 +83,3 @@ var NewsCarousel = React.createClass({
     );
   }
 });
-
-ReactDOM.render(
-  <NewsCarousel url="/api/v1/news/entry/?format=json" />,
-  document.getElementById('news')
-);

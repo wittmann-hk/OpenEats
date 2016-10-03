@@ -68,18 +68,20 @@ var Browse = React.createClass({
   },
   render: function() {
     return (
-      <div className="row">
-        <div className="col-xs-2 sidebar">
-          <div className="row">
-            <h3 className="course">By Course</h3>
-            <CourseList url="/api/v1/groups/course/?format=json" filter={this.filter} />
-            <h3 className="cuisine">By Cuisine</h3>
-            <CuisineList url="/api/v1/groups/cuisine/?format=json" filter={this.filter} />
+      <div className="container">
+        <div className="row">
+          <div className="col-xs-2 sidebar">
+            <div className="row">
+              <h3 className="course">By Course</h3>
+              <CourseList url="/api/v1/groups/course/?format=json" />
+              <h3 className="cuisine">By Cuisine</h3>
+              <CuisineList url="/api/v1/groups/cuisine/?format=json" />
+            </div>
           </div>
-        </div>
-        <div className="col-xs-10">
-          <div id="browse" className="row">
-            <Recipes data={this.state.data} />
+          <div className="col-xs-10">
+            <div id="browse" className="row">
+              <Recipes data={this.state.data} />
+            </div>
           </div>
         </div>
       </div>

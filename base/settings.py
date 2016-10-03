@@ -102,7 +102,6 @@ INSTALLED_APPS = (
     'api.v1.recipe',
     'api.v1.recipe_groups',
     'api.v1.ingredient',
-    'api.v1.accounts',
     'api.v1.news',
     'api.v1.list',
 
@@ -163,6 +162,9 @@ PIPELINE = {
         'core': {
             'source_filenames': (
               'css/base/footer.css',
+              'css/news/news.scss',
+              'css/browse/browse.scss',
+              'css/recipe/recipe.scss',
             ),
             'output_filename': 'css/core.min.css',
             'extra_context': {
@@ -189,6 +191,19 @@ PIPELINE = {
         },
     },
     'JAVASCRIPT': {
+        'core': {
+            'source_filenames': (
+              'js/base/app.jsx',
+              'js/base/nav.jsx',
+              'js/news/news.jsx',
+              'js/browse/cuisine.jsx',
+              'js/browse/course.jsx',
+              'js/browse/browse.jsx',
+              'js/recipe/recipe.jsx',
+              'js/base/router.jsx',
+            ),
+            'output_filename': 'js/core.min.js',
+        },
         'news': {
             'source_filenames': (
               'js/news/news.jsx',

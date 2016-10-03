@@ -16,11 +16,11 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     # Web UI
-    url(r'^$', TemplateView.as_view(template_name='news/news.html'), name='home'),
-    url(r'^recipe/$', TemplateView.as_view(template_name='recipe/recipe.html'), name='recipe'),
-    url(r'^browse/', TemplateView.as_view(template_name='browse/browse.html'), name='browse'),
-    url(r'^search/$', TemplateView.as_view(template_name='base/base.html'), name='search'),
-    url(r'^about/$', TemplateView.as_view(template_name='base/base.html'), name='about'),
+    url(r'^', TemplateView.as_view(template_name='base/base.html'), name='home'),
+    #url(r'^recipe/$', TemplateView.as_view(template_name='recipe/recipe.html'), name='recipe'),
+    #url(r'^browse/', TemplateView.as_view(template_name='browse/browse.html'), name='browse'),
+    #url(r'^search/$', TemplateView.as_view(template_name='base/base.html'), name='search'),
+    #url(r'^about/$', TemplateView.as_view(template_name='base/base.html'), name='about'),
 
     # Admin
     url(r'^admin/', include(admin.site.urls)),
