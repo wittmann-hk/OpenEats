@@ -1,24 +1,28 @@
+import React from 'react'
+import request from 'superagent';
+
+require("./css/recipe.scss");
 
 var Ingredients = React.createClass({
   loadRecipeFromServer: function() {
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
+    console.log(this.props.url);
+    console.log(this.props.config);
+    request
+      .get(this.props.url)
+      .type('json')
+      .end((err, res) => {
+        if (!err && res) {
+          this.setState({ data: res.body });
+        } else {
+          console.error(url, err.toString());
+        }
+      })
   },
   getInitialState: function() {
     return {data: []};
   },
   componentDidMount: function() {
     this.loadRecipeFromServer();
-    console.log(this.props.params);
   },
   render: function() {
     var ingredients = this.state.data.map(function(ingredient) {
@@ -80,30 +84,28 @@ var RecipeScheme = React.createClass({
   }
 });
 
-var Recipe = React.createClass({
-  loadRecipeFromServer: function() {
-    $.ajax({
-      url: url,
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(url, status, err.toString());
-      }.bind(this)
-    });
+export default React.createClass({
+  loadRecipeFromServer: function(url) {
+    request
+      .get(url)
+      .type('json')
+      .end((err, res) => {
+        if (!err && res) {
+          this.setState({ data: res.body });
+        } else {
+          console.error(url, err.toString());
+        }
+      })
   },
   getInitialState: function() {
     return {data: []};
   },
   componentDidMount: function() {
-    url = "/api/v1/recipe/recipes/"+ this.props.params.recipe_id + "/?format=json";
+    var url = "/api/v1/recipe/recipes/"+ this.props.params.recipe + "/?format=json";
     this.loadRecipeFromServer(url);
-    console.log(this.props.params);
   },
   render: function() {
-    ing_url = "/api/v1/ingredient/ingredient/?format=json&recipe="+ this.props.params.recipe_id;
+    var ing_url = "/api/v1/ingredient/ingredient/?format=json&recipe="+ this.props.params.recipe;
     return (
       <div className="container">
         <div className="row">

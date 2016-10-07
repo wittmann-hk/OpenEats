@@ -1,13 +1,16 @@
 *.pyc
 db/*
 local_settings.py
+frontend/static-files/*
 static-files/*
 *.log
 changelog.txt
-search_index/
 .idea/
+frontend/site-media/
 site-media/
 openeats.db
 *.css.map
 *.js.map
 templates/angular/
+frontend/node_modules/
+frontend/public/bundle.js

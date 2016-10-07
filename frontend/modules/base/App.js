@@ -1,5 +1,8 @@
+import React from 'react'
 
-var App = React.createClass({
+import Nav from './Nav'
+
+export default React.createClass({
   render: function() {
     return (
       <div className="react">

@@ -1,3 +1,7 @@
+import React from 'react'
+import request from 'superagent';
+
+require("./css/news.scss");
 
 var CarouselButtons = React.createClass({
   render: function() {
@@ -20,7 +24,7 @@ var CarouselIndicators = React.createClass({
   render: function() {
     var indicatorNodes = this.props.data.map(function(entry) {
       return (
-        <li data-target="#news" data-slide-to={entry.id-1} key={entry.id} />
+        <li className={((1===entry.id) ? 'active':'')} data-target="#news" data-slide-to={entry.id-1} key={entry.id} />
       );
     });
     return (
@@ -35,12 +39,10 @@ var CarouselItems = React.createClass({
   render: function() {
     var entryNodes = this.props.data.map(function(entry) {
       return (
-        <div className={'item '+((1===entry.id) ?'active':'')} key={entry.id}>
-          <div className="container">
-            <div className="carousel-caption">
-              <h1>{entry.title}</h1>
-              <p>{entry.content}</p>
-            </div>
+        <div className={'item ' + ((1===entry.id) ? 'active':'')} key={entry.id}>
+          <div className="carousel-caption">
+            <h1>{entry.title}</h1>
+            <p>{entry.content}</p>
           </div>
         </div>
       );
@@ -53,29 +55,29 @@ var CarouselItems = React.createClass({
   }
 });
 
-var NewsCarousel = React.createClass({
-  loadNewsFromServer: function() {
-    $.ajax({
-      url: this.props.route.url,
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.route.url, status, err.toString());
-      }.bind(this)
-    });
+export default React.createClass({
+  loadNewsFromServer: function(url) {
+    request
+      .get(url)
+      .type('json')
+      .end((err, res) => {
+        if (!err && res) {
+          this.setState({ data: res.body });
+        } else {
+          console.error(url, err.toString());
+        }
+      })
   },
   getInitialState: function() {
     return {data: []};
   },
   componentDidMount: function() {
-    this.loadNewsFromServer();
+    var url = "/api/v1/news/entry/?format=json";
+    this.loadNewsFromServer(url);
   },
   render: function() {
     return (
-      <div id="news" className="carousel slide" data-ride="carousel">
+      <div id="news" className="carousel slide" data-ride="carousel" data-interval="false">
         <CarouselIndicators data={this.state.data} />
         <CarouselItems data={this.state.data} />
         <CarouselButtons />

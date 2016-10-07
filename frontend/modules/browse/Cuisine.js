@@ -1,17 +1,19 @@
+import React from 'react'
+import { Link } from 'react-router'
+import request from 'superagent';
 
-var CuisineList = React.createClass({
+export default React.createClass({
   loadGroupFromServer: function(url) {
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
+    request
+      .get(this.props.url)
+      .type('json')
+      .end((err, res) => {
+        if (!err && res) {
+          this.setState({ data: res.body });
+        } else {
+          console.error(url, err.toString());
+        }
+      })
   },
   getInitialState: function() {
     return {data: []};
