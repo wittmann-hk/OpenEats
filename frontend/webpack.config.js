@@ -29,7 +29,7 @@ module.exports = {
 
   resolve: {
     alias: {
-      config: './config/dev.js',
+      config: './common/config/dev.js',
       //config: path.join(__dirname, 'config', process.env.NODE_ENV)
     }
   },

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router'
 import Form from 'react-router-form'
+import { Link } from 'react-router'
 
 export default React.createClass({
   render: function() {
@@ -24,12 +24,13 @@ export default React.createClass({
                 <a href="#" id="menu_dropdown" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span className="caret"/></a>
                 <ul className="dropdown-menu">
                   <li className="dropdown-header">Recipes</li>
-                  <li><a href="#">New Recipe</a></li>
+                  <li><Link activeClassName="active" to="/recipe/create">New Recipe</Link></li>
                   <li><a href="#">My Recipes</a></li>
                   <li role="separator" className="divider"/>
                   <li className="dropdown-header">My Account</li>
                   <li><a href="#">Settings</a></li>
-                  <li><a href="#">Logout</a></li>
+                  <li><Link activeClassName="active" to="/login">Login</Link></li>
+                  <li><Link activeClassName="active" to="/logout">Logout</Link></li>
                 </ul>
               </li>
               <li><Link activeClassName="active" to="/about">About</Link></li>

@@ -24,7 +24,7 @@ class RecipeAdmin(admin.ModelAdmin):
     actions=[export_MealMaster]
     list_display = ['title', 'admin_thumbnail', 'author', 'pub_date', 'shared']
     admin_thumbnail = AdminThumbnail(image_field='photo')
-    list_filter = ['shared', 'author', 'course', 'cuisine']
+    list_filter = ['shared', 'author', 'cuisine']
     search_fields = ['author__username', 'title',]
     radio_fields = {"shared": admin.HORIZONTAL}
     class Media:

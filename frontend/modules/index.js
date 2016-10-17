@@ -4,8 +4,12 @@ import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 
 import App from './base/App'
 import About from './about/About'
+import Login from './account/Login'
+import Logout from './account/Logout'
+import {Auth} from './account/Auth'
 import News from './news/News'
 import Browse from './browse/Browse'
+import Create from './create/Create'
 import Recipe from './recipe/Recipe'
 
 // Load in the base CSS
@@ -14,16 +18,27 @@ require("./base/css/footer.css");
 // Load in config file
 var config = require('config');
 
+function requireAuth(nextState, replace) {
+  if (!Auth.loggedIn()) {
+    replace({
+      pathname:'/login/',
+      state: {nextPathname: '/login/'}
+    })
+  }
+}
+
 render((
     <div>
       <Router history={browserHistory} config={config}>
         <Route path="/" component={App}>
           <IndexRoute component={News}/>
-          <Route path="/recipe/:recipe" component={Recipe}/>
+          <Route path="/recipe/create" component={Create} onEnter={requireAuth}/>
+          <Route path="/recipe/:recipe" component={Recipe} />
           <Route path="/about" component={About}/>
+          <Route path="/login" component={Login}/>
+          <Route path="/logout" component={Logout}/>
           <Route path="/browse" component={Browse}>
             <Route path="/browse/search" component={Browse}/>
-            <Route path="/browse/course/:course" component={Browse}/>
             <Route path="/browse/cuisine/:cuisine" component={Browse}/>
           </Route>
         </Route>

@@ -1,0 +1,13 @@
+
+@import 'rich-text-editor';
+
+.recipe-form {
+  margin-top: 20px;
+  .box {
+    border: solid 1px #ddd;
+  }
+  .add-ing {
+    float: right;
+    margin-right: 15px;
+  }
+}

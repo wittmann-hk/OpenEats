@@ -14,7 +14,7 @@ class Ingredient(models.Model):
     title = models.CharField(_('title'), max_length=250)
     quantity = models.FloatField(_('quantity'), default=0)
     measurement = models.CharField(_('measurement'), max_length=200, blank=True, null=True)
-    recipe = models.ForeignKey(Recipe, verbose_name=_('recipe'), related_name='ingredients')
+    recipe = models.ForeignKey(Recipe, verbose_name=_('recipe'), related_name='ingredients', null=True)
  
     class Meta:
         ordering = ['title']

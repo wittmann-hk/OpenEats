@@ -2,7 +2,6 @@
 import os
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 SERVE_MEDIA = True
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -95,6 +94,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'rest_framework.authtoken',
     'coreapi',
     'pipeline',
 
@@ -105,7 +105,6 @@ INSTALLED_APPS = (
     'api.v1.news',
     'api.v1.list',
 
-    'taggit',
     'imagekit',
     'django_extensions',
 )
@@ -142,6 +141,10 @@ LANGUAGE_CODE = 'en-us'
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': "%B %-d, %Y",
     'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
+    )
 }
 
 # Static and i18n settings

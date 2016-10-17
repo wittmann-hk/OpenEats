@@ -1,7 +1,6 @@
 import React from 'react'
 import request from 'superagent';
 
-import Course from './Course'
 import Cuisine from './Cuisine'
 
 require("./css/browse.scss");
@@ -30,7 +29,7 @@ var Recipes = React.createClass({
 
 export default React.createClass({
   loadNewsFromServer: function(url) {
-    var base_url = "/api/v1/recipe/recipes/?format=json";
+    var base_url = "/api/v1/recipe/recipes/?format=json&fields=id,title,pub_date,photo";
     request
       .get(base_url + url)
       .type('json')
@@ -57,9 +56,6 @@ export default React.createClass({
     if (this.props.params.cuisine) {
       this.loadNewsFromServer('&cuisine=' + this.props.params.cuisine);
     }
-    else if (this.props.params.course) {
-      this.loadNewsFromServer('&course=' + this.props.params.course);
-    }
     else if (this.props.location.query) {
       var query_string = this.buildQueryString(this.props.location.query);
       this.loadNewsFromServer(query_string);
@@ -72,9 +68,6 @@ export default React.createClass({
     if (this.props != nextProps) {
       if (nextProps.params.cuisine) {
         this.loadNewsFromServer('&cuisine=' + nextProps.params.cuisine);
-      }
-      else if (nextProps.params.course) {
-        this.loadNewsFromServer('&course=' + nextProps.params.course);
       }
       else if (nextProps.location.query) {
         var query_string = this.buildQueryString(nextProps.location.query);
@@ -91,8 +84,6 @@ export default React.createClass({
         <div className="row">
           <div className="col-xs-2 sidebar">
             <div className="row">
-              <h3 className="course">By Course</h3>
-              <Course url="/api/v1/groups/course/?format=json" />
               <h3 className="cuisine">By Cuisine</h3>
               <Cuisine url="/api/v1/groups/cuisine/?format=json" />
             </div>
