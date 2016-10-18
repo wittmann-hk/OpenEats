@@ -32,6 +32,7 @@ render((
       <Router history={browserHistory} config={config}>
         <Route path="/" component={App}>
           <IndexRoute component={News}/>
+          <Route path="/news" component={News}/>
           <Route path="/recipe/create" component={Create} onEnter={requireAuth}/>
           <Route path="/recipe/:recipe" component={Recipe} />
           <Route path="/about" component={About}/>
