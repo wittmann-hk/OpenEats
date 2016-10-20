@@ -10,10 +10,8 @@ export default React.createClass({
   },
   handleSubmit: function(e) {
     e.preventDefault();
-
     var username = this.refs.username.value;
     var pass = this.refs.pass.value;
-
     Auth.login(username, pass, (loggedIn) => {
       if (loggedIn) {
         this.context.router.replace('/')

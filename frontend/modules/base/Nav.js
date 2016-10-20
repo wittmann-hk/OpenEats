@@ -18,8 +18,7 @@ export default React.createClass({
           <Nav>
             <LinkContainer to="/news"><NavItem>News</NavItem></LinkContainer>
             <LinkContainer to="/browse"><NavItem>Browse</NavItem></LinkContainer>
-            <NavDropdown eventKey={1} title="Dropdown" id="basic-nav-dropdown">
-              <LinkContainer to="/browse"><MenuItem>Browse</MenuItem></LinkContainer>
+            <NavDropdown eventKey={1} title="Account" id="basic-nav-dropdown">
               <LinkContainer to="/recipe/create"><MenuItem>Create Recipe</MenuItem></LinkContainer>
               <MenuItem divider />
               <LinkContainer to="/login"><MenuItem>Login</MenuItem></LinkContainer>
