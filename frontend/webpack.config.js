@@ -27,12 +27,12 @@ module.exports = {
     ],
   },
 
-  resolve: {
-    alias: {
-      config: './common/config/dev.js',
-      //config: path.join(__dirname, 'config', process.env.NODE_ENV)
-    }
-  },
+  // resolve: {
+  //   alias: {
+  //    config: './common/config/dev.js',
+  //    config: path.join(__dirname, 'config', process.env.NODE_ENV)
+  //   }
+  // },
 
   devServer: {
     historyApiFallback: true,

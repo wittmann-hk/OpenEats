@@ -16,7 +16,7 @@ import Recipe from './recipe/Recipe'
 require("./base/css/footer.css");
 
 // Load in config file
-var config = require('config');
+// var config = require('config');
 
 function requireAuth(nextState, replace) {
   if (!Auth.loggedIn()) {
@@ -29,7 +29,7 @@ function requireAuth(nextState, replace) {
 
 render((
     <div>
-      <Router history={browserHistory} config={config}>
+      <Router history={browserHistory}>
         <Route path="/" component={App}>
           <IndexRoute component={News}/>
           <Route path="/news" component={News}/>

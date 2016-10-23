@@ -9,7 +9,7 @@ export default React.createClass({
       .type('json')
       .end((err, res) => {
         if (!err && res) {
-          this.setState({ data: res.body });
+          this.setState({ data: res.body.results });
         } else {
           console.error(url, err.toString());
         }
@@ -24,15 +24,21 @@ export default React.createClass({
   render: function() {
     var cuisines = this.state.data.map(function(cuisine) {
       return (
-        <li key={cuisine.id}>
-          <Link to={"/browse/cuisine/" + cuisine.id} activeStyle={{ color: 'red' }}>{cuisine.title}</Link>
-        </li>
+        <Link className="list-group-item"
+              activeClassName="active"
+              to={"/browse/cuisine/" + cuisine.id}
+              key={cuisine.id}>
+          {cuisine.title}
+        </Link>
       );
     });
     return (
-      <ul className="cuisine">
+      <div className="list-group">
+         <p className="list-group-item disabled">
+           <b>Filter Cuisine</b>
+         </p>
         {cuisines}
-      </ul>
+      </div>
     );
   }
 });

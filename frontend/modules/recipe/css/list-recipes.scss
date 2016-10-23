@@ -1,0 +1,25 @@
+.recipes {
+  margin-top: 20px;
+  .recipe {
+    padding: 0;
+    img {
+      width: 100%;
+    }
+    .caption {
+      height: 130px;
+      overflow: hidden;
+      h4 {
+        white-space: nowrap;
+      }
+    }
+    .ratings {
+      padding-right: 10px;
+      padding-left: 10px;
+      color: #d17581;
+      .date {
+        font-size: 12px;
+        margin-top: 1px;
+      }
+    }
+  }
+}
