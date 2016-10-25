@@ -3,7 +3,7 @@ import request from 'superagent';
 
 import ListRecipes from './ListRecipes'
 
-require("./css/recipe.scss");
+require("./../css/recipe.scss");
 
 var Ingredients = React.createClass({
   loadRecipeFromServer: function() {

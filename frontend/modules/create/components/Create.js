@@ -1,57 +1,53 @@
 import React from 'react'
-import request from 'superagent';
-import { browserHistory } from 'react-router'
+
+import NewRecipeStore from '../stores/NewRecipeStore';
+import NewRecipeActions from '../actions/NewRecipeActions';
 
 import {RichEditor} from './RichText'
 import {IngredientList} from './IngredientList'
-import {Input, Checkbox, File} from './FormComponent'
+import {Input, Checkbox, File, Alert} from './FormComponents'
 
-require("./css/create.scss");
+require("./../css/create.scss");
+
+function getStateFromStore() {
+  return {
+    data: NewRecipeStore.getForm(),
+    errors: NewRecipeStore.getError()
+  };
+}
 
 var Recipe = React.createClass({
+
   getInitialState: function() {
-    return {title: '',
-            cook_time: '',
-            servings: '',
-            cuisine: '',
-            tags: '',
-            ingredients: '',
-            directions: '',
-            info: '',
-            photo: '',
-            public: '1'};
+    return getStateFromStore();
   },
-  PostData: function(url, data) {
-    let ajax = request.post(url);
-    var item;
-    for (item in data) {
-      if (item == 'photo') {
-        ajax = ajax.attach(item, data[item])
-      } else {
-        ajax = ajax.field(item, data[item])
-      }
-    }
-    ajax.end((err, res) => {
-        if (!err && res) {
-          // TODO: redirect the user to the new recipe they just created
-          // I will need to return the recipe ID in the post responce
-          // browserHistory.push('/');
-          console.log('good job');
-        } else {
-          console.error(url, err.toString());
-        }
-      });
+
+  componentDidMount: function() {
+    NewRecipeStore.addChangeListener(this._onChange);
   },
+
+  componentWillUnmount: function() {
+    NewRecipeStore.removeChangeListener(this._onChange);
+  },
+
+  _onChange: function() {
+    console.log(NewRecipeStore.getForm());
+    this.setState(getStateFromStore());
+  },
+
   CreateRecipe: function(e) {
     e.preventDefault();
-    this.PostData('/api/v1/recipe/recipes/', this.state)
+    NewRecipeActions.submit('/api/v1/recipe/recipes/', this.state.data);
   },
+
   update: function(name, value) {
-    this.setState({[name]: value});
+    NewRecipeActions.update(name, value);
   },
+
   render: function () {
     return (
       <form className="recipe-form">
+        { this.state.errors ? ( <Alert/> ) : ''}
         <Input name="title" type="text" label="Recipe Name" placeholder="Recipe" change={this.update}/>
         <div className="row">
           <Input name="cook_time" type="number" label="Cooking Time" placeholder="Recipe" size="col-xs-6" change={this.update}/>
@@ -72,21 +68,17 @@ var Recipe = React.createClass({
   }
 });
 
+
 export default React.createClass({
   getInitialState: function() {
     // TODO: Add ability to edit recipes
-    return {data: []};
+    return {data: ''};
   },
   render: function() {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-lg-3">
-            <div className="row">
-              <div id="similar"></div>
-            </div>
-          </div>
-          <div className="col-lg-9">
+          <div className="col-lg-12">
             <div className="row">
               <div id="recipe" className="col-lg-push-1 col-lg-10">
                 <Recipe data={this.state.data}/>

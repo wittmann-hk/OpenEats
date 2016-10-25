@@ -2,9 +2,9 @@ import React from 'react'
 import request from 'superagent';
 import {Carousel} from 'react-bootstrap'
 
-import ListRecipes from './../recipe/ListRecipes'
+import ListRecipes from '../../recipe/components/ListRecipes'
 
-require("./css/news.scss");
+require("./../css/news.scss");
 
 var CarouselItems = React.createClass({
   render: function() {

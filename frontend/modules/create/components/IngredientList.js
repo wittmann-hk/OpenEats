@@ -1,5 +1,5 @@
 import React from 'react'
-import {Input} from './FormComponent'
+import {Input} from './FormComponents'
 
 var Ingredient = React.createClass({
   getInitialState: function() {

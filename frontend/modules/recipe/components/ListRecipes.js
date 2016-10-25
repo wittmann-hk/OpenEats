@@ -1,7 +1,7 @@
 import React from 'react'
 import request from 'superagent';
 
-require("./css/list-recipes.scss");
+require("./../css/list-recipes.scss");
 
 export default React.createClass({
   loadRecipesFromServer: function(url) {

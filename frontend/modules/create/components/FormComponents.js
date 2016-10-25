@@ -2,7 +2,7 @@ import React from 'react'
 
 export var Input = React.createClass({
   getInitialState: function() {
-    return {value: ''};
+    return {value: this.props.value || ''};
   },
   handleChange(event) {
     this.setState({value: event.target.value});
@@ -29,7 +29,7 @@ export var Input = React.createClass({
 
 export var File = React.createClass({
   getInitialState: function() {
-    return {value: ''};
+    return {value: this.props.value || ''};
   },
   handleChange(event) {
     this.setState({value: event.target.files[0]});
@@ -54,7 +54,7 @@ export var File = React.createClass({
 
 export var Checkbox = React.createClass({
   getInitialState: function() {
-    return {checked: true};
+    return {checked: this.props.checked || true};
   },
   handleChange(event) {
     var new_value = !this.state.checked === true ? 1 : 0;
@@ -75,6 +75,16 @@ export var Checkbox = React.createClass({
             {this.props.placeholder}
           </label>
         </div>
+      </div>
+    )
+  }
+});
+
+export var Alert = React.createClass({
+  render: function() {
+    return (
+      <div className="alert alert-danger">
+        <strong>Form Error!</strong> Please confirm that all the data is there.
       </div>
     )
   }

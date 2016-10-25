@@ -1,9 +1,9 @@
 import React from 'react'
 
 import Cuisine from './Cuisine'
-import ListRecipes from './../recipe/ListRecipes'
+import ListRecipes from '../../recipe/components/ListRecipes'
 
-require("./css/browse.scss");
+require("./../css/browse.scss");
 
 export default React.createClass({
   buildQueryString : function (query) {
