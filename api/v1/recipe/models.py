@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from api.v1.recipe_groups.models import Cuisine
 from django_extensions.db.fields import AutoSlugField
 from django.utils.translation import ugettext_lazy as _
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 
 class Recipe(models.Model):
@@ -21,6 +23,10 @@ class Recipe(models.Model):
     slug = AutoSlugField(_('slug'), populate_from='title', unique=True)
     author = models.ForeignKey(User, verbose_name=_('user'), null=True)
     photo = models.ImageField(_('photo'), blank=True, upload_to="upload/recipe_photos")
+    photo_thumbnail = ImageSpecField(source='photo',
+                                      processors=[ResizeToFill(300, 200)],
+                                      format='JPEG',
+                                      options={'quality': 70})
     cuisine = models.ForeignKey(Cuisine, verbose_name=_('cuisine'))
     info = models.TextField(_('info'), help_text="enter information about the recipe")
     cook_time = models.IntegerField(_('cook time'), help_text="enter time in minutes")

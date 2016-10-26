@@ -5,7 +5,7 @@ require("./../css/list-recipes.scss");
 
 export default React.createClass({
   loadRecipesFromServer: function(url) {
-    var base_url = "/api/v1/recipe/recipes/?format=json&fields=id,title,pub_date,photo";
+    var base_url = "/api/v1/recipe/recipes/?format=json&fields=id,title,pub_date,photo_thumbnail";
     console.log(base_url + url);
     request
       .get(base_url + url)
@@ -31,7 +31,7 @@ export default React.createClass({
       return (
         <div className={format} key={recipe.id}>
           <div className="thumbnail recipe">
-            <img src={recipe.photo} alt="Recipe Image"/>
+            <img src={recipe.photo_thumbnail} alt="Recipe Image"/>
             <div className="caption">
               <h4><a href={link}>{recipe.title}</a>
               </h4>
