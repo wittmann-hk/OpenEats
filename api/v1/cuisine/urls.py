@@ -7,7 +7,7 @@ from rest_framework.routers import DefaultRouter
 from . import views
 
 # Create a router and register our viewsets with it.
-router = DefaultRouter(schema_title='Recipe Groups')
+router = DefaultRouter(schema_title='Cuisine')
 router.register(r'cuisine', views.CuisineViewSet)
 
 urlpatterns = [

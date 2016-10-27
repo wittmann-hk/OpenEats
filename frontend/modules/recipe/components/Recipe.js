@@ -1,7 +1,7 @@
 import React from 'react'
 import request from 'superagent';
 
-import ListRecipes from './ListRecipes'
+import ListRecipes from '../../browse/components/ListRecipes'
 
 require("./../css/recipe.scss");
 
@@ -110,14 +110,31 @@ export default React.createClass({
         }
       })
   },
+  loadRecipesFromServer: function () {
+    var base_url = "/api/v1/recipe/recipes/?format=json&fields=id,title,pub_date,rating,photo_thumbnail&limit=3";
+    request
+      .get(base_url)
+      .type('json')
+      .end((err, res) => {
+        if (!err && res) {
+          this.setState({recipes: res.body.results});
+        } else {
+          console.error(base_url, err.toString());
+        }
+      })
+  },
   getInitialState: function() {
-    return {data: []};
+    return {
+      data: [],
+      recipes: []
+    };
   },
   componentDidMount: function() {
     var url = "/api/v1/recipe/recipes/"+ this.props.params.recipe + "/?format=json";
     console.log(url);
     console.log(url);
     this.loadRecipeFromServer(url);
+    this.loadRecipesFromServer();
   },
   render: function() {
     var ing_url = "/api/v1/ingredient/ingredient/?format=json&recipe="+ this.props.params.recipe;
@@ -128,7 +145,7 @@ export default React.createClass({
             <RecipeScheme data={this.state.data} url={ing_url}/>
           </div>
           <div className="col-xs-3">
-            <ListRecipes format="col-xs-12" url='&limit=3' />
+            <ListRecipes format="col-xs-12" data={this.state.recipes} />
           </div>
         </div>
       </div>

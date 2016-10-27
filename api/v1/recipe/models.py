@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
-from api.v1.recipe_groups.models import Cuisine
+from api.v1.cuisine.models import Cuisine
 from django_extensions.db.fields import AutoSlugField
 from django.utils.translation import ugettext_lazy as _
 from imagekit.models import ImageSpecField

@@ -100,7 +100,7 @@ INSTALLED_APPS = (
 
     'base',
     'api.v1.recipe',
-    'api.v1.recipe_groups',
+    'api.v1.cuisine',
     'api.v1.ingredient',
     'api.v1.news',
     'api.v1.list',

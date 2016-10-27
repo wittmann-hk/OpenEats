@@ -2,7 +2,7 @@ import React from 'react'
 import request from 'superagent';
 import {Carousel} from 'react-bootstrap'
 
-import ListRecipes from '../../recipe/components/ListRecipes'
+import ListRecipes from '../../browse/components/ListRecipes'
 
 require("./../css/news.scss");
 
@@ -28,32 +28,49 @@ var CarouselItems = React.createClass({
 });
 
 export default React.createClass({
-  loadNewsFromServer: function(url) {
+  loadNewsFromServer: function() {
+    var url = "/api/v1/news/entry/?format=json";
     request
       .get(url)
       .type('json')
       .end((err, res) => {
         if (!err && res) {
-          this.setState({ data: res.body.results });
+          this.setState({ news: res.body.results });
         } else {
           console.error(url, err.toString());
         }
       })
   },
+  loadRecipesFromServer: function () {
+    var base_url = "/api/v1/recipe/recipes/?format=json&fields=id,title,pub_date,rating,photo_thumbnail&limit=4";
+    request
+      .get(base_url)
+      .type('json')
+      .end((err, res) => {
+        if (!err && res) {
+          this.setState({recipes: res.body.results});
+        } else {
+          console.error(base_url, err.toString());
+        }
+      })
+  },
   getInitialState: function() {
-    return {data: []};
+    return {
+      news: [],
+      recipes: []
+    };
   },
   componentDidMount: function() {
-    var url = "/api/v1/news/entry/?format=json";
-    this.loadNewsFromServer(url);
+    this.loadNewsFromServer();
+    this.loadRecipesFromServer();
   },
   render: function() {
     return (
       <div>
-        <CarouselItems data={this.state.data}/>
+        <CarouselItems data={this.state.news}/>
         <div className="container">
           <div className="row">
-            <ListRecipes format="col-xs-12 col-sm-6 col-md-4 col-lg-3" url='&limit=4' />
+            <ListRecipes format="col-xs-12 col-sm-6 col-md-3" data={this.state.recipes} />
           </div>
         </div>
       </div>

@@ -6,10 +6,16 @@
       width: 100%;
     }
     .caption {
-      height: 130px;
-      overflow: hidden;
       h4 {
+        height: 20px;
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: blue;
+      }
+      .desc {
+        height: 60px;
+        overflow: hidden;
       }
     }
     .ratings {

@@ -16,7 +16,14 @@ Next we need to create a `local_settings.py` file for configuring your particula
 Now that we have the dependencies. We need to setup the DB. The default is sqlite, which is fine for dev purposes. But if you want something a bit more robust. The current configuration should work with any database you choose to use. See the [django database docs](https://docs.djangoproject.com/en/1.10/ref/settings/#std:setting-DATABASES) for setting up your database. As a side note, please make sure that you install any additional drivers that python needs to work with the database that you choose.
 
 Once the database is installed:
-* `./manage.py makemigrations`
+* Migrate django default tables - `./manage.py migrate`
+* Make the migrations for each app
+* `./manage.py makemigrations recipe`
+* `./manage.py makemigrations cuisine`
+* `./manage.py makemigrations ingredient`
+* `./manage.py makemigrations news`
+* `./manage.py makemigrations list`
+* Migrate all the apps
 * `./manage.py migrate`
 
 That should be it! you can run the dev server now to load up the api `./manage runserver`.
