@@ -4,6 +4,7 @@ import request from 'superagent';
 import Cuisine from './Cuisine'
 import ListRecipes from './ListRecipes'
 import Pagination from './Pagination'
+import {serverURLs} from '../../common/config'
 
 require("./../css/browse.scss");
 
@@ -35,7 +36,7 @@ export default React.createClass({
       })
   },
   updateURL: function(location, params) {
-    var base_url = "/api/v1/recipe/recipes/?format=json&fields=id,title,pub_date,rating,photo_thumbnail";
+    var base_url = serverURLs.browse;
     console.log(location);
     if (location.query.offset) {
       base_url += "&offset=" + location.query.offset;
@@ -68,7 +69,7 @@ export default React.createClass({
         <div className="row">
           <div className="col-xs-2 sidebar">
             <div className="sidebar">
-              <Cuisine url="/api/v1/cuisine/cuisine/?format=json" />
+              <Cuisine/>
             </div>
           </div>
           <div className="col-xs-10">

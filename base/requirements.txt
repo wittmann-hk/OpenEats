@@ -4,13 +4,10 @@
 coreapi-cli
 Django==1.10
 django-imagekit==3.3
-django-pipeline==1.6.9
 djangorestframework==3.4.6
 gunicorn==19.6.0
 requests==2.11.1
 six==1.10.0
-PyExecJS==1.4.0
-PyReact==0.6.0
 django-filter==0.15.0
 django-extensions==1.7.2
 Pillow==2.7.0

@@ -7,7 +7,6 @@ require("./../../recipe/css/list-recipes.scss");
 
 export default React.createClass({
   render: function() {
-    console.log('hi');
     var format = this.props.format;
     var recipes = this.props.data.map(function(recipe) {
       var link = 'recipe/' + recipe.id;

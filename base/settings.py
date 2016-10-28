@@ -16,8 +16,6 @@ ADMINS = (
     # ('Your Name', 'youremail@email.com'),
 )
 
-MANAGERS = ADMINS
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
@@ -32,8 +30,6 @@ DATABASES = {
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-AUTH_PROFILE_MODULE = 'accounts.UserProfiles'
-
 # List of callables that know how to import templates from various sources.
 TEMPLATES = [
     {
@@ -47,12 +43,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-
-                #"django.core.context_processors.i18n",
-                #"django.core.context_processors.media",
-                #"navbar.context_processors.navbars",
-                "base.context_processors.oelogo",
-                "base.context_processors.oetitle",
             ],
         },
     },
@@ -96,7 +86,6 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'coreapi',
-    'pipeline',
 
     'base',
     'api.v1.recipe',
@@ -150,88 +139,10 @@ REST_FRAMEWORK = {
 }
 
 # Static and i18n settings
-STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
-    'pipeline.finders.PipelineFinder',
 )
-
-PIPELINE = {
-    #'PIPELINE_ENABLED': True,
-    'COMPILERS': {
-        'pipeline.compilers.sass.SASSCompiler',
-        'react.utils.pipeline.JSXCompiler',
-    },
-    'STYLESHEETS': {
-        'core': {
-            'source_filenames': (
-              'css/base/footer.css',
-              'css/news/news.scss',
-              'css/browse/browse.scss',
-              'css/recipe/recipe.scss',
-            ),
-            'output_filename': 'css/core.min.css',
-            'extra_context': {
-                'media': 'screen,projection',
-            },
-        },
-        'news': {
-            'source_filenames': (
-              'css/news/news.scss',
-            ),
-            'output_filename': 'css/news.min.css',
-        },
-        'browse': {
-            'source_filenames': (
-              'css/browse/browse.scss',
-            ),
-            'output_filename': 'css/browse.min.css',
-        },
-        'recipe': {
-            'source_filenames': (
-              'css/recipe/recipe.scss',
-            ),
-            'output_filename': 'css/recipe.min.css',
-        },
-    },
-    'JAVASCRIPT': {
-        'core': {
-            'source_filenames': (
-              'js/base/app.jsx',
-              'js/base/nav.jsx',
-              'js/news/news.jsx',
-              'js/browse/cuisine.jsx',
-              'js/browse/course.jsx',
-              'js/browse/browse.jsx',
-              'js/recipe/recipe.jsx',
-              'js/base/router.jsx',
-            ),
-            'output_filename': 'js/core.min.js',
-        },
-        'news': {
-            'source_filenames': (
-              'js/news/news.jsx',
-            ),
-            'output_filename': 'js/news.min.js',
-        },
-        'browse': {
-            'source_filenames': (
-              'js/browse/cuisine.jsx',
-              'js/browse/course.jsx',
-              'js/browse/browse.jsx',
-              'js/browse/router.jsx',
-            ),
-            'output_filename': 'js/browse.min.js',
-        },
-        'recipe': {
-            'source_filenames': (
-              'js/recipe/recipe.jsx',
-            ),
-            'output_filename': 'js/recipe.min.js',
-        },
-    }
-}
 
 LOCALE_PATHS = (
   os.path.join(PROJECT_PATH, '../locale', ),
@@ -265,14 +176,8 @@ ugettext = lambda s: s
 LANGUAGES = (
      ('en', ugettext('English')),
      ('de', ugettext('German')),
-     ('es', ugettext('Spanish')),
    )
 
-
-
-#OpenEats2 Settings
-OELOGO = 'images/oelogo.png'
-OETITLE = 'OpenEats2 Dev'
 
 #Email Server Settings
 DEFAULT_FROM_EMAIL = ''

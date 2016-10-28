@@ -1,9 +1,11 @@
 import request from 'superagent';
 import AppDispatcher from '../../dispatcher/AppDispatcher';
 import NewRecipeConstants from '../constants/NewRecipeConstants';
+import {serverURLs} from '../../common/config'
 
 export default {
-  submit: function(url, data) {
+  submit: function(data) {
+    url = serverURLs.recipe;
     let ajax = request.post(url);
     var item;
     for (item in data) {

@@ -1,10 +1,11 @@
 import request from 'superagent';
 import AppDispatcher from '../../dispatcher/AppDispatcher';
 import AuthConstants from '../constants/AuthConstants';
+import {serverURLs} from '../../common/config'
 
 export default {
   getToken: function(username, pass) {
-    var url = '/api/v1/accounts/obtain-auth-token/';
+    var url = serverURLs.auth_token;
     request
       .post(url)
       .send({'username': username, 'password': pass})

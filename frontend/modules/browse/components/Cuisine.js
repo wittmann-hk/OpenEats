@@ -1,11 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router'
 import request from 'superagent';
+import {serverURLs} from '../../common/config'
 
 export default React.createClass({
-  loadGroupFromServer: function(url) {
+  loadGroupFromServer: function() {
+    var url = serverURLs.cuisine;
     request
-      .get(this.props.url)
+      .get(url)
       .type('json')
       .end((err, res) => {
         if (!err && res) {

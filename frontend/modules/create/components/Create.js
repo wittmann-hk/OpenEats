@@ -37,7 +37,7 @@ var Recipe = React.createClass({
 
   CreateRecipe: function(e) {
     e.preventDefault();
-    NewRecipeActions.submit('/api/v1/recipe/recipes/', this.state.data);
+    NewRecipeActions.submit(this.state.data);
   },
 
   update: function(name, value) {
