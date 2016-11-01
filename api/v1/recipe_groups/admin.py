@@ -12,4 +12,16 @@ class CuisineAdmin(admin.ModelAdmin):
     list_filter = ['author']
 
 
+class CourseAdmin(admin.ModelAdmin):
+    ordering = ['title']
+    list_display = ['title', 'author']
+    list_filter = ['author']
+
+
+class TagAdmin(admin.ModelAdmin):
+    ordering = ['title']
+    list_display = ['title', 'author']
+    list_filter = ['author']
+
+
 admin.site.register(Cuisine, CuisineAdmin)

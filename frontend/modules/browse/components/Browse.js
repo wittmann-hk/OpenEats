@@ -2,6 +2,7 @@ import React from 'react'
 import request from 'superagent';
 
 import Cuisine from './Cuisine'
+import Course from './Course'
 import ListRecipes from './ListRecipes'
 import Pagination from './Pagination'
 import {serverURLs} from '../../common/config'
@@ -47,6 +48,9 @@ export default React.createClass({
     if (params.cuisine) {
       base_url += "&cuisine=" + params.cuisine;
     }
+    if (params.course) {
+      base_url += "&course=" + params.course;
+    }
     if (location.query.search) {
       base_url += "&search=" + location.query.search;
     }
@@ -69,6 +73,7 @@ export default React.createClass({
         <div className="row">
           <div className="col-xs-2 sidebar">
             <div className="sidebar">
+              <Course/>
               <Cuisine/>
             </div>
           </div>

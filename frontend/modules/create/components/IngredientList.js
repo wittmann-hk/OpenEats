@@ -1,5 +1,7 @@
 import React from 'react'
 import {Input} from './FormComponents'
+import {Auto} from './Auto'
+import {measurements} from '../../common/config'
 
 var Ingredient = React.createClass({
   getInitialState: function() {
@@ -18,7 +20,7 @@ var Ingredient = React.createClass({
       <div className="ingredient" key={this.props.id}>
         <Input name="title" type="text" placeholder="Name" size="col-xs-4" change={this.update}/>
         <Input name="quantity" type="number" placeholder="Quantity" size="col-xs-4" change={this.update}/>
-        <Input name="measurement" type="text" placeholder="Measurement" size="col-xs-4" change={this.update}/>
+        <Auto name="measurement" data={measurements} type="text" placeholder="Measurement" size="col-xs-4" change={this.update}/>
       </div>
     )
   }

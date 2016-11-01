@@ -22,7 +22,7 @@ Once the database is installed:
 * `./manage.py makemigrations cuisine`
 * `./manage.py makemigrations ingredient`
 * `./manage.py makemigrations news`
-* `./manage.py makemigrations list`
+* `./manage.py makemigrations recipe_groups`
 * Migrate all the apps
 * `./manage.py migrate`
 

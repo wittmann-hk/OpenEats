@@ -11,7 +11,7 @@ export default {
       .send({'username': username, 'password': pass})
       .end((err, res) => {
         if (!err && res) {
-          this.logUserIn({token: res.token});
+          this.logUserIn({token: res.body.token});
         } else {
           this.logInError({error: true});
           console.error(url, err.toString());
@@ -22,7 +22,7 @@ export default {
   logUserIn: (token) => {
     AppDispatcher.dispatch({
       actionType: AuthConstants.LOGIN_USER,
-      token: token
+      token: token.token
     });
   },
 

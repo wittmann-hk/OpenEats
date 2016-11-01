@@ -22,13 +22,10 @@ class RecipeAdmin(admin.ModelAdmin):
     export_MealMaster.short_description = "Export Meal Master"
 
     actions=[export_MealMaster]
-    list_display = ['title', 'admin_thumbnail', 'author', 'pub_date', 'shared']
+    list_display = ['title', 'admin_thumbnail', 'author', 'pub_date']
     admin_thumbnail = AdminThumbnail(image_field='photo')
-    list_filter = ['shared', 'author', 'cuisine']
+    list_filter = ['author']
     search_fields = ['author__username', 'title',]
-    radio_fields = {"shared": admin.HORIZONTAL}
-    class Media:
-        js = [settings.STATIC_URL+'grappelli/tinymce/jscripts/tiny_mce/tiny_mce.js', settings.STATIC_URL+'js/tinymce_setup.js', ]
 
 
 class StoredRecipeAdmin(admin.ModelAdmin):
@@ -62,14 +59,6 @@ class ReportedRecipeAdmin(admin.ModelAdmin):
     search_fields = ['reported_by__username', 'recipe__title']
     list_filter = ['reported_by']
 
-
-class FlatPageAdmin(FlatPageAdmin):
-    class Media:
-        js = ['/site-media/admin/tinymce/jscripts/tiny_mce/tiny_mce.js', '/site-media/js/tinymce_setup.js', ]
-
-
-admin.site.unregister(FlatPage)
-admin.site.register(FlatPage, FlatPageAdmin)
 admin.site.register(Recipe, RecipeAdmin)
 admin.site.register(StoredRecipe, StoredRecipeAdmin)
 admin.site.register(NoteRecipe, NoteRecipeAdmin)

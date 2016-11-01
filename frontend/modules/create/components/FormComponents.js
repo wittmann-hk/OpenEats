@@ -80,6 +80,38 @@ export var Checkbox = React.createClass({
   }
 });
 
+export var Select = React.createClass({
+  getInitialState: function() {
+    return { value: this.props.value || '' };
+  },
+  handleChange(event) {
+    this.setState({value: event.target.value});
+    if(this.props.change) {
+      this.props.change(event.target.name, event.target.value);
+    }
+  },
+  render: function () {
+    var options = this.props.data.map(function(option) {
+      return (
+        <option key={option.id} value={option.id}>{option.title}</option>
+      );
+    });
+    return (
+      <div className={this.props.size} key={this.props.id}>
+        <div className="form-group">
+          {this.props.label ? <label>{this.props.label}</label> : null}
+          <select name={this.props.name}
+                  className="form-control"
+                  value={this.state.value}
+                  onChange={this.handleChange}>
+            { options }
+          </select>
+        </div>
+      </div>
+    )
+  }
+});
+
 export var Alert = React.createClass({
   render: function() {
     return (

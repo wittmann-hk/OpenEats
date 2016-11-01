@@ -2,12 +2,15 @@
 # encoding: utf-8
 from __future__ import unicode_literals
 
-from rest_framework import serializers
+from rest_framework import serializers, fields
+from django.contrib.auth.models import User
 
-from models import Recipe, ReportedRecipe, StoredRecipe, NoteRecipe
+from models import Recipe, ReportedRecipe, StoredRecipe, NoteRecipe, Tag
 from api.v1.ingredient.serializers import IngredientSerializer
+from api.v1.recipe_groups.serializers import TagSerializer
 from api.v1.ingredient.models import Ingredient
 from django.conf import settings
+from mixins import FieldLimiter
 
 
 class MyImageField(serializers.ImageField):
@@ -17,32 +20,16 @@ class MyImageField(serializers.ImageField):
         return super(MyImageField, self).to_representation(value)
 
 
-class RecipeSerializer(serializers.ModelSerializer):
+class RecipeSerializer(FieldLimiter, serializers.ModelSerializer):
     """ Used to create new recipes"""
     #photo = MyImageField(required=False)
     photo_thumbnail = MyImageField(required=False)
     ingredients = IngredientSerializer(many=True)
-    #TODO: This is in the settings now, if I need different date tiem formats this could be a problem.
-    #pub_date = serializers.DateTimeField(format='%B %-d, %Y')
+    tags = TagSerializer(many=True)
 
     class Meta:
         model = Recipe
         exclude = ('slug',)
-
-    #TODO: This should be moved to a common file
-    def __init__(self, *args, **kwargs):
-        # Instantiate the superclass normally
-        super(RecipeSerializer, self).__init__(*args, **kwargs)
-
-        if 'request' in self.context:
-            fields = self.context['request'].query_params.get('fields')
-            if fields:
-                fields = fields.split(',')
-                # Drop any fields that are not specified in the `fields` argument.
-                allowed = set(fields)
-                existing = set(self.fields.keys())
-                for field_name in existing - allowed:
-                    self.fields.pop(field_name)
 
     def create(self, validated_data):
         """
@@ -50,9 +37,18 @@ class RecipeSerializer(serializers.ModelSerializer):
         This will also create all the ingredient objects required.
         """
         ingredient_data = validated_data.pop('ingredients')
+        tag_data = validated_data.pop('tags')
+
         recipe = Recipe.objects.create(**validated_data)
+
         for ingredient in ingredient_data:
             Ingredient.objects.create(recipe=recipe, **ingredient)
+
+        for tag in tag_data:
+            author = User.objects.get(pk=1)
+            obj, created = Tag.objects.get_or_create(title=tag['title'].strip(), defaults={'author': author})
+            recipe.tags.add(obj)
+
         return recipe
 
 

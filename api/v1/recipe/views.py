@@ -15,10 +15,10 @@ class RecipeViewSet(viewsets.ModelViewSet):
     """
     queryset = Recipe.objects.all()
     serializer_class = serializers.RecipeSerializer
-    #permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     filter_backends = (filters.DjangoFilterBackend, filters.SearchFilter)
-    filter_fields = ('cuisine', 'title')
-    search_fields = ('title', 'tags')
+    filter_fields = ('course', 'cuisine', 'title')
+    search_fields = ('title', 'tags__title')
 
 
 class ReportedRecipeViewSet(viewsets.ModelViewSet):

@@ -39,6 +39,7 @@ render((
           <Route path="/browse" component={Browse}>
             <Route path="/browse/search" component={Browse}/>
             <Route path="/browse/cuisine/:cuisine" component={Browse}/>
+            <Route path="/browse/course/:course" component={Browse}/>
           </Route>
         </Route>
       </Router>

@@ -2,13 +2,14 @@
 # encoding: utf-8
 from __future__ import unicode_literals
 
-from django.db import models
 from django.contrib.auth.models import User
-from api.v1.cuisine.models import Cuisine
-from django_extensions.db.fields import AutoSlugField
+from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django_extensions.db.fields import AutoSlugField
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
+
+from api.v1.recipe_groups.models import Cuisine, Course, Tag
 
 
 class Recipe(models.Model):
@@ -27,15 +28,16 @@ class Recipe(models.Model):
                                       processors=[ResizeToFill(300, 200)],
                                       format='JPEG',
                                       options={'quality': 70})
+
     cuisine = models.ForeignKey(Cuisine, verbose_name=_('cuisine'))
+    course = models.ForeignKey(Course, verbose_name=_('cuisine'))
+    tags = models.ManyToManyField(Tag, verbose_name=_('tag'), blank=True)
     info = models.TextField(_('info'), help_text="enter information about the recipe")
+    directions = models.TextField(_('directions'))
+    prep_time = models.IntegerField(_('prep time'), help_text="enter time in minutes")
     cook_time = models.IntegerField(_('cook time'), help_text="enter time in minutes")
     servings = models.IntegerField(_('servings'), help_text="enter total number of servings")
-    directions = models.TextField(_('directions'))
-    shared = models.IntegerField(_('shared'), choices=SHARED_CHOCIES, default=SHARE_SHARED, help_text="share the recipe with the community or mark it private")
-    tags = models.CharField(_('tags'), help_text="separate with commas", blank=True, max_length=250)
     rating = models.IntegerField(_('rating'), help_text="rating of the meal", default=0)
-    related = models.OneToOneField('Recipe', verbose_name=_('related'), related_name='RecipeRelated', blank=True, null=True, help_text="relate another recipe")
     pub_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
 
@@ -50,7 +52,7 @@ class Recipe(models.Model):
 
     def get_reported(self):
         if ReportedRecipe.objects.filter(recipe=self):
-            return True        
+            return True
 
 
 class StoredRecipe(models.Model):

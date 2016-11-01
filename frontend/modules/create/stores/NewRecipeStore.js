@@ -7,6 +7,9 @@ import NewRecipeConstants from '../constants/NewRecipeConstants';
 const CHANGE_EVENT = 'change';
 
 var _formData = [];
+var _tags = [];
+var _course = [];
+var _cuisine = [];
 var _errors = false;
 
 function setData(name, value) {
@@ -24,6 +27,18 @@ class FormStoreClass extends EventEmitter {
 
   removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback)
+  }
+
+  getCourse() {
+    return _course;
+  }
+
+  getCuisine() {
+    return _cuisine;
+  }
+
+  getTags() {
+    return _tags;
   }
 
   getError() {
@@ -53,6 +68,13 @@ FormStore.dispatchToken = AppDispatcher.register(action => {
       FormStore.emitChange();
       break;
 
+    case NewRecipeConstants.INIT:
+      _tags = action.tags;
+      _course = action.course;
+      _cuisine = action.cuisine;
+      FormStore.emitChange();
+      break;
+
     case NewRecipeConstants.ERROR:
       _errors = action.error;
       FormStore.emitChange();
@@ -60,6 +82,10 @@ FormStore.dispatchToken = AppDispatcher.register(action => {
 
     case NewRecipeConstants.SUBMIT:
       browserHistory.push('/recipe/' + action.new_recipe_id);
+      // TODO: add the below to clear out the form
+      // (leaving this in for now since it makes testing easier)
+      // _formData = [];
+      // _errors = false;
       FormStore.emitChange();
       break;
 
