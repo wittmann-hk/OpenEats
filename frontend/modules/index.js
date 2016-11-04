@@ -36,11 +36,7 @@ render((
           <Route path="/recipe/:recipe" component={Recipe} />
           <Route path="/about" component={About}/>
           <Route path="/login" component={Login}/>
-          <Route path="/browse" component={Browse}>
-            <Route path="/browse/search" component={Browse}/>
-            <Route path="/browse/cuisine/:cuisine" component={Browse}/>
-            <Route path="/browse/course/:course" component={Browse}/>
-          </Route>
+          <Route path="/browse" component={Browse}/>
         </Route>
       </Router>
     </div>

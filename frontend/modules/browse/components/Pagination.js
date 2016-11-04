@@ -1,57 +1,40 @@
 import React from 'react'
-import { Link } from 'react-router'
 
 export default React.createClass ({
-  getInitialState: function() {
-    return {
-      next: '',
-      previous: '',
-    };
-  },
 
-  componentWillReceiveProps: function(thisprops) {
-    console.log(thisprops);
-    console.log(thisprops.next);
-    this.setState({
-      next: this.getNext(thisprops.next, thisprops.path),
-      previous: this.getNext(thisprops.previous, thisprops.path),
-    });
-  },
-
-  getNext: function(url, path) {
-    var offset = 0;
-    var limit = 0;
-    console.log(url);
-    offset = this.getParameterByName('offset', url);
-    limit = this.getParameterByName('limit', url);
-    return path + "?offset=" + offset + "&limit=" + limit
-  },
-
-  getParameterByName: function(name, url) {
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  _onClick: function (event) {
+    event.preventDefault();
+    if(this.props.filter) {
+      this.props.filter('offset', event.target.name);
+    }
   },
 
   render: function() {
+    var offset = this.props.offset ? parseInt(this.props.offset) : 0;
+    var limit = this.props.limit ? parseInt(this.props.limit) : 0;
+    var count = this.props.count ? parseInt(this.props.count) : 0;
+    var next = offset + limit;
+    var previous = offset - limit;
+
     return (
       <ul className="pager">
         <li className="previous">
-          { this.props.previous ?
-            <Link to={this.state.previous}>
-              <span>&larr;</span> Older
-            </Link>
+          { (previous >= 0) ?
+            <a href="#"
+               name={ previous }
+               onClick={ this._onClick }>
+              <span>&larr;</span> Newer
+            </a>
             : ''
           }
         </li>
         <li className="next">
-          { this.props.next ?
-            <Link to={this.state.next}>
-              Newer <span>&rarr;</span>
-            </Link>
+          { (next < count) ?
+            <a href="#"
+               name={ next }
+               onClick={ this._onClick }>
+               Older <span>&rarr;</span>
+            </a>
             : ''
           }
         </li>

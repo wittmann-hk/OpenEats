@@ -31,7 +31,7 @@ export default React.createClass({
             <LinkContainer to="/about"><NavItem>About</NavItem></LinkContainer>
           </Nav>
           <ul className="nav navbar-nav navbar-right">
-            <Form className="navbar-form" to={'/browse/search'} method="GET">
+            <Form className="navbar-form" to={'/browse'} method="GET">
               <div className="form-group">
                 <input type="text" name="search" className="form-control" placeholder="Search"/>
               </div>
