@@ -2,13 +2,13 @@
 # encoding: utf-8
 from __future__ import unicode_literals
 
-from models import Cuisine, Course, Tag
-from serializers import CuisineSerializer, \
+from .models import Cuisine, Course, Tag
+from .serializers import CuisineSerializer, \
                         CourseSerializer, \
                         TagSerializer
 from rest_framework import permissions
 from rest_framework import viewsets
-from permissions import IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly
 
 
 class CuisineViewSet(viewsets.ModelViewSet):

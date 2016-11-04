@@ -5,12 +5,12 @@ from __future__ import unicode_literals
 from rest_framework import serializers, fields
 from django.contrib.auth.models import User
 
-from models import Recipe, ReportedRecipe, StoredRecipe, NoteRecipe, Tag
+from .models import Recipe, ReportedRecipe, StoredRecipe, NoteRecipe, Tag
 from api.v1.ingredient.serializers import IngredientSerializer
 from api.v1.recipe_groups.serializers import TagSerializer
 from api.v1.ingredient.models import Ingredient
 from django.conf import settings
-from mixins import FieldLimiter
+from .mixins import FieldLimiter
 
 
 class MyImageField(serializers.ImageField):

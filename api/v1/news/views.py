@@ -2,12 +2,12 @@
 # encoding: utf-8
 from __future__ import unicode_literals
 
-from models import Entry
-from serializers import EntrySerializer
+from .models import Entry
+from .serializers import EntrySerializer
 from rest_framework import renderers, permissions, viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
-from permissions import IsAdminOrReadOnly123
+from .permissions import IsAdminOrReadOnly123
 
 
 class EntryViewSet(viewsets.ModelViewSet):

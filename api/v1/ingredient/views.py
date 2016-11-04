@@ -3,11 +3,11 @@
 from __future__ import unicode_literals
 
 from django.http import HttpResponse
-from models import Ingredient
+from .models import Ingredient
 import json
-from serializers import IngredientSerializer
+from .serializers import IngredientSerializer
 from rest_framework import permissions, viewsets
-from permissions import IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly
 from rest_framework import filters
 
 

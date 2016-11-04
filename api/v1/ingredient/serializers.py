@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-from models import Ingredient
+from .models import Ingredient
 from measurement.measures import Volume
 
 

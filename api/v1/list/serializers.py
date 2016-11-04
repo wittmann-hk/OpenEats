@@ -13,7 +13,7 @@ from django.contrib.sites.models import Site
 from django.db.models import Q
 
 from rest_framework import serializers
-from models import GroceryList, GroceryShared, GroceryAisle, GroceryItem, GroceryRecipe
+from .models import GroceryList, GroceryShared, GroceryAisle, GroceryItem, GroceryRecipe
 
 
 class GroceryItemSerializer(serializers.ModelSerializer):

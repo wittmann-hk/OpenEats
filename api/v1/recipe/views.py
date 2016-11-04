@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from rest_framework import permissions, viewsets, filters
 
 from . import serializers
-from models import Recipe, StoredRecipe, NoteRecipe, ReportedRecipe
+from .models import Recipe, StoredRecipe, NoteRecipe, ReportedRecipe
 
 
 class RecipeViewSet(viewsets.ModelViewSet):

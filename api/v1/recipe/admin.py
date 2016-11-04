@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from models import Recipe, StoredRecipe, NoteRecipe, ReportedRecipe
+from .models import Recipe, StoredRecipe, NoteRecipe, ReportedRecipe
 from imagekit.admin import AdminThumbnail
 from api.v1.ingredient.models import Ingredient
 from django.shortcuts import render_to_response

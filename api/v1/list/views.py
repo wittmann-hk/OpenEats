@@ -15,8 +15,8 @@ from api.v1.recipe.models import Recipe
 from datetime import date
 
 from django.http import HttpResponse
-from models import GroceryList, GroceryShared, GroceryAisle, GroceryItem, GroceryRecipe
-from serializers import GroceryListSerializer, GrocerySharedSerializer, GroceryAisleSerializer, GroceryItemSerializer, GroceryRecipeSerializer
+from .models import GroceryList, GroceryShared, GroceryAisle, GroceryItem, GroceryRecipe
+from .serializers import GroceryListSerializer, GrocerySharedSerializer, GroceryAisleSerializer, GroceryItemSerializer, GroceryRecipeSerializer
 from rest_framework import permissions
 from rest_framework import viewsets
 

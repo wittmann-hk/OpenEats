@@ -3,10 +3,10 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from models import GroceryList, GroceryItem, \
+from .models import GroceryList, GroceryItem, \
                    GroceryAisle, GroceryShared, \
                    GroceryRecipe
-from serializers import GroceryItemSerializer
+from .serializers import GroceryItemSerializer
 
 
 class GroceryListInline(admin.TabularInline):
