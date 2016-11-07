@@ -3,7 +3,6 @@
         "pk": 1,
         "model": "ingredient.ingredient", 
         "fields": {
-            "preparation": "to taste", 
             "recipe": 1,
             "quantity": 1, 
             "measurement": "dash", 
@@ -14,7 +13,6 @@
         "pk": 2,
         "model": "ingredient.ingredient", 
         "fields": {
-            "preparation": "", 
             "recipe": 1,
             "quantity": 4, 
             "measurement": "tablespoons", 
@@ -25,7 +23,6 @@
         "pk": 3,
         "model": "ingredient.ingredient", 
         "fields": {
-            "preparation": "", 
             "recipe": 1,
             "quantity": 1, 
             "measurement": "tablespoon", 
@@ -36,7 +33,6 @@
         "pk": 4,
         "model": "ingredient.ingredient", 
         "fields": {
-            "preparation": "", 
             "recipe": 1,
             "quantity": 1, 
             "measurement": "can", 
@@ -47,7 +43,6 @@
         "pk": 5,
         "model": "ingredient.ingredient", 
         "fields": {
-            "preparation": "chili style", 
             "recipe": 1,
             "quantity": 2, 
             "measurement": "cans", 
@@ -58,7 +53,6 @@
         "pk": 6,
         "model": "ingredient.ingredient", 
         "fields": {
-            "preparation": "", 
             "recipe": 1,
             "quantity": 1, 
             "measurement": "whole", 
@@ -69,7 +63,6 @@
         "pk": 7,
         "model": "ingredient.ingredient", 
         "fields": {
-            "preparation": "", 
             "recipe": 1,
             "quantity": 1, 
             "measurement": "pound", 
@@ -80,7 +73,6 @@
         "pk": 8,
         "model": "ingredient.ingredient", 
         "fields": {
-            "preparation": "", 
             "recipe": 1,
             "quantity": 1, 
             "measurement": "pound", 
@@ -91,7 +83,6 @@
         "pk": 9,
         "model": "ingredient.ingredient", 
         "fields": {
-            "preparation": "to taste", 
             "recipe": 1,
             "quantity": 1, 
             "measurement": "dash", 
@@ -102,7 +93,6 @@
         "pk": 10,
         "model": "ingredient.ingredient", 
         "fields": {
-            "preparation": "", 
             "recipe": 1,
             "quantity": 1, 
             "measurement": "can", 
@@ -113,7 +103,6 @@
         "pk": 11,
         "model": "ingredient.ingredient", 
         "fields": {
-            "preparation": "", 
             "recipe": 1,
             "quantity": 1, 
             "measurement": "whole", 
@@ -124,7 +113,6 @@
         "pk": 12,
         "model": "ingredient.ingredient", 
         "fields": {
-            "preparation": "", 
             "recipe": 1,
             "quantity": 1, 
             "measurement": "quart", 
@@ -135,7 +123,6 @@
         "pk": 12,
         "model": "ingredient.ingredient", 
         "fields": {
-            "preparation": "", 
             "recipe": 1,
             "quantity": 1, 
             "measurement": "whole", 

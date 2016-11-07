@@ -13,22 +13,35 @@ from api.v1.recipe_groups.models import Cuisine, Course, Tag
 
 
 class Recipe(models.Model):
-    SHARE_SHARED = 0
-    PRIVATE_SHARED = 1
-    SHARED_CHOCIES = (
-        (SHARE_SHARED, _('Share')),
-        (PRIVATE_SHARED, _('Private')),
-    )
+    """
+    Django Model to hold Recipes.
 
+    Courses have a one to Many relation with Recipes.
+    Cuisines have a one to Many relation with Recipes.
+    Tags have a Many to Many relation with Recipes.
+    Ingredients have a Many to one relation with Recipes.
+
+    :title: = Title of the Recipe
+    :author: = Creator of the Recipe
+    :photo: = Raw Image of a Recipe
+    :photo_thumbnail: = compressed image of the photo
+    :info: = Description of the recipe
+    :directions: = How to make the recipe
+    :prep_time: = How long it takes to prepare the recipe
+    :cook_time: = How long the recipe takes to cook
+    :servings: = How many people the recipe with serve
+    :rating: = Rating of the recipe
+    :pub_date: = When the recipe was created
+    :update_date: = When the recipe was updated
+    """
     title = models.CharField(_("Recipe Title"), max_length=250)
     slug = AutoSlugField(_('slug'), populate_from='title', unique=True)
     author = models.ForeignKey(User, verbose_name=_('user'), null=True)
     photo = models.ImageField(_('photo'), blank=True, upload_to="upload/recipe_photos")
     photo_thumbnail = ImageSpecField(source='photo',
-                                      processors=[ResizeToFill(300, 200)],
-                                      format='JPEG',
-                                      options={'quality': 70})
-
+                                     processors=[ResizeToFill(300, 200)],
+                                     format='JPEG',
+                                     options={'quality': 70})
     cuisine = models.ForeignKey(Cuisine, verbose_name=_('cuisine'))
     course = models.ForeignKey(Course, verbose_name=_('cuisine'))
     tags = models.ManyToManyField(Tag, verbose_name=_('tag'), blank=True)
@@ -47,15 +60,10 @@ class Recipe(models.Model):
     def __unicode__(self):
         return self.title
 
-    def get_absolute_url(self):
-        return "/recipe/%s/" % self.slug
-
-    def get_reported(self):
-        if ReportedRecipe.objects.filter(recipe=self):
-            return True
-
 
 class StoredRecipe(models.Model):
+    # TODO: Unused model.
+    # Keeping this around for now since I may want to use it in the future.
     recipe = models.ForeignKey(Recipe, verbose_name=_('recipe'))
     user = models.ForeignKey(User, verbose_name=_('user'))
 
@@ -64,6 +72,8 @@ class StoredRecipe(models.Model):
 
 
 class NoteRecipe(models.Model):
+    # TODO: Unused model.
+    # Keeping this around for now since I may want to use it in the future.
     recipe = models.ForeignKey(Recipe, verbose_name=_('recipe'))
     author = models.ForeignKey(User, verbose_name=_('author'))
     text = models.TextField(_('note'))
@@ -76,6 +86,8 @@ class NoteRecipe(models.Model):
 
 
 class ReportedRecipe(models.Model):
+    # TODO: Unused model.
+    # Keeping this around for now since I may want to use it in the future.
     recipe = models.OneToOneField(Recipe, on_delete=models.CASCADE, primary_key=True)
     reported_by = models.ForeignKey(User, verbose_name=_('author'))
     pub_date = models.DateTimeField(auto_now_add=True)

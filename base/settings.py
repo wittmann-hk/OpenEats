@@ -148,6 +148,10 @@ LOCALE_PATHS = (
   os.path.join(PROJECT_PATH, '../locale', ),
 )
 
+FIXTURE_DIRS = [
+    os.path.join(PROJECT_PATH, 'api', 'v1', 'fixtures'),
+]
+
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True

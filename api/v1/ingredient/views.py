@@ -2,19 +2,18 @@
 # encoding: utf-8
 from __future__ import unicode_literals
 
-from django.http import HttpResponse
-from .models import Ingredient
-import json
-from .serializers import IngredientSerializer
 from rest_framework import permissions, viewsets
-from .permissions import IsOwnerOrReadOnly
 from rest_framework import filters
+
+from .models import Ingredient
+from .serializers import IngredientSerializer
+from .permissions import IsOwnerOrReadOnly
 
 
 class IngredientViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
-    `update` and `destroy` actions.
+    `update` and `destroy` actions for Ingredients.
     """
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer

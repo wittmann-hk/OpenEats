@@ -15,6 +15,8 @@ class CuisineViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
+
+    Uses `title` as the PK for any lookups.
     """
     queryset = Cuisine.objects.all()
     serializer_class = CuisineSerializer
@@ -27,6 +29,8 @@ class CourseViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
+
+    Uses `title` as the PK for any lookups.
     """
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
@@ -39,6 +43,8 @@ class TagViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
+
+    Uses `title` as the PK for any lookups.
     """
     queryset = Tag.objects.all()
     serializer_class = TagSerializer

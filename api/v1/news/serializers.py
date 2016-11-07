@@ -7,6 +7,7 @@ from .models import Entry
 
 
 class EntrySerializer(serializers.ModelSerializer):
+    """ Standard `rest_framework` ModelSerializer """
     class Meta:
         model = Entry
         exclude = ('slug', 'pub_date',)

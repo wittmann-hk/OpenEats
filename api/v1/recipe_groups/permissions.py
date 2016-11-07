@@ -5,6 +5,9 @@ from __future__ import unicode_literals
 from rest_framework import permissions
 
 
+# TODO: this code is duplicated in other apps.
+# It should be moved to a common app.
+
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
     Custom permission to only allow admins edit it.

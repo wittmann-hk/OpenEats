@@ -2,22 +2,23 @@
 # encoding: utf-8
 from __future__ import unicode_literals
 
-from .models import Entry
-from .serializers import EntrySerializer
-from rest_framework import renderers, permissions, viewsets
+from rest_framework import renderers, viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
-from .permissions import IsAdminOrReadOnly123
+
+from .models import Entry
+from .serializers import EntrySerializer
+from .permissions import IsAdminOrReadOnly
 
 
 class EntryViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
-    `update` and `destroy` actions.
+    `update` and `destroy` actions for THe homepage News items.
     """
     queryset = Entry.objects.all()
     serializer_class = EntrySerializer
-    permission_classes = (IsAdminOrReadOnly123,)
+    permission_classes = (IsAdminOrReadOnly,)
 
     @detail_route(renderer_classes=[renderers.StaticHTMLRenderer])
     def title(self, request, *args, **kwargs):

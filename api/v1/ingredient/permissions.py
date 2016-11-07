@@ -4,6 +4,11 @@ from __future__ import unicode_literals
 
 from rest_framework import permissions
 
+# TODO: this code is duplicated in other apps.
+# It should be moved to a common app.
+
+# TODO: Make sure Admins have permissions to change this stuff as well.
+
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
