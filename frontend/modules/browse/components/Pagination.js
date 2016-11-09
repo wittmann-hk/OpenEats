@@ -5,7 +5,7 @@ export default React.createClass ({
   _onClick: function (event) {
     event.preventDefault();
     if(this.props.filter) {
-      this.props.filter('offset', event.target.name);
+      this.props.filter('offset', parseInt(event.target.name));
     }
   },
 
@@ -23,7 +23,7 @@ export default React.createClass ({
             <a href="#"
                name={ previous }
                onClick={ this._onClick }>
-              <span>&larr;</span> Newer
+              &larr; Newer
             </a>
             : ''
           }
@@ -33,7 +33,7 @@ export default React.createClass ({
             <a href="#"
                name={ next }
                onClick={ this._onClick }>
-               Older <span>&rarr;</span>
+               Older &rarr;
             </a>
             : ''
           }

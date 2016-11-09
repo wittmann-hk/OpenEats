@@ -1,5 +1,4 @@
 import React from 'react'
-import Form from 'react-router-form'
 import { Link } from 'react-router'
 import { Navbar, Nav, NavDropdown, MenuItem, NavItem } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
@@ -30,19 +29,24 @@ export default React.createClass({
             <Account/>
             <LinkContainer to="/about"><NavItem>About</NavItem></LinkContainer>
           </Nav>
-          <ul className="nav navbar-nav navbar-right">
-            <Form className="navbar-form" to={'/browse'} method="GET">
-              <div className="form-group">
-                <input type="text" name="search" className="form-control" placeholder="Search"/>
-              </div>
-              <button type="submit" className="btn btn-default">Submit</button>
-            </Form>
-          </ul>
         </Navbar.Collapse>
       </Navbar>
     );
   }
 });
+
+// TODO: I want to wave this code for now,
+// since I still kind of want to use it in the future
+//import Form from 'react-router-form'
+//"react-router-form": "^2.0.0-rc.0",
+/*<ul className="nav navbar-nav navbar-right">
+  <Form className="navbar-form" to={'/browse'} method="GET">
+    <div className="form-group">
+      <input type="text" name="search" className="form-control" placeholder="Search"/>
+    </div>
+    <button type="submit" className="btn btn-default">Submit</button>
+  </Form>
+</ul>*/
 
 
 var Account = React.createClass({

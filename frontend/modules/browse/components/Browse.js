@@ -1,27 +1,17 @@
 import React from 'react'
-
 import request from 'superagent';
-import { serverURLs } from '../../common/config'
-import { browserHistory } from 'react-router'
 
 import Filter from './Filter'
+import SearchBar from './SearchBar'
 import ListRecipes from './ListRecipes'
 import Pagination from './Pagination'
+import { serverURLs } from '../../common/config'
 
 require("./../css/browse.scss");
 
-
-//TODO:
-/*
-* There may still be some issues with pagtion not working right (was using limit=1)
-* I may want to modify the callback for the child compents to take an array (so pagination can play nicer)
-* */
-
-
-
 // Array of default values that should be used when filtering
 const DEFAULTS = {
-  'limit': 2
+  'limit': 12
 };
 
 const REST_FILTERS = [
@@ -38,6 +28,9 @@ const FILTER_MAP = {
 };
 
 export default React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object
+  },
 
   init: function() {
     var course = [];
@@ -87,17 +80,20 @@ export default React.createClass({
       total_recipes: 0,
       course: [],
       cuisine: [],
-      filters: this.props.location.query || {},
     };
   },
 
   componentDidMount: function() {
     this.init();
-    this.buildBackendURL();
+    this.buildBackendURL(this.props.location.query);
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    this.buildBackendURL(nextProps.location.query);
   },
 
   filter: function(name, value) {
-    var new_filters = this.state.filters;
+    var new_filters = this.props.location.query;
 
     if (value == '' || value == 0) {
       delete new_filters[name];
@@ -110,13 +106,10 @@ export default React.createClass({
         delete new_filters[REST_FILTERS[filter]];
       }
     }
-
-    this.setState({ filters: new_filters }, this.buildBackendURL());
-    this.buildFrontendURL();
+    this.buildFrontendURL(new_filters);
   },
 
-  buildFrontendURL: function () {
-    var query_map = this.state.filters;
+  buildFrontendURL: function (query_map) {
     let encode_data = [];
     for (let d in query_map)
       encode_data.push(encodeURIComponent(d) + '=' + encodeURIComponent(query_map[d]));
@@ -125,15 +118,14 @@ export default React.createClass({
     if (encode_data.length > 0) {
        path += '?' + encode_data.join('&');
     }
-    browserHistory.push(path);
+    this.context.router.push(path);
   },
 
-  buildBackendURL: function () {
+  buildBackendURL: function (query_string) {
     var base_url = '';
-    var state = this.state.filters;
     for (let filter in FILTER_MAP) {
-      if (state[filter]) {
-        base_url += "&" + FILTER_MAP[filter] + "=" + state[filter];
+      if (query_string[filter]) {
+        base_url += "&" + FILTER_MAP[filter] + "=" + query_string[filter];
       }
       else if (DEFAULTS[filter]) {
         base_url += "&" + FILTER_MAP[filter] + "=" + DEFAULTS[filter];
@@ -150,27 +142,34 @@ export default React.createClass({
             <div className="sidebar">
               <Filter title="course"
                       data={ this.state.course }
-                      active={ this.state.filters['course'] }
+                      active={ this.props.location.query['course'] }
                       filter={ this.filter }
               />
               <Filter title="cuisine"
                       data={ this.state.cuisine }
-                      active={ this.state.filters['cuisine'] }
+                      active={ this.props.location.query['cuisine'] }
                       filter={ this.filter }
               />
             </div>
           </div>
           <div className="col-xs-10">
+            <div className="row">
+              <SearchBar format="col-xs-12" filter={ this.filter }/>
+            </div>
             <div id="browse" className="row">
-              <ListRecipes format="col-xs-12 col-sm-6 col-md-4 col-lg-3"
-                           data={this.state.recipes}
-              />
+              {
+                this.state.recipes === undefined || this.state.recipes.length == 0 ?
+                  <h3 className="no-results">Sorry, there are no results for your search.</h3>
+                :
+                  <ListRecipes format="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+                           data={this.state.recipes}/>
+              }
             </div>
             <div className="row">
               <div className="col-xs-12">
-                <Pagination limit={ this.state.filters['limit'] ? this.state.filters['limit'] : DEFAULTS.limit}
+                <Pagination limit={ this.props.location.query['limit'] ? this.props.location.query['limit'] : DEFAULTS.limit}
                             count={ this.state.total_recipes }
-                            offset={ this.state.filters['offset'] }
+                            offset={ this.props.location.query['offset'] }
                             filter={ this.filter }
                 />
               </div>
