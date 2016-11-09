@@ -1,5 +1,7 @@
 import React from 'react'
 
+require("./../css/ratings.scss");
+
 export default React.createClass({
   render: function() {
     var tmp = '......';
@@ -12,7 +14,7 @@ export default React.createClass({
       return <span key={ index } className="glyphicon glyphicon-star-empty"/>;
     });
     return (
-      <p>
+      <p className="rating-stars">
         {stars}
         {empty_stars}
       </p>

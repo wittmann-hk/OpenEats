@@ -22,6 +22,7 @@ class MyImageField(serializers.ImageField):
 
 class RecipeSerializer(FieldLimiter, serializers.ModelSerializer):
     """ Used to create new recipes"""
+    photo = MyImageField(required=False)
     photo_thumbnail = MyImageField(required=False)
     ingredients = IngredientSerializer(many=True)
     tags = TagSerializer(many=True)

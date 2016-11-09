@@ -3,13 +3,13 @@ import { Link } from 'react-router'
 
 import Ratings from '../../recipe/components/Ratings';
 
-require("./../../recipe/css/list-recipes.scss");
+require("./../css/list-recipes.scss");
 
 export default React.createClass({
   render: function() {
     var format = this.props.format;
     var recipes = this.props.data.map(function(recipe) {
-      var link = 'recipe/' + recipe.id;
+      var link = '/recipe/' + recipe.id;
       return (
         <div className={format} key={recipe.id}>
           <div className="thumbnail recipe">
