@@ -27,6 +27,34 @@ export var Input = React.createClass({
   }
 });
 
+export var TextArea = React.createClass({
+  getInitialState: function() {
+    return { value: this.props.value || '' };
+  },
+  handleChange(event) {
+    this.setState({value: event.target.value});
+    if(this.props.change) {
+      this.props.change(event.target.name, event.target.value);
+    }
+  },
+  render: function () {
+    return (
+      <div className={this.props.size} key={this.props.id}>
+        <div className="form-group">
+          {this.props.label ? <label>{this.props.label}</label> : null}
+          <textarea type={this.props.type}
+                    name={this.props.name}
+                    rows={this.props.rows}
+                    className="form-control"
+                    placeholder={this.props.placeholder}
+                    value={this.state.value}
+                    onChange={this.handleChange}/>
+        </div>
+      </div>
+    )
+  }
+});
+
 export var File = React.createClass({
   getInitialState: function() {
     return {value: this.props.value || ''};
@@ -104,6 +132,7 @@ export var Select = React.createClass({
                   className="form-control"
                   value={this.state.value}
                   onChange={this.handleChange}>
+            <option key={0} value="">Please select a {this.props.label}</option>
             { options }
           </select>
         </div>

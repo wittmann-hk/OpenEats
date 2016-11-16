@@ -6,27 +6,42 @@ import {serverURLs} from '../../common/config'
 
 export default {
   submit: function(data) {
-    let ajax = request.post(serverURLs.recipe);
-    var item;
-    for (item in data) {
-      if (item == 'photo') {
-        console.log(item, data[item]);
-        ajax = ajax.attach(item, data[item])
-      } else {
-        console.log(item, data[item]);
-        ajax = ajax.field(item, data[item])
-      }
+    if (data.photo){
+      var photo = data.photo;
+      delete data['photo'];
     }
-    ajax.set('Authorization', 'Token ' + AuthStore.getToken());
-    ajax.end((err, res) => {
-      if (!err && res) {
-        this.handleSubmit(res.body.id);
-      } else {
-        console.error(serverURLs.recipe, err.toString());
-        console.error(res.body);
-        this.error(res.body);
-      }
-    });
+    //data.tags = [{"title":"asdasd", "author": 1}];
+    request
+      .post(serverURLs.recipe)
+      .send(data)
+      .set('Authorization', 'Token ' + AuthStore.getToken())
+      .end((err, res) => {
+        if (!err && res) {
+          //send the image once the file has been created
+          var id = res.body.id;
+          if (photo) {
+            request
+              .patch(serverURLs.recipe + id + "/")
+              .attach('photo', photo)
+              .set('Authorization', 'Token ' + AuthStore.getToken())
+              .end((err, res) => {
+                if (!err && res) {
+                  this.handleSubmit(res.body.id);
+                } else {
+                  console.error(serverURLs.recipe, err.toString());
+                  console.error(res.body);
+                  this.error(res.body);
+                }
+              });
+          } else {
+            this.handleSubmit(res.body.id);
+          }
+        } else {
+          console.error(serverURLs.recipe, err.toString());
+          console.error(res.body);
+          this.error(res.body);
+        }
+      });
   },
 
   handleSubmit: (new_recipe_id) => {

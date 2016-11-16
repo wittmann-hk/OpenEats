@@ -62,7 +62,6 @@ class Tag(models.Model):
     """
     title = models.CharField(_('title'), max_length=100, unique=True)
     slug = AutoSlugField(_('slug'), populate_from='title', unique=True)
-    author = models.ForeignKey(User, verbose_name=_('author'))
 
     class Meta:
         ordering = ['title']

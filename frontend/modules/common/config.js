@@ -7,6 +7,7 @@ export var serverURLs = {
   course: '/api/v1/recipe_groups/course/?format=json',
   tag: '/api/v1/recipe_groups/tag/?format=json',
   ingredient: '/api/v1/ingredient/ingredient/?format=json',
+  direction: '/api/v1/recipe/direction/?format=json',
   news: '/api/v1/news/entry/?format=json',
   recipe: '/api/v1/recipe/recipes/',
 };

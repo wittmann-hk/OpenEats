@@ -90,6 +90,7 @@ export default React.createClass({
 
   componentWillReceiveProps: function(nextProps) {
     this.buildBackendURL(nextProps.location.query);
+    window.scrollTo(0, 0);
   },
 
   filter: function(name, value) {

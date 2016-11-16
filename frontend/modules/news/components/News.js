@@ -49,7 +49,7 @@ var NewsCarousel = React.createClass({
           <img src={entry.image}/>
           <Carousel.Caption>
             <h3>{entry.title}</h3>
-            <p>{entry.content}</p>
+            <p dangerouslySetInnerHTML={{__html: entry.content}}/>
           </Carousel.Caption>
         </Carousel.Item>
       );

@@ -6,7 +6,7 @@ import NewRecipeConstants from '../constants/NewRecipeConstants';
 
 const CHANGE_EVENT = 'change';
 
-var _formData = [];
+var _formData = {};
 var _tags = [];
 var _course = [];
 var _cuisine = [];
@@ -82,10 +82,8 @@ FormStore.dispatchToken = AppDispatcher.register(action => {
 
     case NewRecipeConstants.SUBMIT:
       browserHistory.push('/recipe/' + action.new_recipe_id);
-      // TODO: add the below to clear out the form
-      // (leaving this in for now since it makes testing easier)
-      // _formData = [];
-      // _errors = false;
+      _formData = [];
+      _errors = false;
       FormStore.emitChange();
       break;
 

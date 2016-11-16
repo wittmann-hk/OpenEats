@@ -4,6 +4,7 @@ import request from 'superagent';
 import MiniBrowse from '../../browse/components/MiniBrowse'
 import { serverURLs } from '../../common/config'
 import Ingredients from './Ingredients'
+import Directions from './Directions'
 import Ratings from './Ratings'
 
 require("./../css/recipe.scss");
@@ -90,11 +91,11 @@ var RecipeScheme = React.createClass({
 
             <div className="desc">
               <h4>Instructions</h4>
-              <p dangerouslySetInnerHTML={{__html: this.props.data.directions}}/>
+              <Directions recipe_id={ this.props.recipe_id }/>
             </div>
           </div>
           <div className="panel-footer">
-            <div dangerouslySetInnerHTML={{__html: this.props.data.info}}/>
+            <p>{ this.props.data.info }</p>
           </div>
         </div>
       </div>

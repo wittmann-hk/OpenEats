@@ -46,7 +46,6 @@ class Recipe(models.Model):
     course = models.ForeignKey(Course, verbose_name=_('cuisine'))
     tags = models.ManyToManyField(Tag, verbose_name=_('tag'), blank=True)
     info = models.TextField(_('info'), help_text="enter information about the recipe")
-    directions = models.TextField(_('directions'))
     prep_time = models.IntegerField(_('prep time'), help_text="enter time in minutes")
     cook_time = models.IntegerField(_('cook time'), help_text="enter time in minutes")
     servings = models.IntegerField(_('servings'), help_text="enter total number of servings")
@@ -61,39 +60,20 @@ class Recipe(models.Model):
         return self.title
 
 
-class StoredRecipe(models.Model):
-    # TODO: Unused model.
-    # Keeping this around for now since I may want to use it in the future.
-    recipe = models.ForeignKey(Recipe, verbose_name=_('recipe'))
-    user = models.ForeignKey(User, verbose_name=_('user'))
-
-    def __unicode__(self):
-        return self.recipe.title
-
-
-class NoteRecipe(models.Model):
-    # TODO: Unused model.
-    # Keeping this around for now since I may want to use it in the future.
-    recipe = models.ForeignKey(Recipe, verbose_name=_('recipe'))
-    author = models.ForeignKey(User, verbose_name=_('author'))
-    text = models.TextField(_('note'))
-
-    class meta:
-        verbose_name_plural = "Recipe Notes"
-
-    def __unicode__(self):
-        return "%s note for %s" % (self.author, self.recipe)
-
-
-class ReportedRecipe(models.Model):
-    # TODO: Unused model.
-    # Keeping this around for now since I may want to use it in the future.
-    recipe = models.OneToOneField(Recipe, on_delete=models.CASCADE, primary_key=True)
-    reported_by = models.ForeignKey(User, verbose_name=_('author'))
-    pub_date = models.DateTimeField(auto_now_add=True)
+class Direction(models.Model):
+    """
+    Django Model to hold an Direction.
+    Directions share a many to one relationship.
+    Meaning each Recipe will have many Directions.
+    :title: = Title of the Direction (EX: Mix flour with the meat.)
+    :step: = Order of the Directions (EX: 1)
+    """
+    step = models.IntegerField(_('step'))
+    title = models.TextField(_('title'))
+    recipe = models.ForeignKey(Recipe, verbose_name=_('recipe'), related_name='directions', null=True)
 
     class Meta:
-        ordering = ['pub_date', 'recipe']
-    
+        ordering = ['title']
+
     def __unicode__(self):
-        return self.recipe.title
+        return self.title
