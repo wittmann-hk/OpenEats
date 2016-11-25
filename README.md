@@ -34,10 +34,14 @@ Once you have created a user, we can add some base data to the project. This wil
 * `./manage.py loaddata course_data.json`
 * `./manage.py loaddata cuisine_data.json`
 
-If you want to add some test data we can load a few recipes and some news data. This data isn't really needeed unless you just wanna see how the app looks and if its working.
+If you want to add some test data we can load a few recipes and some news data. This data isn't really needed unless you just wanna see how the app looks and if its working.
 * `./manage.py loaddata news_data.json`
 * `./manage.py loaddata recipe_data.json`
 * `./manage.py loaddata ing_data.json`
+* `./manage.py loaddata direction_data.json`
+
+To load all the data in one command:
+` ./manage.py loaddata api/v1/fixtures/course_data.json api/v1/fixtures/cuisine_data.json api/v1/fixtures/recipe_data.json api/v1/fixtures/direction_data.json api/v1/fixtures/ing_data.json api/v1/fixtures/news_data.json`
 
 That should be it! you can run the dev server now to load up the api `./manage runserver`.
 
@@ -52,14 +56,13 @@ The next thing we need to do is setup react. From your base dir:
 
 
 #TODO
-If you're looking for something too do, I'd love some help on the following:
+If you're looking for something to do, I'd love some help on the following:
 
-* A good UI for Viewing recipes.
 * Usable Django Admin section. I've been ignoring this so the admin code is most likely a bit stale.
-* Fixtures that reflect the current models more accurately.
 * React i18n. I plan on having support for german at some point, but have no idea now i18n works in react.
 * Tests
 * Working grocery list
+* Editing Recipes
 
 #Dev Tips
 All of the data (excluding recipes) can be added to the DB using the Django REST GUI. The following is the CURL post I use to add recipes to the DB quickly for testing. You'll will need to either add your auth token as a header or disable the auth check in `api/v1/recipe/seralizers.py`.
@@ -72,4 +75,3 @@ Apps can access there API roots via there app names:
 * Recipe groups - http://localhost:8000/api/v1/recipe_groups/
 * News - http://localhost:8000/api/v1/news/
 * Lists - http://localhost:8000/api/v1/list/
-

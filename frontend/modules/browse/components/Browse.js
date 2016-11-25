@@ -112,9 +112,9 @@ export default React.createClass({
 
   buildFrontendURL: function (query_map) {
     let encode_data = [];
-    for (let d in query_map)
+    for (let d in query_map) {
       encode_data.push(encodeURIComponent(d) + '=' + encodeURIComponent(query_map[d]));
-
+    }
     var path = '/browse/';
     if (encode_data.length > 0) {
        path += '?' + encode_data.join('&');

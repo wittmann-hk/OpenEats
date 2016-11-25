@@ -9,7 +9,7 @@
         }
     }, 
     {
-        "pk": 10, 
+        "pk": 2,
         "model": "recipe_groups.cuisine", 
         "fields": {
             "author": 1, 
@@ -18,7 +18,7 @@
         }
     }, 
     {
-        "pk": 6, 
+        "pk": 3,
         "model": "recipe_groups.cuisine", 
         "fields": {
             "author": 1, 
@@ -36,7 +36,7 @@
         }
     }, 
     {
-        "pk": 7, 
+        "pk": 5,
         "model": "recipe_groups.cuisine", 
         "fields": {
             "author": 1, 
@@ -45,7 +45,7 @@
         }
     }, 
     {
-        "pk": 8, 
+        "pk": 6,
         "model": "recipe_groups.cuisine", 
         "fields": {
             "author": 1, 
@@ -54,7 +54,7 @@
         }
     }, 
     {
-        "pk": 5, 
+        "pk": 7,
         "model": "recipe_groups.cuisine", 
         "fields": {
             "author": 1, 
@@ -63,25 +63,16 @@
         }
     }, 
     {
-        "pk": 3, 
+        "pk": 8,
         "model": "recipe_groups.cuisine", 
         "fields": {
             "author": 1, 
             "slug": "mexican", 
             "title": "Mexican"
         }
-    }, 
+    },
     {
-        "pk": 9, 
-        "model": "recipe_groups.cuisine", 
-        "fields": {
-            "author": 1, 
-            "slug": "spanish", 
-            "title": "Spanish"
-        }
-    }, 
-    {
-        "pk": 2, 
+        "pk": 9,
         "model": "recipe_groups.cuisine", 
         "fields": {
             "author": 1, 

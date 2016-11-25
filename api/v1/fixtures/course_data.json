@@ -22,8 +22,17 @@
         "model": "recipe_groups.course",
         "fields": {
             "author": 1,
-            "slug": "snack",
-            "title": "Snack"
+            "slug": "appetizer",
+            "title": "Appetizer"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "recipe_groups.course",
+        "fields": {
+            "author": 4,
+            "slug": "dessert",
+            "title": "Dessert"
         }
     }
 ]

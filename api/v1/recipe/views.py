@@ -6,7 +6,7 @@ from rest_framework import permissions, viewsets, filters
 
 from . import serializers
 from .models import Recipe, Direction
-from .permissions import IsOwnerOrReadOnly
+from api.v1.common.permissions import IsOwnerOrReadOnly
 
 
 class RecipeViewSet(viewsets.ModelViewSet):

@@ -26,6 +26,7 @@ class DirectionSerializer(serializers.ModelSerializer):
         model = Direction
         fields = '__all__'
 
+
 class RecipeSerializer(FieldLimiter, serializers.ModelSerializer):
     """ Used to create new recipes"""
     photo = MyImageField(required=False)

@@ -62,7 +62,7 @@ class Recipe(models.Model):
 
 class Direction(models.Model):
     """
-    Django Model to hold an Direction.
+    Django Model to hold a Direction.
     Directions share a many to one relationship.
     Meaning each Recipe will have many Directions.
     :title: = Title of the Direction (EX: Mix flour with the meat.)

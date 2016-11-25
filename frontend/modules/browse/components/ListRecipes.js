@@ -11,16 +11,16 @@ export default React.createClass({
     var recipes = this.props.data.map(function(recipe) {
       var link = '/recipe/' + recipe.id;
       return (
-        <div className={format} key={recipe.id}>
+        <div className={ format } key={ recipe.id }>
           <div className="thumbnail recipe">
-            <img src={recipe.photo_thumbnail} alt="Recipe Image"/>
+            <img src={ recipe.photo_thumbnail  } alt="Recipe Image"/>
             <div className="caption">
-              <h4><Link to={link}>{recipe.title}</Link></h4>
-              <p className="desc">This is a short description. Lorem ipsum dolor sit amet, short description. Lorem ipsum dolor sit amet, short description. Lorem ipsum dolor sit amet, short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <h4><Link to={ link }>{ recipe.title }</Link></h4>
+              <p className="desc">{ recipe.info }</p>
             </div>
             <div className="ratings">
-              <p className="pull-right date">{recipe.pub_date}</p>
-              <Ratings stars={recipe.rating}/>
+              <p className="pull-right date">{ recipe.pub_date }</p>
+              <Ratings stars={ recipe.rating }/>
             </div>
           </div>
         </div>
@@ -28,7 +28,7 @@ export default React.createClass({
     });
     return (
       <div className="recipes">
-        {recipes}
+        { recipes }
       </div>
     );
   }

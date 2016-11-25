@@ -8,7 +8,7 @@ from rest_framework.response import Response
 
 from .models import Entry
 from .serializers import EntrySerializer
-from .permissions import IsAdminOrReadOnly
+from api.v1.common.permissions import IsAdminOrReadOnly
 
 
 class EntryViewSet(viewsets.ModelViewSet):
