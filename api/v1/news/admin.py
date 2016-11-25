@@ -3,12 +3,11 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from .models import Entry
-from django.conf import settings
+from .models import News
 
 
-class EntryAdmin(admin.ModelAdmin):
+class NewsAdmin(admin.ModelAdmin):
     search_fields = ['title']
     list_display = ['title', 'frontpage', 'pub_date']
 
-admin.site.register(Entry, EntryAdmin)
+admin.site.register(News, NewsAdmin)

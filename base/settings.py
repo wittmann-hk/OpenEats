@@ -12,10 +12,6 @@ SECRET_KEY = 'tk1ig_pa_p9^muz4vw4%#q@0no$=ce1*b$#s343jouyq9lj)k33j('
 
 SITE_ID = 1
 
-ADMINS = (
-    # ('Your Name', 'youremail@email.com'),
-)
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
@@ -64,13 +60,10 @@ TEMPLATES = [
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-
 )
 
 INSTALLED_APPS = (
@@ -78,9 +71,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'django.contrib.messages',
     'django.contrib.admin',
-    'django.contrib.flatpages',
     'django.contrib.staticfiles',
 
     'rest_framework',
@@ -164,7 +155,6 @@ USE_L10N = True
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'site-media')
 STATIC_ROOT = os.path.join(PROJECT_PATH, 'static-files')
-
 STATICFILES_DIRS = [
     os.path.join(PROJECT_PATH, "static"),
 ]
@@ -176,12 +166,10 @@ MEDIA_URL = '/site-media/'
 STATIC_URL = '/static-files/'
 
 ugettext = lambda s: s
-
 LANGUAGES = (
      ('en', ugettext('English')),
      ('de', ugettext('German')),
    )
-
 
 #Email Server Settings
 DEFAULT_FROM_EMAIL = ''
@@ -190,11 +178,6 @@ EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT =''
 #EMAIL_USE_TLS = True
-
-#registration
-LOGIN_REDIRECT_URL = "/recipe/"
-ACCOUNT_ACTIVATION_DAYS = 7
-
 
 try:
     from local_settings import *

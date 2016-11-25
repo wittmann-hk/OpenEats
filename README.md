@@ -23,7 +23,7 @@ However if you are looking to play around with whats here so far:
 
 Next we need to create a `base/local_settings.py` file for configuring your particulate instance. Things like your secret key and database settings should go here.
 
-Now that we have the dependencies. We need to setup the DB. The default is sqlite, which is fine for dev purposes. But if you want something a bit more robust or if you want to run this in a production environment. The current configuration should work with any database you choose to use. See the [django database docs](https://docs.djangoproject.com/en/1.10/ref/settings/#std:setting-DATABASES) for setting up your database. As a side note, please make sure that you install any additional drivers that python needs to work with the database that you choose.
+Now that we have the dependencies. We need to setup the DB. The default is sqlite, which is fine for dev purposes. But if you want something a bit more robust or if you want to run this in a production environment you should use something like postgres or mysql. The current configuration should work with any database you choose to use. See the [django database docs](https://docs.djangoproject.com/en/1.10/ref/settings/#std:setting-DATABASES) for setting up your database. As a side note, please make sure that you install any additional drivers that python needs to work with the database that you choose.
 
 The migrations should all be present in the repo. Once the database is installed, migrate all the apps.
 * `./manage.py migrate`
@@ -58,11 +58,10 @@ The next thing we need to do is setup react. From your base dir:
 #TODO
 If you're looking for something to do, I'd love some help on the following:
 
-* Usable Django Admin section. I've been ignoring this so the admin code is most likely a bit stale.
 * React i18n. I plan on having support for german at some point, but have no idea now i18n works in react.
-* Tests
+* Tests (both for django and react)
 * Working grocery list
-* Editing Recipes
+* Editing Recipes (WYSIWYG)
 
 #Dev Tips
 All of the data (excluding recipes) can be added to the DB using the Django REST GUI. The following is the CURL post I use to add recipes to the DB quickly for testing. You'll will need to either add your auth token as a header or disable the auth check in `api/v1/recipe/seralizers.py`.

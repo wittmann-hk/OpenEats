@@ -3,25 +3,21 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from .models import Cuisine
+from .models import Cuisine, Course, Tag
 
 
-class CuisineAdmin(admin.ModelAdmin):
+class CourseAndCuisineAdmin(admin.ModelAdmin):
     ordering = ['title']
-    list_display = ['title', 'author']
-    list_filter = ['author']
-
-
-class CourseAdmin(admin.ModelAdmin):
-    ordering = ['title']
-    list_display = ['title', 'author']
+    list_display = ['title']
     list_filter = ['author']
 
 
 class TagAdmin(admin.ModelAdmin):
     ordering = ['title']
-    list_display = ['title', 'author']
-    list_filter = ['author']
+    list_display = ['title']
+    list_filter = ['recipe__title']
 
 
-admin.site.register(Cuisine, CuisineAdmin)
+admin.site.register(Course, CourseAndCuisineAdmin)
+admin.site.register(Cuisine, CourseAndCuisineAdmin)
+admin.site.register(Tag, TagAdmin)

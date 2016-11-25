@@ -9,7 +9,7 @@ from . import views
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter(schema_title='Homepage News')
-router.register(r'entry', views.EntryViewSet)
+router.register(r'entry', views.NewsViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

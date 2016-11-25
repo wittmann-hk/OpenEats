@@ -7,7 +7,7 @@ from django_extensions.db.fields import AutoSlugField
 from django.utils.translation import ugettext_lazy as _
 
 
-class Entry(models.Model):
+class News(models.Model):
     """
     Django Model to hold News that will display on the homepage.
     :title: = Title of the News

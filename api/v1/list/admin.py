@@ -56,9 +56,10 @@ class GroceryRecipeAdmin(admin.ModelAdmin):
         return obj.list.author
 
     listAuthor.short_description = 'Author'
-    
-admin.site.register(GroceryList, GroceryListAdmin)
-admin.site.register(GroceryShared, GrocerySharedAdmin)
-admin.site.register(GroceryItem, GroceryItemAdmin)
-admin.site.register(GroceryAisle, GroceryAisleAdmin)
-admin.site.register(GroceryRecipe, GroceryRecipeAdmin)
+
+# TODO: Admin site is disabled for List since there are no web hooks yet
+# admin.site.register(GroceryList, GroceryListAdmin)
+# admin.site.register(GroceryShared, GrocerySharedAdmin)
+# admin.site.register(GroceryItem, GroceryItemAdmin)
+# admin.site.register(GroceryAisle, GroceryAisleAdmin)
+# admin.site.register(GroceryRecipe, GroceryRecipeAdmin)

@@ -3,11 +3,11 @@
 from __future__ import unicode_literals
 
 from rest_framework import serializers
-from .models import Entry
+from .models import News
 
 
-class EntrySerializer(serializers.ModelSerializer):
+class NewsSerializer(serializers.ModelSerializer):
     """ Standard `rest_framework` ModelSerializer """
     class Meta:
-        model = Entry
+        model = News
         exclude = ('slug', 'pub_date',)

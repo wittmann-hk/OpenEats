@@ -43,7 +43,7 @@ class Recipe(models.Model):
                                      format='JPEG',
                                      options={'quality': 70})
     cuisine = models.ForeignKey(Cuisine, verbose_name=_('cuisine'))
-    course = models.ForeignKey(Course, verbose_name=_('cuisine'))
+    course = models.ForeignKey(Course, verbose_name=_('course'))
     tags = models.ManyToManyField(Tag, verbose_name=_('tag'), blank=True)
     info = models.TextField(_('info'), help_text="enter information about the recipe")
     prep_time = models.IntegerField(_('prep time'), help_text="enter time in minutes")
