@@ -27,13 +27,6 @@ module.exports = {
     ],
   },
 
-  // resolve: {
-  //   alias: {
-  //    config: './common/config/dev.js',
-  //    config: path.join(__dirname, 'config', process.env.NODE_ENV)
-  //   }
-  // },
-
   devServer: {
     historyApiFallback: true,
     proxy: {
@@ -53,6 +46,11 @@ module.exports = {
   plugins: process.env.NODE_ENV === 'production' ? [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin()
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
+    }),
   ] : [],
 };

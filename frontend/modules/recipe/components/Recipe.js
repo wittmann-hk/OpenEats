@@ -47,7 +47,6 @@ export default React.createClass({
 
 var RecipeScheme = React.createClass({
   render: function() {
-    console.log(this.props.data);
     return (
       <div className="recipe-details">
         <h1 className="title">{this.props.data.title}</h1>

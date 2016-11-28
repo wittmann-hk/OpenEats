@@ -35,7 +35,6 @@ var Recipe = React.createClass({
   },
 
   _onChange: function() {
-    console.log(NewRecipeStore.getForm());
     this.setState( getStateFromStore() );
   },
 

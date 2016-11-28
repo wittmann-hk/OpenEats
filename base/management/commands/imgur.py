@@ -26,5 +26,5 @@ class Command(BaseCommand):
             image_generator = Thumbnail(source=source_file)
             result = image_generator.generate()
 
-        with open(settings.PROJECT_PATH + settings.MEDIA_URL + 'default_thumbnail.png', 'w') as dest:
+        with open(settings.MEDIA_ROOT + '/default_thumbnail.png', 'w') as dest:
             dest.write(result.read())

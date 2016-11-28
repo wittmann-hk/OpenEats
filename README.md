@@ -11,10 +11,6 @@ I have a lot of ideas as far as features go. But since I moved the whole UI to r
  
  
 #Running the App
- 
-This Code is still very much in development. Almost all the code has been rewritten; the only major thing sticking around is the database structure. If you are looking for something to use right away I suggest you use the main fork.
-
-However if you are looking to play around with whats here so far:
 * `git clone https://github.com/RyanNoelk/OpenEats.git`
 * `cd openeats`
 * `git checkout dev`
@@ -48,10 +44,12 @@ That should be it! you can run the dev server now to load up the api `./manage r
 Load up `http://localhost:8000/api/v1/recipe/` in a browser and see the results.
 
 
-The next thing we need to do is setup react. From your base dir:
+The next thing we need to do is setup react. The bundle and index are located in `frontend/public/' The bundle there is already a production copy.  That should be used if your looking to just serve the project with, for example, nginx. However if you want node to serve the code. See below
+
+From your base dir:
 * `cd frontend` 
 * `npm install` (this will take a few minutes as its loading a ton of small static files)
-* `npm start`
+* `NODE_ENV=production npm start`
 * Load `http://localhost:8080` in a browse and see the results.
 
 
@@ -66,7 +64,7 @@ If you're looking for something to do, I'd love some help on the following:
 #Dev Tips
 All of the data (excluding recipes) can be added to the DB using the Django REST GUI. The following is the CURL post I use to add recipes to the DB quickly for testing. You'll will need to either add your auth token as a header or disable the auth check in `api/v1/recipe/seralizers.py`.
 
-```curl -X POST -H "Content-Type: application/json" http://localhost:8000/api/v1/recipe/recipes/ --data '{"info":"hi", "cook_time":"12", "title":"hi", "directions":"<p>hi</p>", "servings":"12", "cuisine":"1", "ingredients":[{"title":"first", "quantity":"2", "measurement":"tsp"}], "prep_time":"123", "course":"1", "tags":[{"author":"1", "title":"chicken"}]}'```
+```curl -X POST -H "Content-Type: application/json" http://localhost:8000/api/v1/recipe/recipes/ --data '{"info":"hi", "cook_time":"12", "title":"hi", "directions":[{"title":"do this first", "step":"1"}], "servings":"12", "cuisine":"1", "ingredients":[{"title":"first", "quantity":"2", "measurement":"tsp"}], "prep_time":"123", "course":"1", "tags":[{"author":"1", "title":"chicken"}]}'```
 
 Apps can access there API roots via there app names:
 * Recipes - http://localhost:8000/api/v1/recipe

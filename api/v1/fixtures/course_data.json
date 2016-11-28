@@ -30,7 +30,7 @@
         "pk": 4,
         "model": "recipe_groups.course",
         "fields": {
-            "author": 4,
+            "author": 1,
             "slug": "dessert",
             "title": "Dessert"
         }
