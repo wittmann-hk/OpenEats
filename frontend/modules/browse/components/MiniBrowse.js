@@ -8,7 +8,7 @@ require("./../css/browse.scss");
 
 export default React.createClass({
   loadRecipesFromServer: function (url) {
-    var base_url = serverURLs.browse + url;
+    var base_url = serverURLs.mini_browse + url;
     request
       .get(base_url)
       .type('json')

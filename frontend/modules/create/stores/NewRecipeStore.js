@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 import { browserHistory } from 'react-router'
 
-import AppDispatcher from '../../dispatcher/AppDispatcher';
+import AppDispatcher from '../../common/AppDispatcher';
 import NewRecipeConstants from '../constants/NewRecipeConstants';
 
 const CHANGE_EVENT = 'change';

@@ -2,6 +2,7 @@
 export var serverURLs = {
   auth_token: '/api/v1/accounts/obtain-auth-token/',
   browse: '/api/v1/recipe/recipes/?format=json&fields=id,title,pub_date,rating,photo_thumbnail,info',
+  mini_browse: '/api/v1/recipe/mini-browse/?format=json',
   //create: '/api/v1/recipe/recipes/',
   cuisine: '/api/v1/recipe_groups/cuisine/?format=json',
   course: '/api/v1/recipe_groups/course/?format=json',

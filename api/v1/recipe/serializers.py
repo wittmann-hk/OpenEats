@@ -27,6 +27,22 @@ class DirectionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class MiniBrowseSerializer(serializers.ModelSerializer):
+    """ Used to get random recipes and limit the return data. """
+    photo_thumbnail = MyImageField(required=False)
+
+    class Meta:
+        model = Recipe
+        fields = (
+            'id',
+            'title',
+            'pub_date',
+            'rating',
+            'photo_thumbnail',
+            'info'
+        )
+
+
 class RecipeSerializer(FieldLimiter, serializers.ModelSerializer):
     """ Used to create new recipes"""
     photo = MyImageField(required=False)

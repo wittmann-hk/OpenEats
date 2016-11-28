@@ -1,5 +1,5 @@
 import request from 'superagent';
-import AppDispatcher from '../../dispatcher/AppDispatcher';
+import AppDispatcher from '../../common/AppDispatcher';
 import AuthStore from '../../account/stores/AuthStore';
 import NewRecipeConstants from '../constants/NewRecipeConstants';
 import {serverURLs} from '../../common/config'

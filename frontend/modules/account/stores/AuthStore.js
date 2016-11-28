@@ -1,4 +1,4 @@
-import AppDispatcher from '../../dispatcher/AppDispatcher';
+import AppDispatcher from '../../common/AppDispatcher';
 import AuthConstants from '../constants/AuthConstants';
 import { EventEmitter } from 'events';
 import { browserHistory } from 'react-router'
