@@ -66,6 +66,7 @@ var Recipe = React.createClass({
         <IngredientList name="ingredients" label="Ingredients" change={this.update}/>
         <DirectionList name="directions" label="Instructions" change={this.update}/>
         <TextArea name="info" rows="4" label="Recipe Information" placeholder="A quick description of the recipe" change={this.update}/>
+        <Input name="source" type="text" label="Source" placeholder="URL source of the recipe (if any)" change={this.update}/>
         <File name="photo" label="Photo" placeholder="Photo" change={this.update}/>
         <button className="btn btn-primary" onClick={this.CreateRecipe}>Submit Recipe</button>
       </form>

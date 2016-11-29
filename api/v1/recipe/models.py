@@ -46,6 +46,7 @@ class Recipe(models.Model):
     course = models.ForeignKey(Course, verbose_name=_('course'))
     tags = models.ManyToManyField(Tag, verbose_name=_('tag'), blank=True)
     info = models.TextField(_('info'), help_text="enter information about the recipe")
+    source = models.CharField(_('course'), max_length=200, blank=True)
     prep_time = models.IntegerField(_('prep time'), help_text="enter time in minutes")
     cook_time = models.IntegerField(_('cook time'), help_text="enter time in minutes")
     servings = models.IntegerField(_('servings'), help_text="enter total number of servings")
