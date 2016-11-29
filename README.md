@@ -36,15 +36,16 @@ If you want to add some test data we can load a few recipes and some news data. 
 * `./manage.py loaddata ing_data.json`
 * `./manage.py loaddata direction_data.json`
 
-To load all the data in one command:
-` ./manage.py loaddata api/v1/fixtures/course_data.json api/v1/fixtures/cuisine_data.json api/v1/fixtures/recipe_data.json api/v1/fixtures/direction_data.json api/v1/fixtures/ing_data.json api/v1/fixtures/news_data.json`
+Now we need to gather all the static fields for the django rest framework and django admin panel. Also, we need to build the default image for when recipes don't have an image. 
+
+* `./manage collectstatic`
+* `./manage imgur`
 
 That should be it! you can run the dev server now to load up the api `./manage runserver`.
 
-Load up `http://localhost:8000/api/v1/recipe/` in a browser and see the results.
+Load up `http://localhost:8000/admin/` in a browser and see the results.
 
-
-The next thing we need to do is setup react. The bundle and index are located in `frontend/public/' The bundle there is already a production copy.  That should be used if your looking to just serve the project with, for example, nginx. However if you want node to serve the code. See below
+The next thing we need to do is setup react. The bundle and index are located in `frontend/public/` The bundle there is already a production copy.  That should be used if your looking to just serve the project with, for example, nginx. However if you want node to serve the code. See below
 
 From your base dir:
 * `cd frontend` 
@@ -52,6 +53,11 @@ From your base dir:
 * `NODE_ENV=production npm start`
 * Load `http://localhost:8080` in a browse and see the results.
 
+If you just want to test or play around with the code, you can run the dev server. First, make sure the  django server is running. Then:
+* `cd frontend` 
+* `npm install` (this will take a few minutes as its loading a ton of small static files)
+* `npm start`
+* Load `http://localhost:8080` in a browse and see the results.
 
 #TODO
 If you're looking for something to do, I'd love some help on the following:
