@@ -1,4 +1,26 @@
 var webpack = require('webpack');
+var isProd = (process.env.NODE_ENV === 'production');
+
+// http://jonnyreeves.co.uk/2016/simple-webpack-prod-and-dev-config/
+function getPlugins() {
+  var plugins;
+
+  plugins = [];
+
+  plugins.push(new webpack.DefinePlugin({
+    'process.env': {
+      'NODE_ENV': process.env.NODE_ENV
+    }
+  }));
+
+  if (isProd) {
+    plugins.push(new webpack.optimize.DedupePlugin());
+    plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
+    plugins.push(new webpack.optimize.UglifyJsPlugin());
+  }
+
+  return plugins;
+}
 
 module.exports = {
   entry: './modules/index.js',
@@ -29,28 +51,10 @@ module.exports = {
 
   devServer: {
     historyApiFallback: true,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8000/',
-        secure: false
-      },
-      '/site-media': {
-        target: 'http://localhost:8000/',
-        secure: false
-      }
-    }
+    inline: true,
+    host: "0.0.0.0",
+    port: "8080"
   },
 
-  // add this handful of plugins that optimize the build
-  // when we're in production
-  plugins: process.env.NODE_ENV === 'production' ? [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production')
-      }
-    }),
-  ] : [],
+  plugins: getPlugins()
 };

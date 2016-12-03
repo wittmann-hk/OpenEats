@@ -1,18 +1,19 @@
+var apiHost = "http://localhost:8000";
+var apiUrl = apiHost + '/api/v1';
 
 export var serverURLs = {
-  auth_token: '/api/v1/accounts/obtain-auth-token/',
-  browse: '/api/v1/recipe/recipes/?format=json&fields=id,title,pub_date,rating,photo_thumbnail,info',
-  mini_browse: '/api/v1/recipe/mini-browse/?format=json',
-  //create: '/api/v1/recipe/recipes/',
-  cuisine: '/api/v1/recipe_groups/cuisine/?format=json',
-  course: '/api/v1/recipe_groups/course/?format=json',
-  tag: '/api/v1/recipe_groups/tag/?format=json',
-  ingredient: '/api/v1/ingredient/ingredient/?format=json',
-  direction: '/api/v1/recipe/direction/?format=json',
-  news: '/api/v1/news/entry/?format=json',
-  recipe: '/api/v1/recipe/recipes/',
+  auth_token: apiUrl + '/accounts/obtain-auth-token/',
+  browse: apiUrl + '/recipe/recipes/?format=json&fields=id,title,pub_date,rating,photo_thumbnail,info',
+  mini_browse: apiUrl + '/recipe/mini-browse/?format=json',
+  //create: apiUrl + '/recipe/recipes/',
+  cuisine: apiUrl + '/recipe_groups/cuisine/?format=json',
+  course: apiUrl + '/recipe_groups/course/?format=json',
+  tag: apiUrl + '/recipe_groups/tag/?format=json',
+  ingredient: apiUrl + '/ingredient/ingredient/?format=json',
+  direction: apiUrl + '/recipe/direction/?format=json',
+  news: apiUrl + '/news/entry/?format=json',
+  recipe: apiUrl + '/recipe/recipes/',
 };
-
 
 export var measurements = [
   'tablespoon',

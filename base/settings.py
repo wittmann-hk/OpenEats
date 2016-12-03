@@ -14,12 +14,12 @@ SITE_ID = 1
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'openeats.db',           # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'openeats',                   # Or path to database file if using sqlite3.
+        'USER': 'root',                       # Not used with sqlite3.
+        'PASSWORD': 'root',                   # Not used with sqlite3.
+        'HOST': 'db',                         # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '3306',                       # Set to empty string for default. Not used with sqlite3.
     }
 }
 # Hosts/domain names that are valid for this site; required if DEBUG is False
@@ -62,6 +62,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
 )
@@ -87,6 +88,7 @@ INSTALLED_APPS = (
 
     'imagekit',
     'django_extensions',
+    'corsheaders'
 )
 
 # Password validation
@@ -128,6 +130,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100
 }
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:8080'
+)
 
 # Static and i18n settings
 STATICFILES_FINDERS = (

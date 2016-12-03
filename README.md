@@ -1,16 +1,29 @@
-#OpenEats Project
+# OpenEats Project
 
 OpenEats is a recipe management site that allows users to create, share, and store recipes. This fork uses Django Rest Framework as a backend and React (with flux) as a front end. 
 
 The main goals of this project are two fold. One, I wanted a place to store my personal collection of recipes and share them with close friends and family. Two, I wanted to learn react :). I went digging around for a starting point and gathering ideas when i came across open eats. It had some cool ideas and was well documented for the most part. 
 
 I have a lot of ideas as far as features go. But since I moved the whole UI to react and the backend to a pure API, I'm currently working on getting the core of the project stable.  The Core, in my mind, consists of a few things.
+
 - Creating, viewing, and editing recipes.
 - Browsing and searching for recipes.
 - A simple homepage and about page.
  
- 
-#Running the App
+# Running the App
+
+## Docker
+
+```bash
+docker-compose build
+docker-compose up -d
+```
+
+You can then use `docker-compose run --rm api bash` to run the DB migrations shown below (eg: `python ./manage.py migrate`).
+
+
+## Manually
+
 * `git clone https://github.com/RyanNoelk/OpenEats.git`
 * `cd openeats`
 * `git checkout dev`
@@ -59,7 +72,8 @@ If you just want to test or play around with the code, you can run the dev serve
 * `npm start`
 * Load `http://localhost:8080` in a browse and see the results.
 
-#TODO
+# TODO
+
 If you're looking for something to do, I'd love some help on the following:
 
 * React i18n. I plan on having support for german at some point, but have no idea now i18n works in react.
@@ -67,10 +81,13 @@ If you're looking for something to do, I'd love some help on the following:
 * Working grocery list
 * Editing Recipes (WYSIWYG)
 
-#Dev Tips
+# Dev Tips
+
 All of the data (excluding recipes) can be added to the DB using the Django REST GUI. The following is the CURL post I use to add recipes to the DB quickly for testing. You'll will need to either add your auth token as a header or disable the auth check in `api/v1/recipe/seralizers.py`.
 
-```curl -X POST -H "Content-Type: application/json" http://localhost:8000/api/v1/recipe/recipes/ --data '{"info":"hi", "cook_time":"12", "title":"hi", "directions":[{"title":"do this first", "step":"1"}], "servings":"12", "cuisine":"1", "ingredients":[{"title":"first", "quantity":"2", "measurement":"tsp"}], "prep_time":"123", "course":"1", "tags":[{"author":"1", "title":"chicken"}]}'```
+```bash
+curl -X POST -H "Content-Type: application/json" http://localhost:8000/api/v1/recipe/recipes/ --data '{"info":"hi", "cook_time":"12", "title":"hi", "directions":[{"title":"do this first", "step":"1"}], "servings":"12", "cuisine":"1", "ingredients":[{"title":"first", "quantity":"2", "measurement":"tsp"}], "prep_time":"123", "course":"1", "tags":[{"author":"1", "title":"chicken"}]}'
+```
 
 Apps can access there API roots via there app names:
 * Recipes - http://localhost:8000/api/v1/recipe
