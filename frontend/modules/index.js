@@ -3,6 +3,7 @@ import { render } from 'react-dom'
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 
 import App from './base/components/App'
+import NotFound from './base/components/404'
 import About from './about/components/About'
 import Login from './account/components/Login'
 import News from './news/components/News'
@@ -37,6 +38,7 @@ render((
           <Route path="/about" component={About}/>
           <Route path="/login" component={Login}/>
           <Route path="/browse" component={Browse}/>
+          <Route path="*" component={NotFound} />
         </Route>
       </Router>
     </div>
