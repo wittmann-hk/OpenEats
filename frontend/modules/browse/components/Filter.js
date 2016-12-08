@@ -1,5 +1,7 @@
 import React from 'react'
 
+require("./../css/filter.scss");
+
 export default React.createClass({
 
   _onClick: function (event) {
@@ -28,7 +30,7 @@ export default React.createClass({
       );
     });
     return (
-      <div className="list-group">
+      <div className="list-group filter">
          <p className="list-group-item disabled">
            <b>Filter { this.props.title }</b>
          </p>
