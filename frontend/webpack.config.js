@@ -10,7 +10,8 @@ function getPlugins() {
   plugins.push(new webpack.DefinePlugin({
     'process.env': {
       'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-      'API_URL': JSON.stringify(process.env.API_URL)
+      'API_URL': JSON.stringify(process.env.API_URL),
+      'LOCALE': JSON.stringify('en')
     }
   }));
 
@@ -32,12 +33,20 @@ module.exports = {
     publicPath: '/'
   },
 
+  resolve: {
+    extensions: ['', '.js', '.jsx', '.json']
+  },
+
   module: {
     loaders: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader?presets[]=es2015&presets[]=react'
+      },
+      {
+        test: /\.json$/,
+        loader: 'json'
       },
       {
         test: /\.css$/,

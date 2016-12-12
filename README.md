@@ -95,3 +95,12 @@ Apps can access there API roots via there app names:
 * Recipe groups - http://localhost:8000/api/v1/recipe_groups/
 * News - http://localhost:8000/api/v1/news/
 * Lists - http://localhost:8000/api/v1/list/
+
+### Generating updated locale files
+
+After adding new `defineMessages` you'll need to update the locale files. Instead of doing it manually you can run this script to do it for you.
+
+```bash
+docker-compose run --rm node bash
+./node_modules/.bin/babel-node scripts/merge-locale.js
+```
