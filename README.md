@@ -76,10 +76,12 @@ If you just want to test or play around with the code, you can run the dev serve
 
 If you're looking for something to do, I'd love some help on the following:
 
-* React i18n. I plan on having support for german at some point, but have no idea now i18n works in react.
+* React i18n. There is some basic support for this. but we must go deeper
 * Tests (both for django and react)
 * Working grocery list
 * Editing Recipes (WYSIWYG)
+* Improved UI. Right now I'm using mostly bootstrap styles to make things go.
+* Docker in prod. I would love to be able to have a compose file that I can just run in prod.
 
 # Dev Tips
 
