@@ -1,4 +1,10 @@
 import React from 'react'
+import {
+    injectIntl,
+    IntlProvider,
+    defineMessages,
+    formatMessage
+} from 'react-intl';
 
 export var Input = React.createClass({
   getInitialState: function() {
@@ -55,7 +61,7 @@ export var TextArea = React.createClass({
   }
 });
 
-export var File = React.createClass({
+export var File = injectIntl(React.createClass({
   getInitialState: function() {
     return {value: this.props.value || ''};
   },
@@ -66,6 +72,15 @@ export var File = React.createClass({
     }
   },
   render: function () {
+    const {formatMessage} = this.props.intl;
+    const messages = defineMessages({
+      help_block: {
+        id: 'file_widget.help_block',
+        description: 'File upload widget help message',
+        defaultMessage: 'Please upload a picture of the finished recipe!',
+      }
+    });
+
     return (
       <div className={this.props.size} key={this.props.id}>
         <div className="form-group">
@@ -73,12 +88,12 @@ export var File = React.createClass({
           <input type="file"
                  name={this.props.name}
                  onChange={this.handleChange}/>
-          <p className="help-block">Please upload a picture of the finished recipe!</p>
+          <p className="help-block">{ formatMessage(messages.help_block) }</p>
         </div>
       </div>
     )
   }
-});
+}));
 
 export var Checkbox = React.createClass({
   getInitialState: function() {
@@ -108,7 +123,7 @@ export var Checkbox = React.createClass({
   }
 });
 
-export var Select = React.createClass({
+export var Select = injectIntl(React.createClass({
   getInitialState: function() {
     return { value: this.props.value || '' };
   },
@@ -124,6 +139,16 @@ export var Select = React.createClass({
         <option key={option.id} value={option.id}>{option.title}</option>
       );
     });
+
+    const {formatMessage} = this.props.intl;
+    const messages = defineMessages({
+      header: {
+        id: 'select_widget.header',
+        description: 'Select widget default message',
+        defaultMessage: 'Please select a {label}',
+      }
+    });
+
     return (
       <div className={this.props.size} key={this.props.id}>
         <div className="form-group">
@@ -132,21 +157,35 @@ export var Select = React.createClass({
                   className="form-control"
                   value={this.state.value}
                   onChange={this.handleChange}>
-            <option key={0} value="">Please select a {this.props.label}</option>
+            <option key={0} value="">{ formatMessage(messages.header, {label: this.props.label}) }</option>
             { options }
           </select>
         </div>
       </div>
     )
   }
-});
+}));
 
-export var Alert = React.createClass({
+export var Alert = injectIntl(React.createClass({
   render: function() {
+    const {formatMessage} = this.props.intl;
+    const messages = defineMessages({
+      title: {
+        id: 'widget_error.title',
+        description: 'Form error title',
+        defaultMessage: 'Form error!',
+      },
+      message: {
+        id: 'widget_error.message',
+        description: 'Form error message',
+        defaultMessage: 'Please confirm that all the data is there.',
+      }
+    });
+
     return (
       <div className="alert alert-danger">
-        <strong>Form Error!</strong> Please confirm that all the data is there.
+        <strong>{ formatMessage(messages.title) }</strong> { formatMessage(messages.message) }
       </div>
     )
   }
-});
+}));

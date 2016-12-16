@@ -1,5 +1,11 @@
 import React from 'react'
 import request from 'superagent';
+import {
+    injectIntl,
+    IntlProvider,
+    defineMessages,
+    formatMessage
+} from 'react-intl';
 
 import MiniBrowse from '../../browse/components/MiniBrowse'
 import { serverURLs } from '../../common/config'
@@ -45,8 +51,43 @@ export default React.createClass({
   }
 });
 
-var RecipeScheme = React.createClass({
+var RecipeScheme = injectIntl(React.createClass({
   render: function() {
+
+    const {formatMessage} = this.props.intl;
+    const messages = defineMessages({
+      cooking_time: {
+        id: 'recipe.cooking_time',
+        description: 'Cooking time',
+        defaultMessage: 'Cooking time',
+      },
+      prep_time: {
+        id: 'recipe.prep_time',
+        description: 'Preparation time',
+        defaultMessage: 'Prep time',
+      },
+      servings: {
+        id: 'recipe.servings',
+        description: 'Servings',
+        defaultMessage: 'Servings',
+      },
+      ingredients: {
+        id: 'recipe.ingredients',
+        description: 'Ingredients',
+        defaultMessage: 'Ingredients',
+      },
+      instructions: {
+        id: 'recipe.instructions',
+        description: 'Instructions',
+        defaultMessage: 'Instructions',
+      },
+      photo_placeholder: {
+        id: 'recipe.photo_placeholder',
+        description: 'Photo placeholder',
+        defaultMessage: 'Generic placeholder thumbnail'
+      }
+    });
+
     return (
       <div className="recipe-details">
         <h1 className="title">{this.props.data.title}</h1>
@@ -61,35 +102,35 @@ var RecipeScheme = React.createClass({
               <div className="col-xs-8">
                 <div className="row misc">
                   <div className="col-xs-4 item">
-                    <p className="header">Cooking Time</p>
+                    <p className="header">{ formatMessage(messages.cooking_time) }</p>
                     <p className="body">{ this.props.data.cook_time }</p>
                   </div>
                   <div className="col-xs-4 item middle">
-                    <p className="header">Prep Time</p>
+                    <p className="header">{ formatMessage(messages.prep_time) }</p>
                     <p className="body">{ this.props.data.prep_time }</p>
                   </div>
                   <div className="col-xs-4 item">
-                    <p className="header">Servings</p>
+                    <p className="header">{ formatMessage(messages.servings) }</p>
                     <p className="body">{ this.props.data.servings }</p>
                   </div>
                 </div>
 
                 <div className="desc">
-                  <h4>Ingredients</h4>
+                  <h4>{ formatMessage(messages.ingredients) }</h4>
                   <Ingredients recipe_id={ this.props.recipe_id }/>
                 </div>
               </div>
 
               <div className="col-xs-4">
                 <div className="ratings">
-                  <img src={this.props.data.photo_thumbnail} className="img-responsive" alt="Generic placeholder thumbnail"/>
+                  <img src={this.props.data.photo_thumbnail} className="img-responsive" alt={ formatMessage(messages.photo_placeholder) }/>
                   <Ratings stars={ this.props.data.rating }/>
                 </div>
               </div>
             </div>
 
             <div className="desc">
-              <h4>Instructions</h4>
+              <h4>{ formatMessage(messages.instructions) }</h4>
               <Directions recipe_id={ this.props.recipe_id }/>
             </div>
           </div>
@@ -100,4 +141,4 @@ var RecipeScheme = React.createClass({
       </div>
     );
   }
-});
+}));

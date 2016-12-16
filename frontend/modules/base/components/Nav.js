@@ -20,7 +20,6 @@ function getAuthState() {
 
 export default injectIntl(React.createClass({
   render: function() {
-
     const {formatMessage} = this.props.intl;
     const messages = defineMessages({
       brand: {
@@ -107,27 +106,55 @@ var Account = React.createClass({
 });
 
 
-var AccountLogin = React.createClass({
+var AccountLogin = injectIntl(React.createClass({
   render: function () {
+    const {formatMessage} = this.props.intl;
+    const messages = defineMessages({
+      label: {
+        id: 'nav.login.title',
+        description: 'Login title',
+        defaultMessage: 'Login',
+      }
+    });
+
     return (
-      <LinkContainer to="/login"><MenuItem>Login</MenuItem></LinkContainer>
+      <LinkContainer to="/login"><MenuItem>{ formatMessage(messages.label) }</MenuItem></LinkContainer>
     )
   }
-});
+}));
 
 
-var AccountMenu = React.createClass({
+var AccountMenu = injectIntl(React.createClass({
   logout: function() {
     AuthActions.logUserOut();
   },
 
   render: function () {
+    const {formatMessage} = this.props.intl;
+    const messages = defineMessages({
+      title: {
+        id: 'nav.accountmenu.title',
+        description: 'Account menu title',
+        defaultMessage: 'My Account',
+      },
+      create_recipe: {
+        id: 'nav.accountmenu.create_recipe',
+        description: 'Create recipe title',
+        defaultMessage: 'Create recipe',
+      },
+      logout: {
+        id: 'nav.accountmenu.logout',
+        description: 'Logout title',
+        defaultMessage: 'Logout',
+      }
+    });
+
     return (
-      <NavDropdown eventKey={1} title="My Account" id="basic-nav-dropdown">
-        <LinkContainer to="/recipe/create"><MenuItem>Create Recipe</MenuItem></LinkContainer>
+      <NavDropdown eventKey={1} title={ formatMessage(messages.title) } id="basic-nav-dropdown">
+        <LinkContainer to="/recipe/create"><MenuItem>{ formatMessage(messages.create_recipe) }</MenuItem></LinkContainer>
         <MenuItem divider />
-        <NavItem onClick={this.logout}>Logout</NavItem>
+        <NavItem onClick={this.logout}>{ formatMessage(messages.logout) }</NavItem>
       </NavDropdown>
     )
   }
-});
+}));
