@@ -72,17 +72,6 @@ If you just want to test or play around with the code, you can run the dev serve
 * `npm start`
 * Load `http://localhost:8080` in a browse and see the results.
 
-# TODO
-
-If you're looking for something to do, I'd love some help on the following:
-
-* React i18n. There is some basic support for this. but we must go deeper
-* Tests (both for django and react)
-* Working grocery list
-* Editing Recipes (WYSIWYG)
-* Improved UI. Right now I'm using mostly bootstrap styles to make things go.
-* Docker in prod. I would love to be able to have a compose file that I can just run in prod.
-
 # Dev Tips
 
 All of the data (excluding recipes) can be added to the DB using the Django REST GUI. The following is the CURL post I use to add recipes to the DB quickly for testing. You'll will need to either add your auth token as a header or disable the auth check in `api/v1/recipe/seralizers.py`.
