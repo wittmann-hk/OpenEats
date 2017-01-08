@@ -12,7 +12,6 @@ from api.v1.ingredient.models import Ingredient
 from django.conf import settings
 from .mixins import FieldLimiter
 
-
 class MyImageField(serializers.ImageField):
     def to_representation(self, value):
         if not bool(value):
@@ -72,28 +71,33 @@ class RecipeSerializer(FieldLimiter, serializers.ModelSerializer):
 
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
+
+        # Create the Ingredients
+        if ingredient_data:
+            for ingredient in instance.ingredients.all():
+                ingredient.delete()
+
+            for ingredient in ingredient_data:
+                Ingredient.objects.create(recipe=instance, **ingredient)
+
+        # Create the Directions
+        if direction_data:
+            for direction in instance.directions.all():
+                direction.delete()
+
+            for direction in direction_data:
+                Direction.objects.create(recipe=instance, **direction)
+
+        # Create the Tags
+        if tag_data:
+            for tag in instance.tags.all():
+                instance.tags.remove(tag)
+
+            for tag in tag_data:
+                obj, created = Tag.objects.get_or_create(title=tag['title'].strip())
+                instance.tags.add(obj)
+
         instance.save()
-
-        # # Create the Ingredients
-        # ingredient_instance = Ingredient.objects.get_or_create(recipe=recipe)
-        # for ingredient in ingredient_data:
-        #     for attr, value in ingredient:
-        #         setattr(ingredient_instance, attr, value)
-        #     ingredient_instance.save()
-        #
-        # # Create the Directions
-        # direction_instance = Ingredient.objects.get_or_create(recipe=recipe)
-        # for direction in direction_data:
-        #     for attr, value in direction:
-        #         setattr(direction_instance, attr, value)
-        #     direction_instance.save()
-
-        # # Create the Tags
-        # for tag in tag_data:
-        #     author = User.objects.get(pk=1)
-        #     obj, created = Tag.objects.get_or_create(title=tag['title'].strip(), defaults={'author': author})
-        #     recipe.tags.add(obj)
-
         return instance
 
     def create(self, validated_data):

@@ -8,15 +8,25 @@ import {
 
 export var Input = React.createClass({
   getInitialState: function() {
-    return {value: this.props.value || ''};
+    return { value: this.props.value || '' };
   },
-  handleChange(event) {
+
+  handleChange: function(event) {
     this.setState({value: event.target.value});
     if(this.props.change) {
       this.props.change(event.target.name, event.target.value);
     }
   },
-  render: function () {
+
+  componentWillReceiveProps: function(nextProps) {
+    if (this.props.value === undefined && this.props.value != nextProps.value) {
+      this.setState({
+        value: nextProps.value
+      });
+    }
+  },
+
+  render: function() {
     return (
       <div className={this.props.size} key={this.props.id}>
         <div className="form-group">
@@ -37,12 +47,22 @@ export var TextArea = React.createClass({
   getInitialState: function() {
     return { value: this.props.value || '' };
   },
+
   handleChange(event) {
     this.setState({value: event.target.value});
     if(this.props.change) {
       this.props.change(event.target.name, event.target.value);
     }
   },
+
+  componentWillReceiveProps: function(nextProps) {
+    if (this.props.value === undefined && this.props.value != nextProps.value) {
+      this.setState({
+        value: nextProps.value
+      });
+    }
+  },
+
   render: function () {
     return (
       <div className={this.props.size} key={this.props.id}>
@@ -65,12 +85,14 @@ export var File = injectIntl(React.createClass({
   getInitialState: function() {
     return {value: this.props.value || ''};
   },
+
   handleChange(event) {
     this.setState({value: event.target.files[0]});
     if(this.props.change) {
       this.props.change(event.target.name, event.target.files[0]);
     }
   },
+
   render: function () {
     const {formatMessage} = this.props.intl;
     const messages = defineMessages({
@@ -99,6 +121,7 @@ export var Checkbox = React.createClass({
   getInitialState: function() {
     return {checked: this.props.checked || true};
   },
+
   handleChange(event) {
     var new_value = !this.state.checked === true ? 1 : 0;
     this.setState({checked: new_value});
@@ -106,6 +129,15 @@ export var Checkbox = React.createClass({
       this.props.change(event.target.name, new_value);
     }
   },
+
+  componentWillReceiveProps: function(nextProps) {
+    if (this.props.checked != nextProps.checked) {
+      this.setState({
+        checked: nextProps.checked
+      });
+    }
+  },
+
   render: function () {
     return (
       <div className={this.props.size} key={this.props.id}>
@@ -127,12 +159,22 @@ export var Select = injectIntl(React.createClass({
   getInitialState: function() {
     return { value: this.props.value || '' };
   },
+
   handleChange(event) {
     this.setState({value: event.target.value});
     if(this.props.change) {
       this.props.change(event.target.name, event.target.value);
     }
   },
+
+  componentWillReceiveProps: function(nextProps) {
+    if (this.props.value === undefined && this.props.value != nextProps.value) {
+      this.setState({
+        value: nextProps.value
+      });
+    }
+  },
+
   render: function () {
     var options = this.props.data.map(function(option) {
       return (

@@ -1,12 +1,17 @@
 import React from 'react'
-import {measurements} from '../../common/config'
 
 export default React.createClass({
   getInitialState: function() {
     return {
-      value: this.props.value || '',
-      comp_value: this.arrayify(this.props.value)
+      tags: this.props.tags || [],
+      input: this.unarrayify(this.props.tags || [])
     };
+  },
+
+  unarrayify(value) {
+    return value.map((tag, key) => {
+      return tag.title
+    }).join(', ');
   },
 
   arrayify(value) {
@@ -14,7 +19,7 @@ export default React.createClass({
     if (value) {
       var tags = value.split(',');
       for (let title in tags) {
-        dict.push({'title': tags[title]})
+        dict.push({'title': tags[title].trim()})
       }
     }
     return dict
@@ -22,11 +27,21 @@ export default React.createClass({
 
   handleChange(event) {
     this.setState({
-      value: event.target.value,
-      comp_value: this.arrayify(event.target.value)
+      tags: this.arrayify(event.target.value),
+      input: event.target.value
     });
+
     if(this.props.change) {
       this.props.change(event.target.name, this.arrayify(event.target.value));
+    }
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    if (this.props.tags === undefined && this.props.tags != nextProps.tags) {
+      this.setState({
+        tags: nextProps.tags,
+        input: this.unarrayify(nextProps.tags)
+      });
     }
   },
 
@@ -39,7 +54,7 @@ export default React.createClass({
                  name={this.props.name}
                  className="form-control"
                  placeholder={this.props.placeholder}
-                 value={this.state.value}
+                 value={this.state.input}
                  onChange={this.handleChange}/>
         </div>
       </div>

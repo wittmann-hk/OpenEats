@@ -74,7 +74,7 @@ class Direction(models.Model):
     recipe = models.ForeignKey(Recipe, verbose_name=_('recipe'), related_name='directions', null=True)
 
     class Meta:
-        ordering = ['title']
+        ordering = ['step']
 
     def __unicode__(self):
         return self.title

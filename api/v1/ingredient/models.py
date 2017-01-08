@@ -25,7 +25,7 @@ class Ingredient(models.Model):
     recipe = models.ForeignKey(Recipe, verbose_name=_('recipe'), related_name='ingredients', null=True)
  
     class Meta:
-        ordering = ['title']
+        ordering = ['id']
 
     def __unicode__(self):
         return self.title

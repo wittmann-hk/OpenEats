@@ -16,7 +16,7 @@ import About from './about/components/About'
 import Login from './account/components/Login'
 import News from './news/components/News'
 import Browse from './browse/components/Browse'
-import Create from './create/components/Create'
+import { RecipeForm } from './recipe_form/components/RecipeForm'
 import Recipe from './recipe/components/Recipe'
 
 // Load in the base CSS
@@ -29,7 +29,8 @@ render((
           <Route path="/" component={App}>
             <IndexRoute component={News}/>
             <Route path="/news" component={News}/>
-            <Route path="/recipe/create" component={Create} /*onEnter={requireAuth}*//>
+            <Route path="/recipe/create" component={RecipeForm} /*onEnter={requireAuth}*//>
+            <Route path="/recipe/edit/:recipe" component={RecipeForm} /*onEnter={requireAuth}*//>
             <Route path="/recipe/:recipe" component={Recipe} />
             <Route path="/about" component={About}/>
             <Route path="/login" component={Login}/>
