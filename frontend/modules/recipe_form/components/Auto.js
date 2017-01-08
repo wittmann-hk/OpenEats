@@ -1,7 +1,13 @@
 import React from 'react'
 import Autocomplete from 'react-autocomplete';
+import {
+    injectIntl,
+    IntlProvider,
+    defineMessages,
+    formatMessage
+} from 'react-intl';
 
-export var Auto = React.createClass({
+export var Auto = injectIntl(React.createClass({
   getInitialState: function() {
     return {
       val: this.props.value || '',
@@ -43,6 +49,20 @@ export var Auto = React.createClass({
   },
 
   render: function () {
+    const {formatMessage} = this.props.intl;
+    const messages = defineMessages({
+      loading: {
+        id: 'autocomplete.loading',
+        description: 'Loading message',
+        defaultMessage: 'Loading...',
+      },
+      no_matches: {
+        id: 'autocomplete.no_matches',
+        description: 'No matches found message',
+        defaultMessage: 'No matches for {value}'
+      }
+    });
+
     return (
       <div className={this.props.size} key={this.props.id}>
         {this.props.label ? <label>{this.props.label}</label> : null}
@@ -66,9 +86,9 @@ export var Auto = React.createClass({
           renderMenu={(items, value) => (
             <div className="menu">
                 { this.state.loading ? (
-                  <div className="item">Loading...</div>
+                  <div className="item">{ formatMessage(messages.loading) }</div>
                 ) : items.length === 0 ? (
-                  <div className="item">No matches for {value}</div>
+                  <div className="item">{ formatMessage(messages.no_matches, {value: value}) }</div>
                 ) : this.renderItems(items)}
               </div>
           )}
@@ -76,4 +96,4 @@ export var Auto = React.createClass({
       </div>
     )
   }
-});
+}));

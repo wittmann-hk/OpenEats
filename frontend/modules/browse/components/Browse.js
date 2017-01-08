@@ -1,4 +1,10 @@
 import React from 'react'
+import {
+    injectIntl,
+    IntlProvider,
+    defineMessages,
+    formatMessage
+} from 'react-intl';
 import request from 'superagent';
 
 import Filter from './Filter'
@@ -27,7 +33,7 @@ const FILTER_MAP = {
   'search' : 'search'
 };
 
-export default React.createClass({
+export default injectIntl(React.createClass({
   contextTypes: {
     router: React.PropTypes.object
   },
@@ -136,6 +142,15 @@ export default React.createClass({
   },
 
   render: function() {
+    const {formatMessage} = this.props.intl;
+    const messages = defineMessages({
+      no_results: {
+        id: 'browse.no_results',
+        description: 'No results header',
+        defaultMessage: 'Sorry, there are no results for your search.',
+      }
+    });
+
     return (
       <div className="container">
         <div className="row">
@@ -160,7 +175,7 @@ export default React.createClass({
             <div id="browse" className="row">
               {
                 this.state.recipes === undefined || this.state.recipes.length == 0 ?
-                  <h3 className="no-results">Sorry, there are no results for your search.</h3>
+                  <h3 className="no-results">{ formatMessage(messages.no_results) }</h3>
                 :
                   <ListRecipes format="col-xs-12 col-sm-6 col-md-4 col-lg-3"
                            data={this.state.recipes}/>
@@ -180,4 +195,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+}));

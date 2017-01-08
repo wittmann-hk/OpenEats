@@ -72,15 +72,6 @@ If you just want to test or play around with the code, you can run the dev serve
 * `npm start`
 * Load `http://localhost:8080` in a browse and see the results.
 
-# TODO
-
-If you're looking for something to do, I'd love some help on the following:
-
-* React i18n. I plan on having support for german at some point, but have no idea now i18n works in react.
-* Tests (both for django and react)
-* Working grocery list
-* Editing Recipes (WYSIWYG)
-
 # Dev Tips
 
 All of the data (excluding recipes) can be added to the DB using the Django REST GUI. The following is the CURL post I use to add recipes to the DB quickly for testing. You'll will need to either add your auth token as a header or disable the auth check in `api/v1/recipe/seralizers.py`.
@@ -95,3 +86,12 @@ Apps can access there API roots via there app names:
 * Recipe groups - http://localhost:8000/api/v1/recipe_groups/
 * News - http://localhost:8000/api/v1/news/
 * Lists - http://localhost:8000/api/v1/list/
+
+### Generating updated locale files
+
+After adding new `defineMessages` you'll need to update the locale files. Instead of doing it manually you can run this script to do it for you.
+
+```bash
+docker-compose run --rm node bash
+./node_modules/.bin/babel-node scripts/merge-locale.js
+```

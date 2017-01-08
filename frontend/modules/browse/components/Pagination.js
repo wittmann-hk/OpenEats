@@ -1,6 +1,12 @@
 import React from 'react'
+import {
+    injectIntl,
+    IntlProvider,
+    defineMessages,
+    formatMessage
+} from 'react-intl';
 
-export default React.createClass ({
+export default injectIntl(React.createClass ({
 
   _onClick: function (event) {
     event.preventDefault();
@@ -16,6 +22,20 @@ export default React.createClass ({
     var next = offset + limit;
     var previous = offset - limit;
 
+    const {formatMessage} = this.props.intl;
+    const messages = defineMessages({
+      newer: {
+        id: 'pagination.newer',
+        description: 'Newer content link text',
+        defaultMessage: 'Newer',
+      },
+      older: {
+        id: 'pagination.older',
+        description: 'Older content link text',
+        defaultMessage: 'Older',
+      }
+    });
+
     return (
       <ul className="pager">
         <li className="previous">
@@ -23,7 +43,7 @@ export default React.createClass ({
             <a href="#"
                name={ previous }
                onClick={ this._onClick }>
-              &larr; Newer
+              &larr; { formatMessage(messages.newer) }
             </a>
             : ''
           }
@@ -33,7 +53,7 @@ export default React.createClass ({
             <a href="#"
                name={ next }
                onClick={ this._onClick }>
-               Older &rarr;
+               { formatMessage(messages.older) } &rarr;
             </a>
             : ''
           }
@@ -41,4 +61,4 @@ export default React.createClass ({
       </ul>
     );
   }
-})
+}));

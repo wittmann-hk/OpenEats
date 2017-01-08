@@ -1,4 +1,8 @@
-var apiHost = "http://localhost:8000";
+var apiHost = '';
+if (process.env.API_URL) {
+  apiHost = process.env.API_URL;
+}
+
 var apiUrl = apiHost + '/api/v1';
 
 export var serverURLs = {

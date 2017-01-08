@@ -1,6 +1,14 @@
 import React from 'react'
+import {
+    injectIntl,
+    IntlProvider,
+    defineMessages,
+    formatMessage
+} from 'react-intl';
 
-export default React.createClass({
+require("./../css/filter.scss");
+
+export default injectIntl(React.createClass({
 
   _onClick: function (event) {
     event.preventDefault();
@@ -10,6 +18,20 @@ export default React.createClass({
   },
 
   render: function() {
+    const {formatMessage} = this.props.intl;
+    const messages = defineMessages({
+      filter_x: {
+        id: 'filter.filter_x',
+        description: 'Filter field',
+        defaultMessage: 'Filter {title}',
+      },
+      clear_filter: {
+        id: 'filter.clear_filter',
+        description: 'Clear filter button',
+        defaultMessage: 'Clear filter',
+      }
+    });
+
     var _onClick = this._onClick;
     var active = this.props.active;
     var items = this.props.data.map(function(item) {
@@ -28,9 +50,9 @@ export default React.createClass({
       );
     });
     return (
-      <div className="list-group">
+      <div className="list-group filter">
          <p className="list-group-item disabled">
-           <b>Filter { this.props.title }</b>
+           <b>{ formatMessage(messages.filter_x, {title: this.props.title }) }</b>
          </p>
         { items }
         { active ?
@@ -39,11 +61,11 @@ export default React.createClass({
              name={ '' }
              key={ 9999999999999999 }
              onClick={ _onClick }>
-            Clear Filter
+            { formatMessage(messages.clear_filter) }
           </a>
           : ''
         }
       </div>
     );
   }
-});
+}));
