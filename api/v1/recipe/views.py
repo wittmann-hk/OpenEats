@@ -7,7 +7,7 @@ import random
 
 from . import serializers
 from .models import Recipe, Direction
-from api.v1.common.permissions import IsOwnerOrReadOnly
+from v1.common.permissions import IsOwnerOrReadOnly
 
 
 class RecipeViewSet(viewsets.ModelViewSet):

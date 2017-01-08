@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from django.conf.urls import url, include
 from rest_framework.routers import DefaultRouter
 
-from api.v1.recipe_groups import views
+from v1.recipe_groups import views
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter(schema_title='recipe_groups')
