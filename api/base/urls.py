@@ -12,7 +12,7 @@ admin.autodiscover()
 
 urlpatterns = [
     # Backend
-    url(r'^api/', include('api.urls')),
+    url(r'^api/v1/', include('v1.urls', namespace='v1')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     # Generic Static Home

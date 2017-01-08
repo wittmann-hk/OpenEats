@@ -9,7 +9,7 @@ from django_extensions.db.fields import AutoSlugField
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
-from api.v1.recipe_groups.models import Cuisine, Course, Tag
+from v1.recipe_groups.models import Cuisine, Course, Tag
 
 
 class Recipe(models.Model):

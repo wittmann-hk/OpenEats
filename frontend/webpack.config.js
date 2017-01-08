@@ -10,8 +10,8 @@ function getPlugins() {
   plugins.push(new webpack.DefinePlugin({
     'process.env': {
       'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-      'API_URL': JSON.stringify(process.env.API_URL),
-      'LOCALE': JSON.stringify('en')
+      'API_URL': JSON.stringify(process.env.NODE_API_URL),
+      'LOCALE': JSON.stringify(process.env.NODE_LOCALE)
     }
   }));
 
@@ -63,7 +63,7 @@ module.exports = {
     historyApiFallback: true,
     inline: true,
     host: "0.0.0.0",
-    port: "8080"
+    port: process.env.NODE_PORT
   },
 
   plugins: getPlugins()

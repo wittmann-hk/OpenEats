@@ -8,7 +8,7 @@ from .serializers import CuisineSerializer, \
                         TagSerializer
 from rest_framework import permissions
 from rest_framework import viewsets
-from api.v1.common.permissions import IsOwnerOrReadOnly
+from v1.common.permissions import IsOwnerOrReadOnly
 
 
 class CuisineViewSet(viewsets.ModelViewSet):

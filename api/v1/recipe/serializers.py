@@ -6,9 +6,9 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 
 from .models import Recipe, Tag, Direction
-from api.v1.ingredient.serializers import IngredientSerializer
-from api.v1.recipe_groups.serializers import TagSerializer
-from api.v1.ingredient.models import Ingredient
+from v1.ingredient.serializers import IngredientSerializer
+from v1.recipe_groups.serializers import TagSerializer
+from v1.ingredient.models import Ingredient
 from django.conf import settings
 from .mixins import FieldLimiter
 
