@@ -10,6 +10,13 @@
     padding: 9px;
     color: #333;
   }
+  .description {
+    margin-top: 20px;
+  }
+  .edit {
+    margin-top: 15px;
+    margin-left: 10px;
+  }
   .info {
     display: block;
   }
@@ -18,12 +25,12 @@
     .misc {
       border-bottom: black 1px dotted;
       border-top: black 1px dotted;
-      margin: 20px 0;
+      margin: 10px 0;
       .item {
         float: left;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        padding: 0 20px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding: 0 10px;
         text-align: center;
         width: 33%;
         .header {
@@ -43,10 +50,7 @@
       height: 0;
       line-height: 0;
     }
-    .ingredients {
-      display: block;
-    }
-    .instructions {
+    .instructions, .ingredients  {
       display: block;
     }
   }

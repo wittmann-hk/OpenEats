@@ -43,7 +43,7 @@ export default React.createClass({
             <RecipeScheme data={this.state.data} recipe_id={ this.props.params.recipe }/>
           </div>
           <div className="col-xs-3">
-            <MiniBrowse format="col-xs-12" qs="&limit=3" />
+            <MiniBrowse format="col-xs-12" qs="&limit=4" />
           </div>
         </div>
       </div>
@@ -81,6 +81,26 @@ var RecipeScheme = injectIntl(React.createClass({
         description: 'Instructions',
         defaultMessage: 'Instructions',
       },
+      source: {
+        id: 'recipe.source',
+        description: 'Source of the recipe',
+        defaultMessage: 'Source'
+      },
+      created_by: {
+        id: 'recipe.created_by',
+        description: 'Created by',
+        defaultMessage: 'Created by'
+      },
+      last_updated: {
+        id: 'recipe.last_updated',
+        description: 'Last Updated',
+        defaultMessage: 'Last Updated'
+      },
+      minutes: {
+        id: 'recipe.minutes',
+        description: 'minutes',
+        defaultMessage: 'minutes'
+      },
       photo_placeholder: {
         id: 'recipe.photo_placeholder',
         description: 'Photo placeholder',
@@ -94,20 +114,32 @@ var RecipeScheme = injectIntl(React.createClass({
         <img className=" banner-img img-responsive" src={this.props.data.photo}/>
         <div className="panel panel-success">
           <div className="panel-heading">
-            <h3>{this.props.data.title}</h3>
+            <div className="row">
+              <div className="col-lg-8">
+                <h3>{this.props.data.title}</h3>
+              </div>
+              <div className="col-lg-4">
+                {/*
+                TODO: add linkage to edit recipe and delete recipe
+                <button className="btn btn-danger pull-right edit"><span className="glyphicon glyphicon-trash"/></button>
+                <button className="btn btn-warning pull-right edit"><span className="glyphicon glyphicon-edit"/></button>
+                */}
+              </div>
+            </div>
           </div>
           <div className="recipe-schema" itemType="http://schema.org/Recipe">
-
             <div className="row">
               <div className="col-xs-8">
+                <div className="description">{ this.props.data.info }</div>
+
                 <div className="row misc">
                   <div className="col-xs-4 item">
                     <p className="header">{ formatMessage(messages.cooking_time) }</p>
-                    <p className="body">{ this.props.data.cook_time }</p>
+                    <p className="body">{ this.props.data.cook_time } { formatMessage(messages.minutes) }</p>
                   </div>
                   <div className="col-xs-4 item middle">
                     <p className="header">{ formatMessage(messages.prep_time) }</p>
-                    <p className="body">{ this.props.data.prep_time }</p>
+                    <p className="body">{ this.props.data.prep_time } { formatMessage(messages.minutes) }</p>
                   </div>
                   <div className="col-xs-4 item">
                     <p className="header">{ formatMessage(messages.servings) }</p>
@@ -135,7 +167,20 @@ var RecipeScheme = injectIntl(React.createClass({
             </div>
           </div>
           <div className="panel-footer">
-            <p>{ this.props.data.info }</p>
+            <div className="row">
+              <div className="col-lg-6">
+                { (this.props.data.source) ?
+                  <div>{ formatMessage(messages.source) }: { this.props.data.source }</div>
+                  :
+                  <div>{ formatMessage(messages.created_by) }: { this.props.data.username }</div>
+                }
+              </div>
+              <div className="col-lg-6">
+                <div className="pull-right">
+                  { formatMessage(messages.last_updated) }: { this.props.data.update_date }
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

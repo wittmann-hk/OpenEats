@@ -26,13 +26,13 @@ export default React.createClass({
   render: function() {
     var ingredients = this.state.data.map(function(direction) {
       return (
-        <li className="ingredient" key={ direction.step }>
+        <li className="instruction" key={ direction.step }>
           { direction.title }
         </li>
       );
     });
     return (
-      <ol className="ingredients" >
+      <ol className="instructions" >
         { ingredients }
       </ol>
     );

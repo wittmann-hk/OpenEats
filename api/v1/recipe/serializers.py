@@ -53,6 +53,7 @@ class RecipeSerializer(FieldLimiter, serializers.ModelSerializer):
     ingredients = IngredientSerializer(many=True)
     directions = DirectionSerializer(many=True)
     tags = TagSerializer(many=True)
+    username = serializers.ReadOnlyField(source='author.username')
 
     class Meta:
         model = Recipe
