@@ -192,15 +192,15 @@ class RecipeForm extends React.Component {
                   { this.state.errors ? ( <Alert/> ) : ''}
                   <Input name="title" type="text" label={ formatMessage(messages.name_label) } placeholder={ formatMessage(messages.name_placeholder) } change={this.update} value={ this.state.data.title }/>
                   <div className="row">
-                    <Select name="course" data={this.state.course} label={ formatMessage(messages.course_label) } size="col-xs-4" change={this.update} value={ this.state.data.course }/>
-                    <Select name="cuisine" data={this.state.cuisine} label={ formatMessage(messages.cuisine_label) } size="col-xs-4" change={this.update} value={ this.state.data.cuisine }/>
-                    <TagList name="tags" data={this.state.tags} label={ formatMessage(messages.tags_label) } size="col-xs-4" change={this.update} tags={ this.state.data.tags }/>
+                    <Select name="course" data={this.state.course} label={ formatMessage(messages.course_label) } size="col-sm-4 col-xs-12" change={this.update} value={ this.state.data.course }/>
+                    <Select name="cuisine" data={this.state.cuisine} label={ formatMessage(messages.cuisine_label) } size="col-sm-4 col-xs-12" change={this.update} value={ this.state.data.cuisine }/>
+                    <TagList name="tags" data={this.state.tags} label={ formatMessage(messages.tags_label) } size="col-sm-4 col-xs-12" change={this.update} tags={ this.state.data.tags }/>
                   </div>
                   <div className="row">
-                    <Input name="cook_time" type="number" label={ formatMessage(messages.prep_time_label) } placeholder={ formatMessage(messages.prep_time_placeholder) } size="col-xs-3" change={this.update} value={ this.state.data.prep_time }/>
-                    <Input name="prep_time" type="number" label={ formatMessage(messages.cooking_time_label) } placeholder={ formatMessage(messages.cooking_time_placeholder) } size="col-xs-3" change={this.update} value={ this.state.data.cook_time }/>
-                    <Input name="servings" type="number" label={ formatMessage(messages.servings_label) } placeholder={ formatMessage(messages.servings_placeholder) } size="col-xs-3" change={this.update} value={ this.state.data.servings }/>
-                    <Input name="rating" type="number" label={ formatMessage(messages.rating_label) } placeholder={ formatMessage(messages.rating_placeholder) } size="col-xs-3" change={this.update}  value={ this.state.data.rating }/>
+                    <Input name="cook_time" type="number" label={ formatMessage(messages.prep_time_label) } placeholder={ formatMessage(messages.prep_time_placeholder) } size="col-sm-3 col-xs-12" change={this.update} value={ this.state.data.prep_time }/>
+                    <Input name="prep_time" type="number" label={ formatMessage(messages.cooking_time_label) } placeholder={ formatMessage(messages.cooking_time_placeholder) } size="col-sm-3 col-xs-12" change={this.update} value={ this.state.data.cook_time }/>
+                    <Input name="servings" type="number" label={ formatMessage(messages.servings_label) } placeholder={ formatMessage(messages.servings_placeholder) } size="col-sm-3 col-xs-12" change={this.update} value={ this.state.data.servings }/>
+                    <Input name="rating" type="number" label={ formatMessage(messages.rating_label) } placeholder={ formatMessage(messages.rating_placeholder) } size="col-sm-3 col-xs-12" change={this.update}  value={ this.state.data.rating }/>
                   </div>
                   <IngredientList name="ingredients" label={ formatMessage(messages.ingredients_label) } change={this.update} ingredients={ this.state.data.ingredients }/>
                   <DirectionList name="directions" label={ formatMessage(messages.instructions_label) } change={this.update} instructions={ this.state.data.directions }/>
