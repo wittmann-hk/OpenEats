@@ -45,7 +45,7 @@ export default injectIntl(React.createClass({
     });
 
     return (
-      <Navbar>
+      <Navbar collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
             <Link className="navbar-brand" to="/">{formatMessage(messages.brand)}</Link>
