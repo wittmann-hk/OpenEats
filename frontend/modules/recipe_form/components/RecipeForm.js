@@ -1,4 +1,5 @@
 import React from 'react'
+import { browserHistory } from 'react-router'
 import request from 'superagent';
 import {
     injectIntl,
@@ -6,6 +7,7 @@ import {
     defineMessages,
     formatMessage
 } from 'react-intl';
+import AuthStore from '../../account/stores/AuthStore'
 import { RecipeStore, INIT_EVENT } from '../stores/RecipeStore';
 import RecipeActions from '../actions/RecipeActions';
 
@@ -23,11 +25,8 @@ class RecipeForm extends React.Component {
     super(props);
     this.state = this.getStateFromStore();
 
-    this.componentDidMount = this.componentDidMount.bind(this);
-    this.componentWillUnmount = this.componentWillUnmount.bind(this);
     this._onInit = this._onInit.bind(this);
     this.CreateRecipe = this.CreateRecipe.bind(this);
-    this.render = this.render.bind(this);
   }
 
   getStateFromStore() {
@@ -40,6 +39,10 @@ class RecipeForm extends React.Component {
     };
   }
 
+  getAuthUser() {
+    return AuthStore.getUser();
+  }
+
   componentDidMount() {
     RecipeActions.init(this.props.params.recipe);
     RecipeStore.addChangeListener(INIT_EVENT, this._onInit);
@@ -50,7 +53,15 @@ class RecipeForm extends React.Component {
   }
 
   _onInit() {
-    this.setState( this.getStateFromStore() );
+    const state = this.getStateFromStore();
+    this.setState(state);
+
+    if (Object.keys(state.data).length > 0) {
+      const user = this.getAuthUser();
+      if (user === null || (state.data.author !== user.id)) {
+        browserHistory.replace('/recipe/' + state.data.id);
+      }
+    }
   }
 
   CreateRecipe(e) {

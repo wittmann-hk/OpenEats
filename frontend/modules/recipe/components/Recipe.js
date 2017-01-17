@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 import request from 'superagent';
 import {
     injectIntl,
@@ -7,6 +8,7 @@ import {
     formatMessage
 } from 'react-intl';
 
+import AuthStore from '../../account/stores/AuthStore'
 import MiniBrowse from '../../browse/components/MiniBrowse'
 import { serverURLs } from '../../common/config'
 import Ingredients from './Ingredients'
@@ -29,18 +31,37 @@ export default React.createClass({
         }
       })
   },
+
   getInitialState: function() {
-    return { data: [] };
+    return {
+      data: [],
+      user: this.getAuthUser()
+    };
   },
+
   componentDidMount: function() {
+    AuthStore.addChangeListener(this._onChange);
     this.loadRecipeFromServer();
   },
+
+  componentWillUnmount: function() {
+    AuthStore.removeChangeListener(this._onChange);
+  },
+
+  _onChange: function() {
+    this.setState({user: this.getAuthUser()});
+  },
+
+  getAuthUser() {
+    return AuthStore.getUser();
+  },
+
   render: function() {
     return (
       <div className="container">
         <div className="row">
           <div className="col-md-9">
-            <RecipeScheme data={this.state.data} recipe_id={ this.props.params.recipe }/>
+            <RecipeScheme data={ this.state.data } user={ this.state.user } recipe_id={ this.props.params.recipe }/>
           </div>
           <div className="col-md-3">
             <MiniBrowse format="col-md-12 col-sm-6 col-xs-12" qs="&limit=4" />
@@ -168,22 +189,38 @@ var RecipeScheme = injectIntl(React.createClass({
           </div>
           <div className="panel-footer">
             <div className="row">
-              <div className="col-lg-6 col-xs-12">
+              <div className="col-lg-10 col-md-6 col-xs-8">
                 { (this.props.data.source) ?
-                  <div>{ formatMessage(messages.source) }: { this.props.data.source }</div>
-                  :
-                  <div>{ formatMessage(messages.created_by) }: { this.props.data.username }</div>
+                    <div>{ formatMessage(messages.source) }: <a href={ this.props.data.source }>{ this.getDomain(this.props.data.source) }</a></div>
+                  : null
                 }
-              </div>
-              <div className="col-lg-6 hidden-xs">
-                <div className="pull-right">
+                <div>{ formatMessage(messages.created_by) }: { this.props.data.username }</div>
+                <div className="hidden-sm hidden-xs">
                   { formatMessage(messages.last_updated) }: { this.props.data.update_date }
                 </div>
+              </div>
+              <div className="col-lg-2 col-md-6 col-xs-4 pull-right text-right">
+                { this.showEditLink() }
               </div>
             </div>
           </div>
         </div>
       </div>
     );
+  },
+
+  showEditLink: function() {
+    if (this.props.user !== null && (this.props.user.id === this.props.data.author)) {
+      return (
+        <Link to={ "/recipe/edit/" + this.props.data.id }><button className="btn btn-primary btn-sm">Edit recipe</button></Link>
+      )
+    }
+  },
+
+  // Hack-a-licious!
+  getDomain: function(url) {
+    let a = document.createElement('a');
+    a.href = url;
+    return a.hostname;
   }
 }));
