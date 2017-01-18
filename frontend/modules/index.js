@@ -18,26 +18,45 @@ import News from './news/components/News'
 import Browse from './browse/components/Browse'
 import { RecipeForm } from './recipe_form/components/RecipeForm'
 import Recipe from './recipe/components/Recipe'
+import AuthStore from './account/stores/AuthStore'
 
 // Load in the base CSS
 require("./base/css/footer.css");
 
+const requireAuth = (nextState, replace) => {
+  if (!AuthStore.isAuthenticated()) {
+    replace('/browse');
+  }
+};
+
+const routeConfig = [
+  { path: '/',
+    component: App,
+    indexRoute: { component: News },
+    childRoutes: [
+      { path: 'news', component: News },
+      { path: 'about', component: About },
+      { path: 'login', component: Login },
+      { path: 'browse', component: Browse },
+      { path: 'recipe',
+        childRoutes: [
+          { path: 'create', component: RecipeForm, onEnter: requireAuth },
+          { path: 'edit/:id', component: RecipeForm, onEnter: requireAuth },
+          { path: ':recipe', component: Recipe }
+        ]
+      },
+      { path: '*', component: NotFound }
+    ]
+  }
+]
+
 render((
-    <IntlProvider locale={process.env.LOCALE} messages={messages}>
+    <IntlProvider locale={ process.env.LOCALE } messages={ messages }>
       <div>
-        <Router history={browserHistory}>
-          <Route path="/" component={App}>
-            <IndexRoute component={News}/>
-            <Route path="/news" component={News}/>
-            <Route path="/recipe/create" component={RecipeForm} /*onEnter={requireAuth}*//>
-            <Route path="/recipe/edit/:recipe" component={RecipeForm} /*onEnter={requireAuth}*//>
-            <Route path="/recipe/:recipe" component={Recipe} />
-            <Route path="/about" component={About}/>
-            <Route path="/login" component={Login}/>
-            <Route path="/browse" component={Browse}/>
-            <Route path="*" component={NotFound} />
-          </Route>
-        </Router>
+        <Router
+          history={ browserHistory }
+          routes={ routeConfig }
+        />
       </div>
     </IntlProvider>
   ),

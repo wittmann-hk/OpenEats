@@ -44,7 +44,7 @@ class RecipeForm extends React.Component {
   }
 
   componentDidMount() {
-    RecipeActions.init(this.props.params.recipe);
+    RecipeActions.init(this.props.params.id);
     RecipeStore.addChangeListener(INIT_EVENT, this._onInit);
   }
 
@@ -58,7 +58,7 @@ class RecipeForm extends React.Component {
 
     if (Object.keys(state.data).length > 0) {
       const user = this.getAuthUser();
-      if (user === null || (state.data.author !== user.id)) {
+      if (state.data.author !== user.id) {
         browserHistory.replace('/recipe/' + state.data.id);
       }
     }
