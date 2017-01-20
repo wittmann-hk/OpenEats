@@ -1,7 +1,12 @@
 # Django settings for openeats project.
 import os
 
-DEBUG = os.environ.get('DJANGO_DEBUG', True)
+# We can't set the debug just using the env var.
+# Python with evaluate any string as a True bool.
+DEBUG = False
+if os.environ.get('DJANGO_DEBUG', None).lower() == 'true':
+    DEBUG = True
+
 SERVE_MEDIA = True
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -64,6 +69,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
 )
 
@@ -72,6 +78,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'django.contrib.messages',
     'django.contrib.admin',
     'django.contrib.staticfiles',
 

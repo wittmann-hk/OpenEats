@@ -74,6 +74,7 @@ AuthStore.dispatchToken = AppDispatcher.register(action => {
     case AuthConstants.LOGOUT_USER:
       removeUser();
       AuthStore.emitChange();
+      browserHistory.push('/');
       break;
 
     default:
