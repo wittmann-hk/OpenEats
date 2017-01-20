@@ -210,9 +210,18 @@ var RecipeScheme = injectIntl(React.createClass({
   },
 
   showEditLink: function() {
+    const {formatMessage} = this.props.intl;
+    const messages = defineMessages({
+      edit_recipe: {
+        id: 'recipe.edit_recipe',
+        description: 'Edit recipe button text',
+        defaultMessage: 'Edit recipe'
+      }
+    });
+
     if (this.props.user !== null && (this.props.user.id === this.props.data.author)) {
       return (
-        <Link to={ "/recipe/edit/" + this.props.data.id }><button className="btn btn-primary btn-sm">Edit recipe</button></Link>
+        <Link to={ "/recipe/edit/" + this.props.data.id }><button className="btn btn-primary btn-sm">{ formatMessage(messages.edit_recipe) }</button></Link>
       )
     }
   },
