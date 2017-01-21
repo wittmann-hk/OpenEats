@@ -65,5 +65,6 @@
   "recipe.servings": "Servings",
   "recipe.ingredients": "Ingredients",
   "recipe.instructions": "Instructions",
-  "recipe.photo_placeholder": "Generic placeholder thumbnail"
+  "recipe.photo_placeholder": "Generic placeholder thumbnail",
+  "recipe.edit_recipe": "Edit recipe"
 }

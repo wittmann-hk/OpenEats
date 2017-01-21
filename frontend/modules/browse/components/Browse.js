@@ -154,7 +154,7 @@ export default injectIntl(React.createClass({
     return (
       <div className="container">
         <div className="row">
-          <div className="col-xs-2 sidebar">
+          <div className="sidebar col-sm-2 hidden-xs">
             <div className="sidebar">
               <Filter title="course"
                       data={ this.state.course }
@@ -168,7 +168,7 @@ export default injectIntl(React.createClass({
               />
             </div>
           </div>
-          <div className="col-xs-10">
+          <div className="col-sm-10 col-xs-12">
             <div className="row">
               <SearchBar format="col-xs-12" filter={ this.filter }/>
             </div>
