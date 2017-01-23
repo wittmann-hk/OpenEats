@@ -121,7 +121,7 @@ RecipeStore.dispatchToken = AppDispatcher.register(action => {
 
     case RecipeConstants.SUBMIT:
       browserHistory.push('/recipe/' + action.new_recipe_id);
-      _formData = [];
+      _formData = {};
       _errors = false;
       RecipeStore.emitChange();
       break;
