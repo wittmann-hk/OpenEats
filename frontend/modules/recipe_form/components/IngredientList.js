@@ -63,7 +63,10 @@ var Ingredient = injectIntl(React.createClass({
 
 export default injectIntl(React.createClass({
   getInitialState: function () {
-    return { ingredients: []};
+    return {
+      ingredients: [],
+      errors: this.props.errors || false
+    };
   },
 
   addIngredient: function (e) {
@@ -109,6 +112,10 @@ export default injectIntl(React.createClass({
         ingredients: nextProps.ingredients
       });
     }
+
+    if('errors' in nextProps) {
+      this.setState({errors: nextProps.errors});
+    }
   },
 
   render: function () {
@@ -132,15 +139,27 @@ export default injectIntl(React.createClass({
       )
     });
 
+    let panelClass = "panel panel-default";
+    let errorMessage = false;
+    if (this.state.errors !== false) {
+      panelClass = "panel panel-danger";
+      errorMessage = (
+        <div className="panel-footer">
+          { this.state.errors[0] }
+        </div>
+      )
+    }
+
     return (
       <div className="row">
         {this.props.label ? <label className="col-xs-12">{this.props.label}</label> : null}
         <div className="col-xs-12">
-          <div className="panel panel-default">
+          <div className={ panelClass }>
             <div className="panel-body">
               { ingredientList }
               <a href="#" onClick={this.addIngredient} className="btn btn-success add-ing">{ formatMessage(messages.add_ingredient) }</a>
             </div>
+            { errorMessage }
           </div>
         </div>
       </div>

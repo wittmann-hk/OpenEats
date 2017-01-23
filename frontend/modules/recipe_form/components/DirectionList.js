@@ -53,7 +53,10 @@ var Instruction = injectIntl(React.createClass({
 
 export default injectIntl(React.createClass({
   getInitialState: function () {
-    return { instructions: [] };
+    return {
+      instructions: [],
+      errors: this.props.errors || false
+    };
   },
 
   addInstruction: function (e) {
@@ -100,6 +103,10 @@ export default injectIntl(React.createClass({
         instructions: nextProps.instructions
       });
     }
+
+    if('errors' in nextProps) {
+      this.setState({errors: nextProps.errors});
+    }
   },
 
   render: function () {
@@ -123,15 +130,27 @@ export default injectIntl(React.createClass({
         )
     });
 
+    let panelClass = "panel panel-default";
+    let errorMessage = false;
+    if (this.state.errors !== false) {
+      panelClass = "panel panel-danger";
+      errorMessage = (
+        <div className="panel-footer">
+          { this.state.errors[0] }
+        </div>
+      )
+    }
+
     return (
       <div className="row">
         { this.props.label ? <label className="col-xs-12">{ this.props.label }</label> : null }
         <div className="col-xs-12">
-          <div className="panel panel-default">
+          <div className={ panelClass }>
             <div className="panel-body">
               { instructionsList }
               <a href="#" onClick={ this.addInstruction } className="btn btn-success add-ing">{ formatMessage(messages.next_instruction) }</a>
             </div>
+            { errorMessage }
           </div>
         </div>
       </div>

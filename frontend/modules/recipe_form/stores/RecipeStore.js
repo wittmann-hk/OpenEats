@@ -6,6 +6,7 @@ import RecipeConstants from '../constants/RecipeConstants';
 
 export const INIT_EVENT = 'init';
 export const CHANGE_EVENT = 'change';
+export const ERROR_EVENT = 'error';
 
 var _formData = {};
 var _tags = [];
@@ -25,6 +26,10 @@ class RecipeStoreClass extends EventEmitter {
 
   emitChange() {
     this.emit(CHANGE_EVENT);
+  }
+
+  emitError() {
+    this.emit(ERROR_EVENT);
   }
 
   addChangeListener(event, callback) {
@@ -111,7 +116,7 @@ RecipeStore.dispatchToken = AppDispatcher.register(action => {
 
     case RecipeConstants.ERROR:
       _errors = action.error;
-      RecipeStore.emitChange();
+      RecipeStore.emitError();
       break;
 
     case RecipeConstants.SUBMIT:
