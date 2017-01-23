@@ -79,11 +79,7 @@ class RecipeForm extends React.Component {
 
   CreateRecipe(e) {
     e.preventDefault();
-    if (this.state.data.id) {
-      RecipeActions.edit(this.state.data);
-    } else {
-      RecipeActions.submit(this.state.data);
-    }
+    RecipeActions.submit(this.state.data);
   }
 
   update(name, value) {
