@@ -112,8 +112,12 @@ class RecipeSerializer(FieldLimiter, serializers.ModelSerializer):
         direction_data = validated_data.pop('directions', None)
         tag_data = validated_data.pop('tags', None)
 
-        # Create the recipe
-        recipe = Recipe.objects.create(**validated_data)
+        # Create the recipe.
+        # Use the log-in user as the author.
+        recipe = Recipe.objects.create(
+            author=self.context['request'].user,
+            **validated_data
+        )
 
         # Create the Ingredients
         for ingredient in ingredient_data:

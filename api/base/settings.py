@@ -28,8 +28,12 @@ DATABASES = {
     }
 }
 # Hosts/domain names that are valid for this site; required if DEBUG is False
-# See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
+# See https://docs.djangoproject.com/en/1.10/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+env_allowed_host = os.environ.get('ALLOWED_HOST', None)
+if env_allowed_host is not None:
+    ALLOWED_HOSTS.append(env_allowed_host)
 
 # List of callables that know how to import templates from various sources.
 TEMPLATES = [

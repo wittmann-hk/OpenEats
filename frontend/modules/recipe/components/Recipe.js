@@ -18,8 +18,8 @@ import Ratings from './Ratings'
 require("./../css/recipe.scss");
 
 export default React.createClass({
-  loadRecipeFromServer: function() {
-    var url = serverURLs.recipe + this.props.params.recipe + "/?format=json";
+  loadRecipeFromServer: function(id) {
+    var url = serverURLs.recipe + id + "/?format=json";
     request
       .get(url)
       .type('json')
@@ -41,11 +41,15 @@ export default React.createClass({
 
   componentDidMount: function() {
     AuthStore.addChangeListener(this._onChange);
-    this.loadRecipeFromServer();
+    this.loadRecipeFromServer(this.props.params.recipe);
   },
 
   componentWillUnmount: function() {
     AuthStore.removeChangeListener(this._onChange);
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.loadRecipeFromServer(nextProps.params.recipe);
   },
 
   _onChange: function() {
