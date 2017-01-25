@@ -164,10 +164,10 @@ class RecipeForm extends React.Component {
         description: 'Recipe ingredients label',
         defaultMessage: 'Ingredients',
       },
-      instructions_label: {
-        id: 'recipe.create.instructions_label',
+      directions_label: {
+        id: 'recipe.create.directions_label',
         description: 'Rating label',
-        defaultMessage: 'Instructions',
+        defaultMessage: 'Directions',
       },
       information_label: {
         id: 'recipe.create.information_label',
@@ -297,9 +297,9 @@ class RecipeForm extends React.Component {
                     errors={ this.getErrors('ingredients') } />
                   <DirectionList
                     name="directions"
-                    label={ formatMessage(messages.instructions_label) }
+                    label={ formatMessage(messages.directions_label) }
                     change={ this.update }
-                    instructions={ this.state.data.directions }
+                    directions={ this.state.data.directions }
                     errors={ this.getErrors('directions') } />
                   <TextArea
                     name="info"

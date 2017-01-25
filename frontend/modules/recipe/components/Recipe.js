@@ -101,10 +101,10 @@ var RecipeScheme = injectIntl(React.createClass({
         description: 'Ingredients',
         defaultMessage: 'Ingredients',
       },
-      instructions: {
-        id: 'recipe.instructions',
-        description: 'Instructions',
-        defaultMessage: 'Instructions',
+      directions: {
+        id: 'recipe.directions',
+        description: 'Directions',
+        defaultMessage: 'Directions',
       },
       source: {
         id: 'recipe.source',
@@ -187,7 +187,7 @@ var RecipeScheme = injectIntl(React.createClass({
             </div>
 
             <div className="desc">
-              <h4>{ formatMessage(messages.instructions) }</h4>
+              <h4>{ formatMessage(messages.directions) }</h4>
               <Directions recipe_id={ this.props.recipe_id }/>
             </div>
           </div>
