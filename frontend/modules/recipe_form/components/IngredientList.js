@@ -48,9 +48,31 @@ var Ingredient = injectIntl(React.createClass({
 
     return (
       <div className="ingredient" key={this.props.id}>
-        <Input name="title" type="text" placeholder={ formatMessage(messages.name_placeholder) } size="col-sm-4 col-xs-12" change={ this.update } value={ this.state.title }/>
-        <Input name="quantity" type="number" placeholder={ formatMessage(messages.quantity_placeholder) } size="col-sm-3 col-xs-12" change={ this.update } value={ this.state.quantity }/>
-        <Auto name="measurement" data={measurements} type="text" placeholder={ formatMessage(messages.measurement_placeholder) } size="col-sm-4 col-xs-12" change={ this.update } value={ this.state.measurement }/>
+        <Input
+          name="quantity"
+          type="number"
+          placeholder={ formatMessage(messages.quantity_placeholder) }
+          size="col-sm-3 col-xs-12"
+          change={ this.update }
+          value={ this.state.quantity }
+        />
+        <Auto
+          name="measurement"
+          data={measurements}
+          type="text"
+          placeholder={ formatMessage(messages.measurement_placeholder) }
+          size="col-sm-4 col-xs-12"
+          change={ this.update }
+          value={ this.state.measurement }
+        />
+        <Input
+          name="title"
+          type="text"
+          placeholder={ formatMessage(messages.name_placeholder) }
+          size="col-sm-4 col-xs-12"
+          change={ this.update }
+          value={ this.state.title }
+        />
         <div className="col-xs-1">
           <div className="form-group">
             <button onClick={ this.props.deleteIngredient } className="btn btn-danger glyphicon glyphicon-remove" />
