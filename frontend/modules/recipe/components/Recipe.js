@@ -1,12 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router'
-import request from 'superagent';
+import { Link, browserHistory } from 'react-router'
+import request from 'superagent'
 import {
     injectIntl,
     IntlProvider,
     defineMessages,
     formatMessage
-} from 'react-intl';
+} from 'react-intl'
 
 import AuthStore from '../../account/stores/AuthStore'
 import MiniBrowse from '../../browse/components/MiniBrowse'
@@ -27,7 +27,11 @@ export default React.createClass({
         if (!err && res) {
           this.setState({ data: res.body });
         } else {
-          console.error(url, err.toString());
+          if (res.statusCode == 404) {
+            browserHistory.replace('/notfound');
+          } else {
+            console.error(url, err.toString());
+          }
         }
       })
   },
