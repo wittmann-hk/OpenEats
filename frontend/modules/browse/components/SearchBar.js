@@ -1,4 +1,5 @@
 import React from 'react'
+import DebounceInput from 'react-debounce-input';
 import {
     injectIntl,
     IntlProvider,
@@ -38,13 +39,15 @@ export default injectIntl(React.createClass({
       <div className={ this.props.format }>
         <div className="input-group search-bar">
           <span className="input-group-addon" id="search_bar_label">{ formatMessage(messages.search) }:</span>
-          <input type="text"
-                 name="SearchBar"
-                 aria-describedby="search_bar_label"
-                 className="form-control"
-                 placeholder={ formatMessage(messages.input_placeholder) }
-                 value={ this.state.value }
-                 onChange={ this._onChange }/>
+          <DebounceInput
+            name="SearchBar"
+            minLength={2}
+            debounceTimeout={250}
+            aria-describedby="search_bar_label"
+            className="form-control"
+            placeholder={ formatMessage(messages.input_placeholder) }
+            value={ this.state.value }
+            onChange={ this._onChange }/>
         </div>
       </div>
     )

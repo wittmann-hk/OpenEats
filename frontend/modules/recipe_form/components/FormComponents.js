@@ -8,11 +8,17 @@ import {
 
 export var Input = React.createClass({
   getInitialState: function() {
-    return { value: this.props.value || '' };
+    return {
+      value: this.props.value || '',
+      errors: this.props.errors || false
+    };
   },
 
   handleChange: function(event) {
-    this.setState({value: event.target.value});
+    this.setState({
+      value: event.target.value
+    });
+
     if(this.props.change) {
       this.props.change(event.target.name, event.target.value);
     }
@@ -24,12 +30,27 @@ export var Input = React.createClass({
         value: nextProps.value
       });
     }
+
+    if ('errors' in nextProps) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
   },
 
   render: function() {
+    let className = "form-group";
+    let errorMessage = false;
+    if (this.state.errors !== false) {
+      className += " has-error";
+      errorMessage = (
+        <span className="help-inline">{ this.state.errors[0] }</span>
+      )
+    }
+
     return (
       <div className={this.props.size} key={this.props.id}>
-        <div className="form-group">
+        <div className={ className }>
           {this.props.label ? <label>{this.props.label}</label> : null}
           <input type={this.props.type}
                  name={this.props.name}
@@ -37,6 +58,7 @@ export var Input = React.createClass({
                  placeholder={this.props.placeholder}
                  value={this.state.value}
                  onChange={this.handleChange}/>
+          { errorMessage }
         </div>
       </div>
     )
@@ -45,7 +67,10 @@ export var Input = React.createClass({
 
 export var TextArea = React.createClass({
   getInitialState: function() {
-    return { value: this.props.value || '' };
+    return {
+      value: this.props.value || '',
+      errors: this.props.errors || false
+    };
   },
 
   handleChange(event) {
@@ -61,12 +86,25 @@ export var TextArea = React.createClass({
         value: nextProps.value
       });
     }
+
+    if ('errors' in nextProps) {
+      this.setState({errors: nextProps.errors});
+    }
   },
 
   render: function () {
+    let className = "form-group";
+    let errorMessage = false;
+    if (this.state.errors !== false) {
+      className += " has-error";
+      errorMessage = (
+        <span className="help-inline">{ this.state.errors[0] }</span>
+      )
+    }
+
     return (
       <div className={this.props.size} key={this.props.id}>
-        <div className="form-group">
+        <div className={ className }>
           {this.props.label ? <label>{this.props.label}</label> : null}
           <textarea type={this.props.type}
                     name={this.props.name}
@@ -75,6 +113,7 @@ export var TextArea = React.createClass({
                     placeholder={this.props.placeholder}
                     value={this.state.value}
                     onChange={this.handleChange}/>
+          { errorMessage }
         </div>
       </div>
     )
@@ -157,7 +196,10 @@ export var Checkbox = React.createClass({
 
 export var Select = injectIntl(React.createClass({
   getInitialState: function() {
-    return { value: this.props.value || '' };
+    return {
+      value: this.props.value || '',
+      errors: this.props.errors || false
+    };
   },
 
   handleChange(event) {
@@ -173,10 +215,16 @@ export var Select = injectIntl(React.createClass({
         value: nextProps.value
       });
     }
+
+    if ('errors' in nextProps) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
   },
 
   render: function () {
-    var options = this.props.data.map(function(option) {
+    const options = this.props.data.map(function(option) {
       return (
         <option key={option.id} value={option.id}>{option.title}</option>
       );
@@ -191,9 +239,18 @@ export var Select = injectIntl(React.createClass({
       }
     });
 
+    let className = "form-group";
+    let errorMessage = false;
+    if (this.state.errors !== false) {
+      className += " has-error";
+      errorMessage = (
+        <span className="help-inline">{ this.state.errors[0] }</span>
+      )
+    }
+
     return (
       <div className={this.props.size} key={this.props.id}>
-        <div className="form-group">
+        <div className={ className }>
           {this.props.label ? <label>{this.props.label}</label> : null}
           <select name={this.props.name}
                   className="form-control"
@@ -202,6 +259,7 @@ export var Select = injectIntl(React.createClass({
             <option key={0} value="">{ formatMessage(messages.header, {label: this.props.label}) }</option>
             { options }
           </select>
+          { errorMessage }
         </div>
       </div>
     )

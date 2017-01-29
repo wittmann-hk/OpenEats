@@ -1,12 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router'
-import request from 'superagent';
+import { Link, browserHistory } from 'react-router'
+import request from 'superagent'
 import {
     injectIntl,
     IntlProvider,
     defineMessages,
     formatMessage
-} from 'react-intl';
+} from 'react-intl'
 
 import AuthStore from '../../account/stores/AuthStore'
 import MiniBrowse from '../../browse/components/MiniBrowse'
@@ -18,8 +18,8 @@ import Ratings from './Ratings'
 require("./../css/recipe.scss");
 
 export default React.createClass({
-  loadRecipeFromServer: function() {
-    var url = serverURLs.recipe + this.props.params.recipe + "/?format=json";
+  loadRecipeFromServer: function(id) {
+    var url = serverURLs.recipe + id + "/?format=json";
     request
       .get(url)
       .type('json')
@@ -27,7 +27,11 @@ export default React.createClass({
         if (!err && res) {
           this.setState({ data: res.body });
         } else {
-          console.error(url, err.toString());
+          if (res.statusCode == 404) {
+            browserHistory.replace('/notfound');
+          } else {
+            console.error(url, err.toString());
+          }
         }
       })
   },
@@ -41,11 +45,15 @@ export default React.createClass({
 
   componentDidMount: function() {
     AuthStore.addChangeListener(this._onChange);
-    this.loadRecipeFromServer();
+    this.loadRecipeFromServer(this.props.params.recipe);
   },
 
   componentWillUnmount: function() {
     AuthStore.removeChangeListener(this._onChange);
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.loadRecipeFromServer(nextProps.params.recipe);
   },
 
   _onChange: function() {
@@ -97,10 +105,10 @@ var RecipeScheme = injectIntl(React.createClass({
         description: 'Ingredients',
         defaultMessage: 'Ingredients',
       },
-      instructions: {
-        id: 'recipe.instructions',
-        description: 'Instructions',
-        defaultMessage: 'Instructions',
+      directions: {
+        id: 'recipe.directions',
+        description: 'Directions',
+        defaultMessage: 'Directions',
       },
       source: {
         id: 'recipe.source',
@@ -183,7 +191,7 @@ var RecipeScheme = injectIntl(React.createClass({
             </div>
 
             <div className="desc">
-              <h4>{ formatMessage(messages.instructions) }</h4>
+              <h4>{ formatMessage(messages.directions) }</h4>
               <Directions recipe_id={ this.props.recipe_id }/>
             </div>
           </div>
