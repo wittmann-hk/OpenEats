@@ -6,8 +6,7 @@ import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 // Load default locale data;
 import en from 'react-intl/locale-data/en';
 import es from 'react-intl/locale-data/es';
-import de from 'react-intl/locale-data/de';
-addLocaleData([...en, ...es, ...de]);
+addLocaleData([...en, ...es]);
 
 const messages = require('./locale/'+process.env.LOCALE+'.json');
 

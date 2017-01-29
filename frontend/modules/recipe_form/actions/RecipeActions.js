@@ -5,6 +5,7 @@ import RecipeConstants from '../constants/RecipeConstants';
 import {serverURLs} from '../../common/config'
 
 class RecipeActions {
+  /* TODO: merge submit() and edit() */
   submit(data) {
     let photo = false;
     if (data.photo){
@@ -14,11 +15,51 @@ class RecipeActions {
     delete data['photo'];
     delete data['photo_thumbnail'];
 
-    let r = 'id' in data ?
-      request.put(serverURLs.recipe + data.id + '/') :
-      request.post(serverURLs.recipe) ;
+    request
+      .post(serverURLs.recipe)
+      .send(data)
+      .set('Authorization', 'Token ' + AuthStore.getToken())
+      .end((err, res) => {
+        if (!err && res) {
+          //send the image once the file has been created
+          var id = res.body.id;
+          if (photo) {
+            request
+              .patch(serverURLs.recipe + id + "/")
+              .attach('photo', photo)
+              .set('Authorization', 'Token ' + AuthStore.getToken())
+              .end((err, res) => {
+                if (!err && res) {
+                  this.handleSubmit(res.body.id);
+                } else {
+                  console.error(serverURLs.recipe, err.toString());
+                  console.error(res.body);
+                  this.error(res.body);
+                }
+              });
+          } else {
+            this.handleSubmit(res.body.id);
+          }
+        } else {
+          console.error(serverURLs.recipe, err.toString());
+          console.error(res.body);
+          this.error(res.body);
+        }
+      });
+  }
 
-    r.send(data)
+  edit(data) {
+    let photo = false;
+    if (data.photo){
+      photo = data.photo;
+    }
+
+    delete data['photo'];
+    delete data['photo_thumbnail'];
+
+    request
+      .put(serverURLs.recipe + data['id'] + '/')
+      .send(data)
       .set('Authorization', 'Token ' + AuthStore.getToken())
       .end((err, res) => {
         if (!err && res) {

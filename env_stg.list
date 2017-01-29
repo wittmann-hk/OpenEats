@@ -9,7 +9,6 @@ DJANGO_SECERT_KEY=sdfsadfas32e98zsdvhhsnz6udvbksjdhfi4galshjfg
 DJANGO_TIME_ZONE=America/Chicago
 DJANGO_SETTINGS_MODULE=base.settings
 DJANGO_DEBUG=False
-ALLOWED_HOST=''
 
 # Node config
 NODE_ENV=production

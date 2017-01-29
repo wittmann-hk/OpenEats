@@ -24,16 +24,16 @@ export default React.createClass({
     this.loadRecipeFromServer();
   },
   render: function() {
-    var directions = this.state.data.map(function(direction) {
+    var ingredients = this.state.data.map(function(direction) {
       return (
-        <li className="direction" key={ direction.step }>
+        <li className="instruction" key={ direction.step }>
           { direction.title }
         </li>
       );
     });
     return (
-      <ol className="directions" >
-        { directions }
+      <ol className="instructions" >
+        { ingredients }
       </ol>
     );
   }
