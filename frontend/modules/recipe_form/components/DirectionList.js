@@ -7,7 +7,7 @@ import {
 } from 'react-intl';
 import { TextArea } from './FormComponents'
 
-var Instruction = injectIntl(React.createClass({
+var Direction = injectIntl(React.createClass({
   getInitialState: function() {
     return {
       step: this.props.data ? this.props.data.step : 0,
@@ -26,24 +26,24 @@ var Instruction = injectIntl(React.createClass({
     const {formatMessage} = this.props.intl;
     const messages = defineMessages({
       step_label: {
-        id: 'instructions.step_label',
+        id: 'directions.step_label',
         description: 'Step # label',
         defaultMessage: 'Step {step, number}',
       },
       textarea_placeholder: {
-        id: 'instructions.textarea_placeholder',
+        id: 'directions.textarea_placeholder',
         description: 'Step # label',
-        defaultMessage: 'Instruction',
+        defaultMessage: 'Direction',
       }
     });
 
     return (
-      <div className="instruction row">
+      <div className="direction row">
         <label className="col-xs-1">{ formatMessage(messages.step_label, {step: this.state.step}) }:</label>
         <TextArea name="title" type="text" placeholder={ formatMessage(messages.textarea_placeholder) } size="col-xs-10" change={ this.update } value={ this.state.title }/>
         <div className="col-xs-1">
           <div className="form-group">
-            <button onClick={ this.props.deleteInstruction } className="btn btn-danger glyphicon glyphicon-remove" />
+            <button onClick={ this.props.deleteDirection } className="btn btn-danger glyphicon glyphicon-remove" />
           </div>
         </div>
       </div>
@@ -53,85 +53,104 @@ var Instruction = injectIntl(React.createClass({
 
 export default injectIntl(React.createClass({
   getInitialState: function () {
-    return { instructions: [] };
+    return {
+      directions: [],
+      errors: this.props.errors || false
+    };
   },
 
-  addInstruction: function (e) {
+  addDirection: function (e) {
     e.preventDefault();
-    let instructions = this.state.instructions;
-    instructions.push({
-      step: instructions.length === 0 ? 1 : (instructions[instructions.length - 1].step + 1),
+    let directions = this.state.directions;
+    directions.push({
+      step: directions.length === 0 ? 1 : (directions[directions.length - 1].step + 1),
       title: ''
     });
-    this.setState({ instructions: instructions });
-    this.props.change(this.props.name, this.state.instructions);
+    this.setState({ directions: directions });
+    this.props.change(this.props.name, this.state.directions);
   },
 
-  deleteInstruction: function (e, key) {
+  deleteDirection: function (e, key) {
     e.preventDefault();
 
-    let instructions = this.state.instructions;
-    instructions.splice(key, 1);
-    instructions = instructions.map((i, k) => { return {step: k + 1, title: i.title};});
+    let directions = this.state.directions;
+    directions.splice(key, 1);
+    directions = directions.map((i, k) => { return {step: k + 1, title: i.title};});
 
     this.setState({
-      instructions: instructions
+      directions: directions
     });
 
-    this.props.change(this.props.name, instructions);
+    this.props.change(this.props.name, directions);
   },
 
   updateData: function (key, name, value) {
-    if (value != this.state.instructions[key][name]) {
-      this.state.instructions[key][name] = value;
+    if (value != this.state.directions[key][name]) {
+      this.state.directions[key][name] = value;
       this.setState({
-        instructions: this.state.instructions
+        directions: this.state.directions
       });
 
       if (this.props.change) {
-        this.props.change(this.props.name, this.state.instructions);
+        this.props.change(this.props.name, this.state.directions);
       }
     }
   },
 
   componentWillReceiveProps: function(nextProps) {
-    if (this.props.instructions === undefined && this.props.instructions != nextProps.instructions) {
+    if (this.props.directions === undefined && this.props.directions != nextProps.directions) {
       this.setState({
-        instructions: nextProps.instructions
+        directions: nextProps.directions
       });
+    }
+
+    if('errors' in nextProps) {
+      this.setState({errors: nextProps.errors});
     }
   },
 
   render: function () {
     const {formatMessage} = this.props.intl;
     const messages = defineMessages({
-      next_instruction: {
-        id: 'instructions.next_instruction',
-        description: 'Next instruction button text',
-        defaultMessage: 'Next instruction',
+      next_direction: {
+        id: 'directions.next_direction',
+        description: 'Next direction button text',
+        defaultMessage: 'Next direction',
       }
     });
 
-    const instructionsList = this.state.instructions.map((instruction, key) => {
+    const directionsList = this.state.directions.map((direction, key) => {
       return (
-        <Instruction 
-          key={ key.toString() + '-' + this.state.instructions.length.toString() }
+        <Direction 
+          key={ key.toString() + '-' + this.state.directions.length.toString() }
           id={ key }
-          data={ instruction }
+          data={ direction }
           change={(name, value) => { this.updateData(key, name, value); } }
-          deleteInstruction={(e) => { this.deleteInstruction(e, key) }}/>
+          deleteDirection={(e) => { this.deleteDirection(e, key) }}/>
         )
     });
+
+    let panelClass = "panel panel-default";
+    let errorMessage = false;
+    if (this.state.errors !== false) {
+      panelClass = "panel panel-danger";
+      errorMessage = (
+        <div className="panel-footer">
+          { this.state.errors[0] }
+        </div>
+      )
+    }
 
     return (
       <div className="row">
         { this.props.label ? <label className="col-xs-12">{ this.props.label }</label> : null }
         <div className="col-xs-12">
-          <div className="panel panel-default">
+          <div className={ panelClass }>
             <div className="panel-body">
-              { instructionsList }
-              <a href="#" onClick={ this.addInstruction } className="btn btn-success add-ing">{ formatMessage(messages.next_instruction) }</a>
+              { directionsList }
+              <a href="#" onClick={ this.addDirection } className="btn btn-success add-ing">{ formatMessage(messages.next_direction) }</a>
             </div>
+            { errorMessage }
           </div>
         </div>
       </div>

@@ -48,9 +48,31 @@ var Ingredient = injectIntl(React.createClass({
 
     return (
       <div className="ingredient" key={this.props.id}>
-        <Input name="title" type="text" placeholder={ formatMessage(messages.name_placeholder) } size="col-sm-4 col-xs-12" change={ this.update } value={ this.state.title }/>
-        <Input name="quantity" type="number" placeholder={ formatMessage(messages.quantity_placeholder) } size="col-sm-3 col-xs-12" change={ this.update } value={ this.state.quantity }/>
-        <Auto name="measurement" data={measurements} type="text" placeholder={ formatMessage(messages.measurement_placeholder) } size="col-sm-4 col-xs-12" change={ this.update } value={ this.state.measurement }/>
+        <Input
+          name="quantity"
+          type="number"
+          placeholder={ formatMessage(messages.quantity_placeholder) }
+          size="col-sm-3 col-xs-12"
+          change={ this.update }
+          value={ this.state.quantity }
+        />
+        <Auto
+          name="measurement"
+          data={measurements}
+          type="text"
+          placeholder={ formatMessage(messages.measurement_placeholder) }
+          size="col-sm-4 col-xs-12"
+          change={ this.update }
+          value={ this.state.measurement }
+        />
+        <Input
+          name="title"
+          type="text"
+          placeholder={ formatMessage(messages.name_placeholder) }
+          size="col-sm-4 col-xs-12"
+          change={ this.update }
+          value={ this.state.title }
+        />
         <div className="col-xs-1">
           <div className="form-group">
             <button onClick={ this.props.deleteIngredient } className="btn btn-danger glyphicon glyphicon-remove" />
@@ -63,7 +85,10 @@ var Ingredient = injectIntl(React.createClass({
 
 export default injectIntl(React.createClass({
   getInitialState: function () {
-    return { ingredients: []};
+    return {
+      ingredients: [],
+      errors: this.props.errors || false
+    };
   },
 
   addIngredient: function (e) {
@@ -109,6 +134,10 @@ export default injectIntl(React.createClass({
         ingredients: nextProps.ingredients
       });
     }
+
+    if('errors' in nextProps) {
+      this.setState({errors: nextProps.errors});
+    }
   },
 
   render: function () {
@@ -132,15 +161,27 @@ export default injectIntl(React.createClass({
       )
     });
 
+    let panelClass = "panel panel-default";
+    let errorMessage = false;
+    if (this.state.errors !== false) {
+      panelClass = "panel panel-danger";
+      errorMessage = (
+        <div className="panel-footer">
+          { this.state.errors[0] }
+        </div>
+      )
+    }
+
     return (
       <div className="row">
         {this.props.label ? <label className="col-xs-12">{this.props.label}</label> : null}
         <div className="col-xs-12">
-          <div className="panel panel-default">
+          <div className={ panelClass }>
             <div className="panel-body">
               { ingredientList }
               <a href="#" onClick={this.addIngredient} className="btn btn-success add-ing">{ formatMessage(messages.add_ingredient) }</a>
             </div>
+            { errorMessage }
           </div>
         </div>
       </div>
