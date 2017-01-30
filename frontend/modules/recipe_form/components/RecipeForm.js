@@ -317,6 +317,12 @@ class RecipeForm extends React.Component {
                     change={ this.update }
                     value={ this.state.data.source }
                     errors={ this.getErrors('source') } />
+
+                  { this.state.data.photo_thumbnail ?
+                    <img src={ this.state.data.photo_thumbnail } /> :
+                    null
+                  }
+
                   <File
                     name="photo"
                     label={ formatMessage(messages.photo_label) }
