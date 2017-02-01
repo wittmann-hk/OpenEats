@@ -327,6 +327,7 @@ class RecipeForm extends React.Component {
                     name="photo"
                     label={ formatMessage(messages.photo_label) }
                     placeholder={ formatMessage(messages.photo_placeholder) }
+                    accept="image/*"
                     change={ this.update } />
 
                   { this.state.errors !== false ? ( <Alert/> ) : ''}

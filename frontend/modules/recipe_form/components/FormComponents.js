@@ -148,6 +148,7 @@ export var File = injectIntl(React.createClass({
           {this.props.label ? <label>{this.props.label}</label> : null}
           <input type="file"
                  name={this.props.name}
+                 accept={ this.props.accept }
                  onChange={this.handleChange}/>
           <p className="help-block">{ formatMessage(messages.help_block) }</p>
         </div>
