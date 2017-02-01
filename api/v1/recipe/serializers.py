@@ -41,7 +41,7 @@ class RecipeSerializer(FieldLimiter, serializers.ModelSerializer):
     photo_thumbnail = serializers.ImageField(required=False)
     ingredients = IngredientSerializer(many=True)
     directions = DirectionSerializer(many=True)
-    tags = TagSerializer(many=True)
+    tags = TagSerializer(many=True, required=False)
     username = serializers.ReadOnlyField(source='author.username')
 
     class Meta:
@@ -117,8 +117,9 @@ class RecipeSerializer(FieldLimiter, serializers.ModelSerializer):
             Direction.objects.create(recipe=recipe, **direction)
 
         # Create the Tags
-        for tag in tag_data:
-            obj, created = Tag.objects.get_or_create(title=tag['title'].strip())
-            recipe.tags.add(obj)
+        if tag_data:
+            for tag in tag_data:
+                obj, created = Tag.objects.get_or_create(title=tag['title'].strip())
+                recipe.tags.add(obj)
 
         return recipe
