@@ -181,14 +181,14 @@ var RecipeScheme = injectIntl(React.createClass({
 
                 <div className="desc">
                   <h4>{ formatMessage(messages.ingredients) }</h4>
-                  <Ingredients recipe_id={ this.props.recipe_id }/>
+                  <Ingredients data={ this.props.data.ingredients }/>
                 </div>
               </div>
             </div>
 
             <div className="desc">
               <h4>{ formatMessage(messages.directions) }</h4>
-              <Directions recipe_id={ this.props.recipe_id }/>
+              <Directions data={ this.props.data.directions }/>
             </div>
           </div>
           <div className="panel-footer">
