@@ -130,17 +130,13 @@ var RecipeScheme = injectIntl(React.createClass({
         description: 'minutes',
         defaultMessage: 'minutes'
       },
-      photo_placeholder: {
-        id: 'recipe.photo_placeholder',
-        description: 'Photo placeholder',
-        defaultMessage: 'Generic placeholder thumbnail'
-      }
     });
 
     return (
       <div className="recipe-details">
-        <h1 className="title hidden-xs">{this.props.data.title}</h1>
-        <img className=" banner-img img-responsive hidden-xs" src={this.props.data.photo}/>
+
+        { this.showRecipeImageHeader() }
+
         <div className="panel panel-success">
           <div className="panel-heading">
             <div className="row">
@@ -160,7 +156,7 @@ var RecipeScheme = injectIntl(React.createClass({
             <div className="row">
               <div className="col-sm-4 col-xs-12 col-sm-push-8">
                 <div className="ratings">
-                  <img src={this.props.data.photo_thumbnail} className="center-block img-responsive" alt={ formatMessage(messages.photo_placeholder) }/>
+                  { this.showRecipeImageThumb() }
                   <Ratings stars={ this.props.data.rating }/>
                 </div>
               </div>
@@ -185,14 +181,14 @@ var RecipeScheme = injectIntl(React.createClass({
 
                 <div className="desc">
                   <h4>{ formatMessage(messages.ingredients) }</h4>
-                  <Ingredients recipe_id={ this.props.recipe_id }/>
+                  <Ingredients data={ this.props.data.ingredients }/>
                 </div>
               </div>
             </div>
 
             <div className="desc">
               <h4>{ formatMessage(messages.directions) }</h4>
-              <Directions recipe_id={ this.props.recipe_id }/>
+              <Directions data={ this.props.data.directions }/>
             </div>
           </div>
           <div className="panel-footer">
@@ -215,6 +211,29 @@ var RecipeScheme = injectIntl(React.createClass({
         </div>
       </div>
     );
+  },
+
+  showRecipeImageHeader: function() {
+    if (this.props.data.photo) {
+      return (
+        <div>
+          <h1 className="title hidden-xs">{ this.props.data.title }</h1>
+          <img className="banner-img img-responsive hidden-xs" src={ this.props.data.photo } />
+        </div>
+      );
+    }
+  },
+
+  showRecipeImageThumb: function() {
+    if (this.props.data.photo_thumbnail) {
+      return (
+        <img className="img-responsive" src={ this.props.data.photo_thumbnail } />
+      );
+    } else {
+      return (
+        <img className="img-responsive" src="/images/default_recipe_image.png" />
+      );
+    }
   },
 
   showEditLink: function() {

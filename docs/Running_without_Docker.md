@@ -25,10 +25,9 @@ If you want to add some test data we can load a few recipes and some news data. 
 * `./manage.py loaddata ing_data.json`
 * `./manage.py loaddata direction_data.json`
 
-Now we need to gather all the static fields for the django rest framework and django admin panel. Also, we need to build the default image for when recipes don't have an image. 
+Now we need to gather all the static fields for the django rest framework and django admin panel.
 
 * `./manage collectstatic`
-* `./manage imgur`
 
 That should be it! you can run the dev server now to load up the api `./manage runserver`.
 

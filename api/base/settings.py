@@ -13,7 +13,7 @@ SERVE_MEDIA = True
 PROJECT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = os.environ.get('DJANGO_SECERT_KEY', 'ChangeMe!')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'ChangeMe!')
 
 SITE_ID = 1
 

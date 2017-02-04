@@ -11,10 +11,9 @@ import AuthStore from '../../account/stores/AuthStore'
 import { RecipeStore, INIT_EVENT, ERROR_EVENT } from '../stores/RecipeStore';
 import RecipeActions from '../actions/RecipeActions';
 
-import DirectionList from './DirectionList'
-import IngredientList from './IngredientList'
+import { DirectionList, IngredientList } from './DataList'
 import TagList from './TagList'
-import { Input, File, Alert, Select, TextArea } from './FormComponents'
+import { Input, File, Alert, Select, TextArea } from '../../common/form/FormComponents'
 import { Auto } from './Auto'
 import { serverURLs } from '../../common/config'
 
@@ -293,13 +292,13 @@ class RecipeForm extends React.Component {
                     name="ingredients"
                     label={ formatMessage(messages.ingredients_label) }
                     change={ this.update }
-                    ingredients={ this.state.data.ingredients }
+                    data={ this.state.data.ingredients }
                     errors={ this.getErrors('ingredients') } />
                   <DirectionList
                     name="directions"
                     label={ formatMessage(messages.directions_label) }
                     change={ this.update }
-                    directions={ this.state.data.directions }
+                    data={ this.state.data.directions }
                     errors={ this.getErrors('directions') } />
                   <TextArea
                     name="info"
@@ -317,10 +316,17 @@ class RecipeForm extends React.Component {
                     change={ this.update }
                     value={ this.state.data.source }
                     errors={ this.getErrors('source') } />
+
+                  { this.state.data.photo_thumbnail ?
+                    <img src={ this.state.data.photo_thumbnail } /> :
+                    null
+                  }
+
                   <File
                     name="photo"
                     label={ formatMessage(messages.photo_label) }
                     placeholder={ formatMessage(messages.photo_placeholder) }
+                    accept="image/*"
                     change={ this.update } />
 
                   { this.state.errors !== false ? ( <Alert/> ) : ''}

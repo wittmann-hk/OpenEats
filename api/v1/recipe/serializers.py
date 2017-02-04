@@ -12,17 +12,6 @@ from v1.ingredient.models import Ingredient
 from django.conf import settings
 from .mixins import FieldLimiter
 
-class MyImageField(serializers.ImageField):
-    def to_representation(self, value):
-        if not bool(value):
-            url = settings.MEDIA_URL + 'default_thumbnail.png'
-            request = self.context.get('request', None)
-            if request is not None:
-                return request.build_absolute_uri(url)
-            return url
-        return super(MyImageField, self).to_representation(value)
-
-
 class DirectionSerializer(serializers.ModelSerializer):
     """ Standard `rest_framework` ModelSerializer """
     class Meta:
@@ -32,7 +21,7 @@ class DirectionSerializer(serializers.ModelSerializer):
 
 class MiniBrowseSerializer(serializers.ModelSerializer):
     """ Used to get random recipes and limit the return data. """
-    photo_thumbnail = MyImageField(required=False)
+    photo_thumbnail = serializers.ImageField(required=False)
 
     class Meta:
         model = Recipe
@@ -48,11 +37,11 @@ class MiniBrowseSerializer(serializers.ModelSerializer):
 
 class RecipeSerializer(FieldLimiter, serializers.ModelSerializer):
     """ Used to create new recipes"""
-    photo = MyImageField(required=False)
-    photo_thumbnail = MyImageField(required=False)
+    photo = serializers.ImageField(required=False)
+    photo_thumbnail = serializers.ImageField(required=False)
     ingredients = IngredientSerializer(many=True)
     directions = DirectionSerializer(many=True)
-    tags = TagSerializer(many=True)
+    tags = TagSerializer(many=True, required=False)
     username = serializers.ReadOnlyField(source='author.username')
 
     class Meta:
@@ -128,8 +117,9 @@ class RecipeSerializer(FieldLimiter, serializers.ModelSerializer):
             Direction.objects.create(recipe=recipe, **direction)
 
         # Create the Tags
-        for tag in tag_data:
-            obj, created = Tag.objects.get_or_create(title=tag['title'].strip())
-            recipe.tags.add(obj)
+        if tag_data:
+            for tag in tag_data:
+                obj, created = Tag.objects.get_or_create(title=tag['title'].strip())
+                recipe.tags.add(obj)
 
         return recipe

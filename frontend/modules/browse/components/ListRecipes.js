@@ -8,12 +8,12 @@ require("./../css/list-recipes.scss");
 export default React.createClass({
   render: function() {
     var format = this.props.format;
-    var recipes = this.props.data.map(function(recipe) {
+    var recipes = this.props.data.map((recipe) => {
       var link = '/recipe/' + recipe.id;
       return (
         <div className={ format } key={ recipe.id }>
           <div className="thumbnail recipe">
-            <img src={ recipe.photo_thumbnail  } alt="Recipe Image"/>
+            <img src={ this.getRecipeImage(recipe) } alt="Recipe Image"/>
             <div className="caption">
               <h4><Link to={ link }>{ recipe.title }</Link></h4>
               <p className="desc">{ recipe.info }</p>
@@ -26,10 +26,19 @@ export default React.createClass({
         </div>
       );
     });
+
     return (
       <div className="recipes">
         { recipes }
       </div>
     );
+  },
+
+  getRecipeImage: function(recipe) {
+    if (recipe.photo_thumbnail) {
+      return recipe.photo_thumbnail;
+    } else {
+      return '/images/default_recipe_image.png';
+    }
   }
 });
