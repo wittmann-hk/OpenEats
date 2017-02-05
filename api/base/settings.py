@@ -25,6 +25,9 @@ DATABASES = {
         'PASSWORD': os.environ.get('MYSQL_ROOT_PASSWORD', ''),
         'HOST': 'db',
         'PORT': '3306',
+        'TEST': {
+            'NAME': os.environ.get('MYSQL_TEST_DATABASE', 'test_openeats')
+        }
     }
 }
 # Hosts/domain names that are valid for this site; required if DEBUG is False

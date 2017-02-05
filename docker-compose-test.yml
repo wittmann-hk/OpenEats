@@ -1,0 +1,24 @@
+version: '2'
+services:
+  api:
+    command: bash tests.sh
+    build: api/
+    volumes:
+      - static-files:/code/static-files
+      - site-media:/code/site-media
+      - ./api:/code
+    depends_on:
+      - db
+    env_file:
+      env_test.list
+  db:
+    image: mariadb
+    volumes:
+      - database:/var/lib/mysql
+    env_file:
+      env_test.list
+volumes:
+  database:
+  node_modules:
+  static-files:
+  site-media:
