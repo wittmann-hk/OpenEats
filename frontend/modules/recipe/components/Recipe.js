@@ -134,63 +134,54 @@ var RecipeScheme = injectIntl(React.createClass({
 
     return (
       <div className="recipe-details">
-
-        { this.showRecipeImageHeader() }
-
         <div className="panel panel-success">
-          <div className="panel-heading">
-            <div className="row">
-              <div className="col-lg-8">
-                <h3>{this.props.data.title}</h3>
-              </div>
-              <div className="col-lg-4">
-                {/*
-                TODO: add linkage to edit recipe and delete recipe
-                <button className="btn btn-danger pull-right edit"><span className="glyphicon glyphicon-trash"/></button>
-                <button className="btn btn-warning pull-right edit"><span className="glyphicon glyphicon-edit"/></button>
-                */}
-              </div>
-            </div>
-          </div>
+
+          { this.showRecipeImageHeader() }
+
           <div className="recipe-schema" itemType="http://schema.org/Recipe">
             <div className="row">
-              <div className="col-sm-4 col-xs-12 col-sm-push-8">
-                <div className="ratings">
-                  { this.showRecipeImageThumb() }
-                  <Ratings stars={ this.props.data.rating }/>
+              <div className="mobile-image">
+                <img className="img-responsive" src={ this.props.data.photo } />
+              </div>
+              <div className="col-sm-7 col-sm-push-5 col-xs-12">
+                <div className="panel panel-default">
+                  <table className="table table-bordered">
+                    <thead>
+                      <tr className="active">
+                        <th>{ formatMessage(messages.cooking_time) }</th>
+                        <th>{ formatMessage(messages.prep_time) }</th>
+                        <th>{ formatMessage(messages.servings) }</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{ this.props.data.cook_time } { formatMessage(messages.minutes) }</td>
+                        <td>{ this.props.data.prep_time } { formatMessage(messages.minutes) }</td>
+                        <td>{ this.props.data.servings }</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div className="panel-body">
+                    <p>{ this.props.data.info }</p>
+                  </div>
                 </div>
               </div>
 
-              <div className="col-sm-8 col-sm-pull-4 col-xs-12">
-                <div className="description">{ this.props.data.info }</div>
-
-                <div className="row misc">
-                  <div className="col-xs-4 item">
-                    <p className="header">{ formatMessage(messages.cooking_time) }</p>
-                    <p className="body">{ this.props.data.cook_time } { formatMessage(messages.minutes) }</p>
-                  </div>
-                  <div className="col-xs-4 item middle">
-                    <p className="header">{ formatMessage(messages.prep_time) }</p>
-                    <p className="body">{ this.props.data.prep_time } { formatMessage(messages.minutes) }</p>
-                  </div>
-                  <div className="col-xs-4 item">
-                    <p className="header">{ formatMessage(messages.servings) }</p>
-                    <p className="body">{ this.props.data.servings }</p>
-                  </div>
-                </div>
-
-                <div className="desc">
-                  <h4>{ formatMessage(messages.ingredients) }</h4>
-                  <Ingredients data={ this.props.data.ingredients }/>
-                </div>
+              <div className="col-sm-5 col-sm-pull-7">
+                <h4>{ formatMessage(messages.ingredients) }</h4>
+                <Ingredients data={ this.props.data.ingredients }/>
               </div>
             </div>
 
-            <div className="desc">
-              <h4>{ formatMessage(messages.directions) }</h4>
-              <Directions data={ this.props.data.directions }/>
+            <div className="row">
+              <div className="col-sm-12">
+                <h4>{ formatMessage(messages.directions) }</h4>
+                <Directions data={ this.props.data.directions }/>
+              </div>
             </div>
           </div>
+
           <div className="panel-footer">
             <div className="row">
               <div className="col-lg-10 col-md-6 col-xs-8">
@@ -216,9 +207,24 @@ var RecipeScheme = injectIntl(React.createClass({
   showRecipeImageHeader: function() {
     if (this.props.data.photo) {
       return (
-        <div>
-          <h1 className="title hidden-xs">{ this.props.data.title }</h1>
-          <img className="banner-img img-responsive hidden-xs" src={ this.props.data.photo } />
+        <div className="panel-heading hero-image" style={{ backgroundImage: "url("+this.props.data.photo+")"}}>
+          <div className="row">
+            <div className="col-lg-12">
+              <h3>{this.props.data.title}</h3>
+              <Ratings stars={ this.props.data.rating }/>
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="panel-heading">
+          <div className="row">
+            <div className="col-lg-12">
+              <h3>{this.props.data.title}</h3>
+              <Ratings stars={ this.props.data.rating }/>
+            </div>
+          </div>
         </div>
       );
     }
