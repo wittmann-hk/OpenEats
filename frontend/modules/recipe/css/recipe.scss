@@ -1,3 +1,4 @@
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss";
 
 .recipe-details {
   margin-top: 20px;
@@ -80,7 +81,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: $screen-sm-min) {
   .recipe-details {
     .mobile-image {
       display: block;
