@@ -22,6 +22,7 @@ services:
     image: mariadb
     volumes:
       - database:/var/lib/mysql
+      - ./mariadb:/etc/mysql/conf.d
 volumes:
   database:
   node_modules:

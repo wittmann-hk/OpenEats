@@ -25,6 +25,9 @@ DATABASES = {
         'PASSWORD': os.environ.get('MYSQL_ROOT_PASSWORD', ''),
         'HOST': 'db',
         'PORT': '3306',
+        'OPTIONS': {
+            'charset': 'utf8mb4'
+        },
         'TEST': {
             'NAME': os.environ.get('MYSQL_TEST_DATABASE', 'test_openeats')
         }

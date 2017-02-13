@@ -15,6 +15,7 @@ services:
     image: mariadb
     volumes:
       - database:/var/lib/mysql
+      - ./mariadb:/etc/mysql/conf.d
     env_file:
       env_test.list
 volumes:
