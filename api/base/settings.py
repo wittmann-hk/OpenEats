@@ -4,7 +4,7 @@ import os
 # We can't set the debug just using the env var.
 # Python with evaluate any string as a True bool.
 DEBUG = False
-if os.environ.get('DJANGO_DEBUG', None).lower() == 'true':
+if os.environ.get('DJANGO_DEBUG', 'False').lower() == 'true':
     DEBUG = True
 
 SERVE_MEDIA = True
