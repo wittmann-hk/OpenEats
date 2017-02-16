@@ -35,7 +35,7 @@ export default injectIntl(React.createClass({
       recipes: {
         id: 'nav.recipes',
         description: 'Navbar Recipes',
-        defaultMessage: 'Recipe',
+        defaultMessage: 'Recipes',
       },
       about: {
         id: 'nav.about',
