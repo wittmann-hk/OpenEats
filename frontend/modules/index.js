@@ -12,8 +12,8 @@ addLocaleData([...en, ...es, ...de]);
 const messages = require('./locale/'+process.env.LOCALE+'.json');
 
 import App from './base/components/App'
+import Footer from './base/components/Footer'
 import NotFound from './base/components/404'
-import About from './about/components/About'
 import Login from './account/components/Login'
 import News from './news/components/News'
 import Browse from './browse/components/Browse'
@@ -23,7 +23,6 @@ import AuthStore from './account/stores/AuthStore'
 
 // Load in the base CSS
 require("../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss");
-require("./base/css/footer.css");
 
 const requireAuth = (nextState, replace) => {
   if (!AuthStore.isAuthenticated()) {
@@ -37,7 +36,6 @@ const routeConfig = [
     indexRoute: { component: News },
     childRoutes: [
       { path: 'news', component: News },
-      { path: 'about', component: About },
       { path: 'login', component: Login },
       { path: 'browse', component: Browse },
       { path: 'recipe',
@@ -55,12 +53,15 @@ const routeConfig = [
 render((
     <IntlProvider locale={ process.env.LOCALE } messages={ messages }>
       <div>
-        <Router
-          history={ browserHistory }
-          routes={ routeConfig }
-        />
+        <div id="content">
+          <Router
+            history={ browserHistory }
+            routes={ routeConfig }
+          />
+        </div>
+        <Footer />
       </div>
     </IntlProvider>
   ),
-  document.getElementById('content')
+  document.getElementById('app')
 );

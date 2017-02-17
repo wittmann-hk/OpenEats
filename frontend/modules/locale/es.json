@@ -10,7 +10,6 @@
   "nav.brand": "Open Eats",
   "nav.news": "Noticias",
   "nav.recipes": "Recetas",
-  "nav.about": "Acerca de",
   "nav.login.title": "Login",
   "nav.accountmenu.title": "Mi cuenta",
   "nav.accountmenu.create_recipe": "Nueva receta",
@@ -66,5 +65,6 @@
   "recipe.ingredients": "Ingredientes",
   "recipe.directions": "Instrucciones",
   "recipe.photo_placeholder": "Foto generica",
-  "recipe.edit_recipe": "Modificar receta"
+  "recipe.edit_recipe": "Modificar receta",
+  "footer.credit": "Creado con {link}"
 }

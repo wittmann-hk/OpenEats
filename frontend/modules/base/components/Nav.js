@@ -36,12 +36,7 @@ export default injectIntl(React.createClass({
         id: 'nav.recipes',
         description: 'Navbar Recipes',
         defaultMessage: 'Recipes',
-      },
-      about: {
-        id: 'nav.about',
-        description: 'Navbar About',
-        defaultMessage: 'About',
-      },
+      }
     });
 
     return (
@@ -57,7 +52,6 @@ export default injectIntl(React.createClass({
             <LinkContainer to="/news"><NavItem>{formatMessage(messages.news)}</NavItem></LinkContainer>
             <LinkContainer to="/browse"><NavItem>{formatMessage(messages.recipes)}</NavItem></LinkContainer>
             <Account/>
-            <LinkContainer to="/about"><NavItem>{formatMessage(messages.about)}</NavItem></LinkContainer>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
