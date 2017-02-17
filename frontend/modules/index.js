@@ -23,6 +23,7 @@ import AuthStore from './account/stores/AuthStore'
 
 // Load in the base CSS
 require("../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss");
+require("./base/css/core.css");
 
 const requireAuth = (nextState, replace) => {
   if (!AuthStore.isAuthenticated()) {
