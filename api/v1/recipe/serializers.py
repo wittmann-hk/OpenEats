@@ -60,12 +60,13 @@ class RecipeSerializer(FieldLimiter, serializers.ModelSerializer):
         direction_data = validated_data.pop('directions', None)
         tag_data = validated_data.pop('tags', None)
 
-        rating = int(validated_data.get('rating', 0))
-        if rating < 0:
-            rating = 0
-        elif rating > 5:
-            rating = 5
-        validated_data['rating'] = rating
+        if 'rating' in validated_data:
+            rating = int(validated_data.get('rating', 0))
+            if rating < 0:
+                rating = 0
+            elif rating > 5:
+                rating = 5
+            validated_data['rating'] = rating
 
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
@@ -108,6 +109,14 @@ class RecipeSerializer(FieldLimiter, serializers.ModelSerializer):
         ingredient_data = validated_data.pop('ingredients', None)
         direction_data = validated_data.pop('directions', None)
         tag_data = validated_data.pop('tags', None)
+
+        if 'rating' in validated_data:
+            rating = int(validated_data.get('rating', 0))
+            if rating < 0:
+                rating = 0
+            elif rating > 5:
+                rating = 5
+            validated_data['rating'] = rating
 
         # Create the recipe.
         # Use the log-in user as the author.

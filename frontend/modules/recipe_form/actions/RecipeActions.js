@@ -7,7 +7,7 @@ import {serverURLs} from '../../common/config'
 class RecipeActions {
   submit(data) {
     let photo = false;
-    if (data.photo){
+    if (typeof data.photo == "object") {
       photo = data.photo;
     }
 
@@ -23,24 +23,28 @@ class RecipeActions {
       .end((err, res) => {
         if (!err && res) {
           //send the image once the file has been created
-          var id = res.body.id;
+
           if (photo) {
-            request
-              .patch(serverURLs.recipe + id + "/")
-              .attach('photo', photo)
-              .set('Authorization', 'Token ' + AuthStore.getToken())
-              .end((err, res) => {
-                if (!err && res) {
-                  this.handleSubmit(res.body.id);
-                } else {
-                  console.error(serverURLs.recipe, err.toString());
-                  console.error(res.body);
-                  this.error(res.body);
-                }
-              });
+            this.submitPhoto(res, photo);
           } else {
             this.handleSubmit(res.body.id);
           }
+        } else {
+          console.error(serverURLs.recipe, err.toString());
+          console.error(res.body);
+          this.error(res.body);
+        }
+      });
+  }
+
+  submitPhoto(res, photo) {
+    request
+      .patch(serverURLs.recipe + res.body.id + "/")
+      .attach('photo', photo)
+      .set('Authorization', 'Token ' + AuthStore.getToken())
+      .end((err, res) => {
+        if (!err && res) {
+          this.handleSubmit(res.body.id);
         } else {
           console.error(serverURLs.recipe, err.toString());
           console.error(res.body);
