@@ -10,7 +10,6 @@
   "nav.brand": "Open Eats",
   "nav.news": "News",
   "nav.recipes": "Rezept",
-  "nav.about": "Über",
   "nav.login.title": "Login",
   "nav.accountmenu.title": "Mein Account",
   "nav.accountmenu.create_recipe": "Rezept erstellen.",
@@ -66,5 +65,6 @@
   "recipe.ingredients": "Zutaten",
   "recipe.instructions": "Anleitung",
   "recipe.photo_placeholder": "Generisches Platzhalter-Thumbnail",
-  "recipe.edit_recipe": "Rezept ändern"
+  "recipe.edit_recipe": "Rezept ändern",
+  "footer.credit": "Erstellt mit {link}"
 }

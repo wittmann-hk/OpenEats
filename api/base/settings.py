@@ -4,7 +4,7 @@ import os
 # We can't set the debug just using the env var.
 # Python with evaluate any string as a True bool.
 DEBUG = False
-if os.environ.get('DJANGO_DEBUG', None).lower() == 'true':
+if os.environ.get('DJANGO_DEBUG', 'False').lower() == 'true':
     DEBUG = True
 
 SERVE_MEDIA = True
@@ -25,6 +25,12 @@ DATABASES = {
         'PASSWORD': os.environ.get('MYSQL_ROOT_PASSWORD', ''),
         'HOST': 'db',
         'PORT': '3306',
+        'OPTIONS': {
+            'charset': 'utf8mb4'
+        },
+        'TEST': {
+            'NAME': os.environ.get('MYSQL_TEST_DATABASE', 'test_openeats')
+        }
     }
 }
 # Hosts/domain names that are valid for this site; required if DEBUG is False

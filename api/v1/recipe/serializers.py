@@ -5,12 +5,13 @@ from __future__ import unicode_literals
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
-from .models import Recipe, Tag, Direction
+from v1.recipe.models import Recipe, Direction
+from v1.recipe_groups.models import Tag
 from v1.ingredient.serializers import IngredientSerializer
 from v1.recipe_groups.serializers import TagSerializer
 from v1.ingredient.models import Ingredient
 from django.conf import settings
-from .mixins import FieldLimiter
+from v1.recipe.mixins import FieldLimiter
 
 class DirectionSerializer(serializers.ModelSerializer):
     """ Standard `rest_framework` ModelSerializer """
@@ -59,6 +60,14 @@ class RecipeSerializer(FieldLimiter, serializers.ModelSerializer):
         direction_data = validated_data.pop('directions', None)
         tag_data = validated_data.pop('tags', None)
 
+        if 'rating' in validated_data:
+            rating = int(validated_data.get('rating', 0))
+            if rating < 0:
+                rating = 0
+            elif rating > 5:
+                rating = 5
+            validated_data['rating'] = rating
+
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
 
@@ -100,6 +109,14 @@ class RecipeSerializer(FieldLimiter, serializers.ModelSerializer):
         ingredient_data = validated_data.pop('ingredients', None)
         direction_data = validated_data.pop('directions', None)
         tag_data = validated_data.pop('tags', None)
+
+        if 'rating' in validated_data:
+            rating = int(validated_data.get('rating', 0))
+            if rating < 0:
+                rating = 0
+            elif rating > 5:
+                rating = 5
+            validated_data['rating'] = rating
 
         # Create the recipe.
         # Use the log-in user as the author.

@@ -1,3 +1,5 @@
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss";
+
 /* GLOBAL STYLES
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
@@ -96,7 +98,7 @@ body {
 /* RESPONSIVE CSS
 -------------------------------------------------- */
 
-@media (min-width: 768px) {
+@media (min-width: $screen-sm-min) {
   /* Navbar positioning foo */
   .navbar-wrapper {
     margin-top: 20px;
@@ -127,7 +129,7 @@ body {
   }
 }
 
-@media (min-width: 992px) {
+@media (min-width: $screen-md-min) {
   .featurette-heading {
     margin-top: 120px;
   }
