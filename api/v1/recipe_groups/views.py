@@ -2,10 +2,9 @@
 # encoding: utf-8
 from __future__ import unicode_literals
 
-from .models import Cuisine, Course, Tag
-from .serializers import CuisineSerializer, \
-                        CourseSerializer, \
-                        TagSerializer
+from django.db.models import Count
+from v1.recipe_groups.models import Cuisine, Course, Tag
+from v1.recipe_groups import serializers
 from rest_framework import permissions
 from rest_framework import viewsets
 from v1.common.permissions import IsOwnerOrReadOnly
@@ -18,11 +17,19 @@ class CuisineViewSet(viewsets.ModelViewSet):
 
     Uses `title` as the PK for any lookups.
     """
-    queryset = Cuisine.objects.all()
-    serializer_class = CuisineSerializer
+    serializer_class = serializers.CuisineSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly)
-    lookup_field = 'title'
+    lookup_field = 'slug'
+
+    def get_queryset(self):
+        query = Cuisine.objects
+
+        if 'course' in self.request.query_params:
+            course = Course.objects.get(slug=self.request.query_params.get('course'))
+            query = query.filter(recipe__course=course)
+
+        return query.annotate(total=Count('recipe', distinct=True))
 
 
 class CourseViewSet(viewsets.ModelViewSet):
@@ -32,11 +39,19 @@ class CourseViewSet(viewsets.ModelViewSet):
 
     Uses `title` as the PK for any lookups.
     """
-    queryset = Course.objects.all()
-    serializer_class = CourseSerializer
+    serializer_class = serializers.CourseSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly)
-    lookup_field = 'title'
+    lookup_field = 'slug'
+
+    def get_queryset(self):
+        query = Course.objects
+
+        if 'cuisine' in self.request.query_params:
+            cuisine = Cuisine.objects.get(slug=self.request.query_params.get('cuisine'))
+            query = query.filter(recipe__cuisine=cuisine)
+
+        return query.annotate(total=Count('recipe', distinct=True))
 
 
 class TagViewSet(viewsets.ModelViewSet):
@@ -47,7 +62,7 @@ class TagViewSet(viewsets.ModelViewSet):
     Uses `title` as the PK for any lookups.
     """
     queryset = Tag.objects.all()
-    serializer_class = TagSerializer
+    serializer_class = serializers.TagSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly)
     lookup_field = 'title'

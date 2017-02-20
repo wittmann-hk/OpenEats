@@ -9,8 +9,8 @@ from v1.recipe_groups import views
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter(schema_title='recipe_groups')
-router.register(r'cuisine', views.CuisineViewSet)
-router.register(r'course', views.CourseViewSet)
+router.register(r'cuisine', views.CuisineViewSet, base_name='cuisine')
+router.register(r'course', views.CourseViewSet, base_name='course')
 router.register(r'tag', views.TagViewSet)
 
 urlpatterns = [
