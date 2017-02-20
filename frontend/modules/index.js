@@ -9,7 +9,7 @@ import es from 'react-intl/locale-data/es';
 import de from 'react-intl/locale-data/de';
 addLocaleData([...en, ...es, ...de]);
 
-const messages = require('./locale/'+process.env.LOCALE+'.json');
+const messages = require('../locale/'+process.env.LOCALE+'.json');
 
 import App from './base/components/App'
 import Footer from './base/components/Footer'

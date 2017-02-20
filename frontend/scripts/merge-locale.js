@@ -10,7 +10,7 @@ import {sync as mkdirpSync} from 'mkdirp';
  */
 
 const MESSAGES_PATTERN = './build/messages/**/*.json';
-const LOCALE_DIR       = './modules/locale/';
+const LOCALE_DIR       = './locale/';
 
 let defaultMessages = globSync(MESSAGES_PATTERN)
   .map((filename) => fs.readFileSync(filename, 'utf8'))
@@ -30,7 +30,7 @@ let defaultMessages = globSync(MESSAGES_PATTERN)
 mkdirpSync(LOCALE_DIR);
 let locales = ['en', 'es', 'de']
   .forEach((locale, i) => {
-    let messages = JSON.parse(fs.readFileSync('./modules/locale/'+locale+'.json', 'utf8'));
+    let messages = JSON.parse(fs.readFileSync(LOCALE_DIR + locale + '.json', 'utf8'));
 
     fs.writeFileSync(
       LOCALE_DIR + locale + '.json',
