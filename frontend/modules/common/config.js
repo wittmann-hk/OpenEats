@@ -15,7 +15,7 @@ export var serverURLs = {
   ingredient: apiUrl + '/ingredient/ingredient/?format=json',
   direction: apiUrl + '/recipe/direction/?format=json',
   news: apiUrl + '/news/entry/?format=json',
-  recipe: apiUrl + '/recipe/recipes/?format=json',
+  recipe: apiUrl + '/recipe/recipes/',
 };
 
 export var measurements = [
