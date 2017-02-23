@@ -5,15 +5,16 @@ import Ratings from '../../recipe/components/Ratings';
 
 require("./../css/list-recipes.scss");
 
-export default React.createClass({
-  render: function() {
-    var format = this.props.format;
-    var recipes = this.props.data.map((recipe) => {
-      var link = '/recipe/' + recipe.id;
+class ListRecipes extends React.Component {
+  render() {
+    const recipes = this.props.data.map((recipe) => {
+      const link = '/recipe/' + recipe.id;
       return (
-        <div className={ format } key={ recipe.id }>
+        <div className={ this.props.format } key={ recipe.id }>
           <div className="thumbnail recipe">
-            <img src={ this.getRecipeImage(recipe) } alt="Recipe Image"/>
+            <Link to={ link }>
+              <img src={ this.getRecipeImage(recipe) } alt={ recipe.title }/>
+            </Link>
             <div className="caption">
               <h4><Link to={ link }>{ recipe.title }</Link></h4>
               <p className="desc">{ recipe.info }</p>
@@ -32,13 +33,21 @@ export default React.createClass({
         { recipes }
       </div>
     );
-  },
+  }
 
-  getRecipeImage: function(recipe) {
+  getRecipeImage(recipe) {
     if (recipe.photo_thumbnail) {
       return recipe.photo_thumbnail;
     } else {
-      return '/images/default_recipe_image.png';
+      const images = ['fish', 'fried-eggs', 'pizza', 'soup', 'steak'];
+      return '/images/' + images[Math.floor(Math.random(0) * images.length)] + '.png';
     }
   }
-});
+}
+
+ListRecipes.propTypes = {
+  format: React.PropTypes.string.isRequired,
+  data: React.PropTypes.array.isRequired
+}
+
+module.exports = ListRecipes;

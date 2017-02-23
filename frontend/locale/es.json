@@ -66,5 +66,6 @@
   "recipe.directions": "Instrucciones",
   "recipe.photo_placeholder": "Foto generica",
   "recipe.edit_recipe": "Modificar receta",
-  "footer.credit": "Creado con {link}"
+  "footer.credit": "Creado con {link}",
+  "footer.icon_credit": "Iconos diseñados por {link} ({ccLink})"
 }

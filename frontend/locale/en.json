@@ -67,5 +67,6 @@
   "recipe.directions": "Directions",
   "recipe.photo_placeholder": "Generic placeholder thumbnail",
   "recipe.edit_recipe": "Edit recipe",
-  "footer.credit": "Created with {link}"
+  "footer.credit": "Created with {link}",
+  "footer.icon_credit": "Icons made by {link} ({ccLink})"
 }
