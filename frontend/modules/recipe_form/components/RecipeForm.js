@@ -1,6 +1,5 @@
 import React from 'react'
 import { browserHistory } from 'react-router'
-import request from 'superagent';
 import {
     injectIntl,
     IntlProvider,
@@ -14,8 +13,6 @@ import RecipeActions from '../actions/RecipeActions';
 import { DirectionList, IngredientList } from './DataList'
 import TagList from './TagList'
 import { Input, File, Alert, Select, TextArea } from '../../common/form/FormComponents'
-import { Auto } from './Auto'
-import { serverURLs } from '../../common/config'
 
 require("./../css/create.scss");
 

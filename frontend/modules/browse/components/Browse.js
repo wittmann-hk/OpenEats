@@ -5,7 +5,7 @@ import {
     defineMessages,
     formatMessage
 } from 'react-intl';
-import request from 'superagent';
+import { request } from '../../common/CustomSuperagent';
 
 import Filter from './Filter'
 import SearchBar from './SearchBar'

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, browserHistory } from 'react-router'
-import request from 'superagent'
+import { request } from '../../common/CustomSuperagent';
 import {
     injectIntl,
     IntlProvider,
@@ -19,7 +19,7 @@ require("./../css/recipe.scss");
 
 export default React.createClass({
   loadRecipeFromServer: function(id) {
-    var url = serverURLs.recipe + id + "/?format=json";
+    var url = serverURLs.recipe + id + "/";
     request
       .get(url)
       .type('json')
@@ -72,7 +72,7 @@ export default React.createClass({
             <RecipeScheme data={ this.state.data } user={ this.state.user } recipe_id={ this.props.params.recipe }/>
           </div>
           <div className="col-md-3">
-            <MiniBrowse format="col-md-12 col-sm-6 col-xs-12" qs="&limit=4" />
+            <MiniBrowse format="col-md-12 col-sm-6 col-xs-12" qs="?limit=4" />
           </div>
         </div>
       </div>
