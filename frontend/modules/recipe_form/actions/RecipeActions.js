@@ -1,4 +1,4 @@
-import request from 'superagent';
+import { request } from '../../common/CustomSuperagent';
 import AppDispatcher from '../../common/AppDispatcher';
 import AuthStore from '../../account/stores/AuthStore';
 import RecipeConstants from '../constants/RecipeConstants';
@@ -19,7 +19,6 @@ class RecipeActions {
       request.post(serverURLs.recipe) ;
 
     r.send(data)
-      .set('Authorization', 'Token ' + AuthStore.getToken())
       .end((err, res) => {
         if (!err && res) {
           //send the image once the file has been created
@@ -41,7 +40,6 @@ class RecipeActions {
     request
       .patch(serverURLs.recipe + res.body.id + "/")
       .attach('photo', photo)
-      .set('Authorization', 'Token ' + AuthStore.getToken())
       .end((err, res) => {
         if (!err && res) {
           this.handleSubmit(res.body.id);
@@ -121,7 +119,7 @@ class RecipeActions {
   }
 
   fetchRecipe(recipe_id) {
-    var url = serverURLs.recipe + recipe_id + "/?format=json";
+    var url = serverURLs.recipe + recipe_id;
     request
       .get(url)
       .type('json')

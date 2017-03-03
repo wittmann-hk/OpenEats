@@ -1,7 +1,4 @@
 import React from 'react'
-import request from 'superagent';
-
-import { serverURLs } from '../../common/config'
 
 export default React.createClass({
   getInitialState: function() {

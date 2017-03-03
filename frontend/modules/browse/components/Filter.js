@@ -32,23 +32,29 @@ export default injectIntl(React.createClass({
       }
     });
 
-    var _onClick = this._onClick;
-    var active = this.props.active;
-    var items = this.props.data.map(function(item) {
-      var classNames = "list-group-item";
-      if (item.title == active) {
-        classNames += " active";
+    const active = this.props.active;
+    const items = this.props.data.map((item) => {
+      let classNames = ["list-group-item"];
+      if (item.slug == active) {
+        classNames += [" active"];
       }
+
+      if (item.total == 0) {
+        return null;
+      }
+
       return (
         <a className={ classNames }
            href="#"
            key={ item.id }
-           name={ item.title }
-           onClick={ _onClick }>
+           name={ item.slug }
+           onClick={ this._onClick }>
           { item.title }
+          <span className="badge">{ item.total }</span>
         </a>
       );
     });
+
     return (
       <div className="list-group filter">
          <p className="list-group-item disabled">
@@ -60,7 +66,7 @@ export default injectIntl(React.createClass({
              href="#"
              name={ '' }
              key={ 9999999999999999 }
-             onClick={ _onClick }>
+             onClick={ this._onClick }>
             { formatMessage(messages.clear_filter) }
           </a>
           : ''

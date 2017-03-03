@@ -1,5 +1,5 @@
 import React from 'react'
-import request from 'superagent';
+import { request } from '../../common/CustomSuperagent';
 import {Carousel} from 'react-bootstrap'
 import MiniBrowse from '../../browse/components/MiniBrowse'
 import {serverURLs} from '../../common/config'
@@ -32,7 +32,7 @@ export default React.createClass({
         <NewsCarousel data={this.state.news}/>
         <div className="container">
           <div className="row">
-            <MiniBrowse format="col-xs-12 col-sm-6 col-md-3" qs="&limit=4" />
+            <MiniBrowse format="col-xs-12 col-sm-6 col-md-3" qs="?limit=4" />
           </div>
         </div>
       </div>

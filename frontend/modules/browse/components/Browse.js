@@ -5,7 +5,7 @@ import {
     defineMessages,
     formatMessage
 } from 'react-intl';
-import request from 'superagent';
+import { request } from '../../common/CustomSuperagent';
 
 import Filter from './Filter'
 import SearchBar from './SearchBar'
@@ -28,8 +28,8 @@ const FILTER_MAP = {
   // frontend filter  :  backend filters
   'offset' : 'offset',
   'limit'  : 'limit',
-  'cuisine': 'cuisine__title',
-  'course' : 'course__title',
+  'cuisine': 'cuisine__slug',
+  'course' : 'course__slug',
   'search' : 'search'
 };
 
@@ -38,27 +38,47 @@ export default injectIntl(React.createClass({
     router: React.PropTypes.object
   },
 
-  init: function() {
-    var course = [];
-    var cuisine = [];
-    request.get(serverURLs.course).type('json')
+  getInitialState: function() {
+    return {
+      recipes: [],
+      total_recipes: 0,
+      course: [],
+      cuisine: [],
+    };
+  },
+
+  getCourses: function() {
+    const query = this.props.location.query;
+    let url = serverURLs.course;
+
+    if ('cuisine' in query) {
+      url = url + '?cuisine=' + query.cuisine;
+    }
+
+    request.get(url).type('json')
       .end((err, res) => {
         if (!err && res) {
-          course = res.body.results;
-          request.get(serverURLs.cuisine).type('json')
-            .end((err, res) => {
-              if (!err && res) {
-                cuisine = res.body.results;
-                this.setState({
-                  course: course,
-                  cuisine: cuisine,
-                });
-              } else {
-                console.error(serverURLs.cuisine, err.toString());
-              }
-            });
+          this.setState({course: res.body.results});
         } else {
           console.error(serverURLs.course, err.toString());
+        }
+      });
+  },
+
+  getCuisines: function() {
+    const query = this.props.location.query;
+    let url = serverURLs.cuisine;
+
+    if ('course' in query) {
+      url = url + '?course=' + query.course;
+    }
+
+    request.get(url).type('json')
+      .end((err, res) => {
+        if (!err && res) {
+          this.setState({cuisine: res.body.results});
+        } else {
+          console.error(serverURLs.cuisine, err.toString());
         }
       });
   },
@@ -80,17 +100,7 @@ export default injectIntl(React.createClass({
       });
   },
 
-  getInitialState: function() {
-    return {
-      recipes: [],
-      total_recipes: 0,
-      course: [],
-      cuisine: [],
-    };
-  },
-
   componentDidMount: function() {
-    this.init();
     this.buildBackendURL(this.props.location.query);
   },
 
@@ -138,6 +148,8 @@ export default injectIntl(React.createClass({
         base_url += "&" + FILTER_MAP[filter] + "=" + DEFAULTS[filter];
       }
     }
+    this.getCourses();
+    this.getCuisines();
     this.getRecipes(base_url);
   },
 

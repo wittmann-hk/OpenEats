@@ -6,7 +6,7 @@ import {
     defineMessages,
     formatMessage
 } from 'react-intl';
-import { Navbar, Nav, NavDropdown, MenuItem, NavItem } from 'react-bootstrap'
+import { Image, Navbar, Nav, NavDropdown, MenuItem, NavItem } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
 import AuthActions from '../../account/actions/AuthActions';
@@ -43,7 +43,9 @@ export default injectIntl(React.createClass({
       <Navbar collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
-            <Link className="navbar-brand" to="/">{formatMessage(messages.brand)}</Link>
+            <Link to="/">
+              <Image alt="Brand" src="/images/chef.png" responsive={ true } />
+            </Link>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>

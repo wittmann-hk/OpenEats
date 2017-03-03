@@ -1,5 +1,5 @@
 import React from 'react'
-import request from 'superagent';
+import { request } from '../../common/CustomSuperagent';
 
 import ListRecipes from './ListRecipes'
 import {serverURLs} from '../../common/config'

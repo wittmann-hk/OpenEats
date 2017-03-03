@@ -66,5 +66,6 @@
   "recipe.instructions": "Anleitung",
   "recipe.photo_placeholder": "Generisches Platzhalter-Thumbnail",
   "recipe.edit_recipe": "Rezept ändern",
-  "footer.credit": "Erstellt mit {link}"
+  "footer.credit": "Erstellt mit {link}",
+  "footer.icon_credit": "Erstellt von {link} ({ccLink})"
 }

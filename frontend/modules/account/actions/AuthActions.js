@@ -1,4 +1,4 @@
-import request from 'superagent';
+import { request } from '../../common/CustomSuperagent';
 import AppDispatcher from '../../common/AppDispatcher';
 import AuthConstants from '../constants/AuthConstants';
 import {serverURLs} from '../../common/config'
