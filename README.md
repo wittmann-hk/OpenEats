@@ -1,5 +1,7 @@
 # OpenEats Project
 
+[![Build Status](https://travis-ci.org/RyanNoelk/OpenEats.svg?branch=master)](https://travis-ci.org/RyanNoelk/OpenEats)
+
 OpenEats is a recipe management site that allows users to create, share, and store recipes. This fork uses Django Rest Framework as a backend and React (with flux) as a front end. 
 
 The main goals of this project are twofold. One, I wanted a place to store my personal collection of recipes and share them with close friends and family. Two, I wanted to learn React :). I went digging around for a starting point and gathering ideas when I came across open eats. It had some cool ideas and was well documented for the most part. 
