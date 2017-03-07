@@ -50,6 +50,7 @@ export default injectIntl(React.createClass({
            name={ item.slug }
            onClick={ this._onClick }>
           { item.title }
+          <div className="clear"/>
           <span className="badge">{ item.total }</span>
         </a>
       );
