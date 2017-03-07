@@ -16,6 +16,9 @@ export var serverURLs = {
   direction: apiUrl + '/recipe/direction/',
   news: apiUrl + '/news/entry/',
   recipe: apiUrl + '/recipe/recipes/',
+  list: apiUrl + '/list/lists/',
+  list_item: apiUrl + '/list/items/',
+  bulk_list_item: apiUrl + '/list/bulk_item/',
 };
 
 export var measurements = [

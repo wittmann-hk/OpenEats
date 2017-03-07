@@ -17,6 +17,7 @@ import NotFound from './base/components/404'
 import Login from './account/components/Login'
 import News from './news/components/News'
 import Browse from './browse/components/Browse'
+import GroceryList from './list/components/GroceryList'
 import { RecipeForm } from './recipe_form/components/RecipeForm'
 import Recipe from './recipe/components/Recipe'
 import AuthStore from './account/stores/AuthStore'
@@ -39,6 +40,11 @@ const routeConfig = [
       { path: 'news', component: News },
       { path: 'login', component: Login },
       { path: 'browse', component: Browse },
+      { path: 'list', component: GroceryList, onEnter: requireAuth ,
+        childRoutes: [
+          { path: ':list_id', component: GroceryList, onEnter: requireAuth },
+        ]
+      },
       { path: 'recipe',
         childRoutes: [
           { path: 'create', component: RecipeForm, onEnter: requireAuth },
