@@ -148,6 +148,13 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100
 }
 
+# We don't want the API to serve static in production.
+# So we are forcing the renderer to be JSON only.
+if not DEBUG:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = (
+        'rest_framework.renderers.JSONRenderer',
+    )
+
 CORS_ORIGIN_WHITELIST = (
     os.environ.get('NODE_URL', 'localhost:8080')
 )
