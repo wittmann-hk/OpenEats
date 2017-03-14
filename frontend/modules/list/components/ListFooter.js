@@ -13,15 +13,10 @@ export default injectIntl(React.createClass({
   render: function () {
     const { formatMessage } = this.props.intl;
     const messages = defineMessages({
-      item: {
-        id: 'list.footer.item',
-        description: 'Number of items left (1 item)',
-        defaultMessage: 'item left',
-      },
-      items: {
-        id: 'list.footer.items',
-        description: 'Number of items left (2 items)',
-        defaultMessage: 'items left',
+      items_left: {
+        id: 'list.footer.items_left',
+        description: 'Number of items left',
+        defaultMessage: '{itemCount, plural, =0 {No items} one {1 item left} other {{itemCount} items left}}',
       },
       all: {
         id: 'list.footer.all',
@@ -47,13 +42,6 @@ export default injectIntl(React.createClass({
 
     var clearButton = null;
     var nowShowing = this.props.nowShowing;
-    var activeItemWord = '';
-
-    if (this.props.count == 1) {
-      activeItemWord = formatMessage(messages.item)
-    } else {
-      activeItemWord = formatMessage(messages.items)
-    }
 
     if (this.props.completedCount > 0) {
       clearButton = (
@@ -68,7 +56,7 @@ export default injectIntl(React.createClass({
     return (
       <div className="list-footer">
         <span className="list-count">
-          <strong>{ this.props.count }</strong> { activeItemWord }
+          { formatMessage(messages.items_left, {itemCount: this.props.count}) }
         </span>
         <ul className="filters">
           <li>
