@@ -15,6 +15,11 @@ PROJECT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'ChangeMe!')
 
+# Force Django to use https headers if its behind a https proxy.
+# See: https://docs.djangoproject.com/en/1.10/ref/settings/#secure-proxy-ssl-header
+if os.environ.get('HTTP_X_FORWARDED_PROTO', 'False').lower() == 'true':
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 SITE_ID = 1
 
 DATABASES = {
