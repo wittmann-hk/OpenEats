@@ -57,6 +57,13 @@ class RecipeGroupsTests(TestCase):
 
         self.assertEqual(response.data.get('count'), 0)
 
+    def test_cuisine_with_non_existent_course(self):
+        view = views.CuisineViewSet.as_view({'get': 'list'})
+        request = self.factory.get('/api/v1/recipe_groups/cuisine/?course=non-existent')
+        response = view(request)
+
+        self.assertEqual(response.data.get('count'), 0)
+
     def test_course_with_cuisine_filter(self):
         view = views.CourseViewSet.as_view({'get': 'list'})
         request = self.factory.get('/api/v1/recipe_groups/course/?cuisine=cuisine-1')
@@ -70,9 +77,16 @@ class RecipeGroupsTests(TestCase):
         for item in results:
             self.assertEquals(totals[item.get('slug')], item.get('total'))
 
-    def test_cuisine_with_course_filter_no_results(self):
+    def test_course_with_cuisine_filter_no_results(self):
         view = views.CourseViewSet.as_view({'get': 'list'})
         request = self.factory.get('/api/v1/recipe_groups/course/?cuisine=cuisine-4')
+        response = view(request)
+
+        self.assertEqual(response.data.get('count'), 0)
+
+    def test_course_with_non_existent_cuisine(self):
+        view = views.CourseViewSet.as_view({'get': 'list'})
+        request = self.factory.get('/api/v1/recipe_groups/course/?cuisine=non-existent')
         response = view(request)
 
         self.assertEqual(response.data.get('count'), 0)

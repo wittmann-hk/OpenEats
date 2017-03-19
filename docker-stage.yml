@@ -1,18 +1,32 @@
 version: '2'
 services:
   api:
+    build: api/
     command: ./base/gunicorn_start.sh
+    restart: always
+    volumes:
+      - static-files:/code/static-files
+      - site-media:/code/site-media
+    depends_on:
+      - db
     env_file:
       env_stg.list
   node:
+    build: frontend/
     command: npm start
+    volumes:
+      - node_modules:/code/node_modules
+    depends_on:
+      - api
     env_file:
       env_stg.list
   db:
+    image: mariadb
     env_file:
       env_stg.list
   nginx:
     build: services/
+    command: ./start.sh
     ports:
       - "80:80"
     volumes:
@@ -23,4 +37,8 @@ services:
       - node
     env_file:
       env_stg.list
-    command: /bin/bash -c "sed -i 's/API_PORT/8000/g' /etc/nginx/conf.d/default.conf && sed -i 's/NODE_PORT/8080/g' /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+volumes:
+  database:
+  node_modules:
+  static-files:
+  site-media:

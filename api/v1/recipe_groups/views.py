@@ -26,8 +26,11 @@ class CuisineViewSet(viewsets.ModelViewSet):
         query = Cuisine.objects
 
         if 'course' in self.request.query_params:
-            course = Course.objects.get(slug=self.request.query_params.get('course'))
-            query = query.filter(recipe__course=course)
+            try:
+                course = Course.objects.get(slug=self.request.query_params.get('course'))
+                query = query.filter(recipe__course=course)
+            except:
+                return []
 
         return query.annotate(total=Count('recipe', distinct=True))
 
@@ -48,8 +51,11 @@ class CourseViewSet(viewsets.ModelViewSet):
         query = Course.objects
 
         if 'cuisine' in self.request.query_params:
-            cuisine = Cuisine.objects.get(slug=self.request.query_params.get('cuisine'))
-            query = query.filter(recipe__cuisine=cuisine)
+            try:
+                cuisine = Cuisine.objects.get(slug=self.request.query_params.get('cuisine'))
+                query = query.filter(recipe__cuisine=cuisine)
+            except:
+                return []
 
         return query.annotate(total=Count('recipe', distinct=True))
 

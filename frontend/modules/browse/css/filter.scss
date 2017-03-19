@@ -1,5 +1,22 @@
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss";
+
 .filter {
   .list-group-item {
-    padding: 7px 7px;
+    padding: 7px;
+    .clear {
+      clear: both;
+    }
+    .badge {
+      display: block;
+      margin-top: -20px;
+    }
+  }
+}
+
+@media (max-width: $screen-md-min) {
+  .filter {
+    .list-group-item {
+      padding: 7px 2px 7px 3px;
+    }
   }
 }

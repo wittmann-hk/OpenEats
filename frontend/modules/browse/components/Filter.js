@@ -5,19 +5,29 @@ import {
     defineMessages,
     formatMessage
 } from 'react-intl';
+import BrowseActions from '../actions/BrowseActions';
 
 require("./../css/filter.scss");
 
-export default injectIntl(React.createClass({
+class Filter extends React.Component {
+  constructor(props) {
+    super(props);
 
-  _onClick: function (event) {
+    this.state = {
+      data: this.props.data || [],
+      loading: false,
+      filter: {}
+    };
+
+    this._onClick = this._onClick.bind(this);
+  }
+
+  _onClick(event) {
     event.preventDefault();
-    if(this.props.filter) {
-      this.props.filter(this.props.title, event.target.name);
-    }
-  },
+    this.props.doFilter(this.props.title, event.target.name);
+  }
 
-  render: function() {
+  render() {
     const {formatMessage} = this.props.intl;
     const messages = defineMessages({
       filter_x: {
@@ -32,10 +42,9 @@ export default injectIntl(React.createClass({
       }
     });
 
-    const active = this.props.active;
     const items = this.props.data.map((item) => {
       let classNames = ["list-group-item"];
-      if (item.slug == active) {
+      if (this.props.filter[this.props.title] === item.slug) {
         classNames += [" active"];
       }
 
@@ -50,6 +59,7 @@ export default injectIntl(React.createClass({
            name={ item.slug }
            onClick={ this._onClick }>
           { item.title }
+          <div className="clear"/>
           <span className="badge">{ item.total }</span>
         </a>
       );
@@ -61,7 +71,7 @@ export default injectIntl(React.createClass({
            <b>{ formatMessage(messages.filter_x, {title: this.props.title }) }</b>
          </p>
         { items }
-        { active ?
+        { this.props.filter[this.props.title] ?
           <a className="list-group-item"
              href="#"
              name={ '' }
@@ -74,4 +84,6 @@ export default injectIntl(React.createClass({
       </div>
     );
   }
-}));
+}
+
+module.exports.Filter = injectIntl(Filter);

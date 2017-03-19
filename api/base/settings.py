@@ -15,6 +15,11 @@ PROJECT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'ChangeMe!')
 
+# Force Django to use https headers if its behind a https proxy.
+# See: https://docs.djangoproject.com/en/1.10/ref/settings/#secure-proxy-ssl-header
+if os.environ.get('HTTP_X_FORWARDED_PROTO', 'False').lower() == 'true':
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 SITE_ID = 1
 
 DATABASES = {
@@ -147,6 +152,13 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100
 }
+
+# We don't want the API to serve static in production.
+# So we are forcing the renderer to be JSON only.
+if not DEBUG:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = (
+        'rest_framework.renderers.JSONRenderer',
+    )
 
 CORS_ORIGIN_WHITELIST = (
     os.environ.get('NODE_URL', 'localhost:8080')

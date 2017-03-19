@@ -5,32 +5,20 @@ import {
     defineMessages,
     formatMessage
 } from 'react-intl';
-import { request } from '../../common/CustomSuperagent';
 
-import Filter from './Filter'
+import { Filter } from './Filter'
 import SearchBar from './SearchBar'
 import ListRecipes from './ListRecipes'
 import Pagination from './Pagination'
-import { serverURLs } from '../../common/config'
+import BrowseActions from '../actions/BrowseActions';
+import BrowseStore from '../stores/BrowseStore';
+import { CourseStore, CuisineStore } from '../stores/FilterStores';
 
 require("./../css/browse.scss");
 
 // Array of default values that should be used when filtering
 const DEFAULTS = {
   'limit': 12
-};
-
-const REST_FILTERS = [
-  'offset'
-];
-
-const FILTER_MAP = {
-  // frontend filter  :  backend filters
-  'offset' : 'offset',
-  'limit'  : 'limit',
-  'cuisine': 'cuisine__slug',
-  'course' : 'course__slug',
-  'search' : 'search'
 };
 
 export default injectIntl(React.createClass({
@@ -42,115 +30,78 @@ export default injectIntl(React.createClass({
     return {
       recipes: [],
       total_recipes: 0,
-      course: [],
-      cuisine: [],
+      filter: {
+        limit: DEFAULTS.limit
+      },
+      courses: [],
+      cuisines: []
     };
   },
 
-  getCourses: function() {
-    const query = this.props.location.query;
-    let url = serverURLs.course;
+  _onChangeRecipes: function() {
+    this.setState(BrowseStore.getState());
 
-    if ('cuisine' in query) {
-      url = url + '?cuisine=' + query.cuisine;
-    }
-
-    request.get(url).type('json')
-      .end((err, res) => {
-        if (!err && res) {
-          this.setState({course: res.body.results});
-        } else {
-          console.error(serverURLs.course, err.toString());
-        }
-      });
-  },
-
-  getCuisines: function() {
-    const query = this.props.location.query;
-    let url = serverURLs.cuisine;
-
-    if ('course' in query) {
-      url = url + '?course=' + query.course;
-    }
-
-    request.get(url).type('json')
-      .end((err, res) => {
-        if (!err && res) {
-          this.setState({cuisine: res.body.results});
-        } else {
-          console.error(serverURLs.cuisine, err.toString());
-        }
-      });
-  },
-
-  getRecipes: function(url) {
-    url = serverURLs.browse + url;
-    request
-      .get(url)
-      .type('json')
-      .end((err, res) => {
-        if (!err && res) {
-          this.setState({
-            total_recipes: res.body.count,
-            recipes: res.body.results
-          });
-        } else {
-          console.error(url, err.toString());
-        }
-      });
-  },
-
-  componentDidMount: function() {
-    this.buildBackendURL(this.props.location.query);
-  },
-
-  componentWillReceiveProps: function(nextProps) {
-    this.buildBackendURL(nextProps.location.query);
-    window.scrollTo(0, 0);
-  },
-
-  filter: function(name, value) {
-    var new_filters = this.props.location.query;
-
-    if (value == '' || value == 0) {
-      delete new_filters[name];
-    } else {
-      new_filters[name] = value;
-    }
-
-    if (REST_FILTERS.indexOf(name) < 0) {
-      for (let filter in REST_FILTERS) {
-        delete new_filters[REST_FILTERS[filter]];
+    let encode_data = [];
+    for (let key in this.state.filter) {
+      if (this.state.filter[key]) {
+        encode_data.push(encodeURIComponent(key) + '=' + encodeURIComponent(this.state.filter[key]));
       }
     }
-    this.buildFrontendURL(new_filters);
-  },
 
-  buildFrontendURL: function (query_map) {
-    let encode_data = [];
-    for (let d in query_map) {
-      encode_data.push(encodeURIComponent(d) + '=' + encodeURIComponent(query_map[d]));
-    }
-    var path = '/browse/';
+    let path = '/browse/';
     if (encode_data.length > 0) {
        path += '?' + encode_data.join('&');
     }
+    
     this.context.router.push(path);
   },
 
-  buildBackendURL: function (query_string) {
-    var base_url = '';
-    for (let filter in FILTER_MAP) {
-      if (query_string[filter]) {
-        base_url += "&" + FILTER_MAP[filter] + "=" + query_string[filter];
-      }
-      else if (DEFAULTS[filter]) {
-        base_url += "&" + FILTER_MAP[filter] + "=" + DEFAULTS[filter];
+  _onChangeCourses: function() {
+    this.setState({courses: CourseStore.getState()['data']});
+  },
+
+  _onChangeCuisines: function() {
+    this.setState({cuisines: CuisineStore.getState()['data']});
+  },
+
+  componentDidMount: function() {
+    BrowseStore.addChangeListener(this._onChangeRecipes);
+    CourseStore.addChangeListener(this._onChangeCourses);
+    CuisineStore.addChangeListener(this._onChangeCuisines);
+
+    if (Object.keys(this.props.location.query).length > 0) {
+      for (let key in this.props.location.query) {
+        this.state.filter[key] = this.props.location.query[key];
       }
     }
-    this.getCourses();
-    this.getCuisines();
-    this.getRecipes(base_url);
+
+    BrowseActions.loadRecipes(this.state.filter);
+    BrowseActions.loadCourses(this.state.filter);
+    BrowseActions.loadCuisines(this.state.filter);
+  },
+
+  componentWillUnmount: function() {
+    BrowseStore.removeChangeListener(this._onChangeRecipes);
+    CourseStore.removeChangeListener(this._onChangeCourses);
+    CuisineStore.removeChangeListener(this._onChangeCuisines);
+  },
+
+  doFilter: function(name, value) {
+    if (value !== "") {
+      this.state.filter[name] = value;  
+    } else {
+      delete this.state.filter[name];
+    }
+    
+    BrowseActions.loadRecipes(this.state.filter);
+
+    if (name !== 'courses') {
+      BrowseActions.loadCourses(this.state.filter);
+    }
+
+    if (name !== 'cuisines') {
+      BrowseActions.loadCuisines(this.state.filter);
+    }
   },
 
   render: function() {
@@ -169,20 +120,20 @@ export default injectIntl(React.createClass({
           <div className="sidebar col-sm-2 hidden-xs">
             <div className="sidebar">
               <Filter title="course"
-                      data={ this.state.course }
-                      active={ this.props.location.query['course'] }
-                      filter={ this.filter }
+                      data={ this.state.courses }
+                      filter={ this.state.filter }
+                      doFilter={ this.doFilter }
               />
               <Filter title="cuisine"
-                      data={ this.state.cuisine }
-                      active={ this.props.location.query['cuisine'] }
-                      filter={ this.filter }
+                      data={ this.state.cuisines }
+                      filter={ this.state.filter }
+                      doFilter={ this.doFilter }
               />
             </div>
           </div>
           <div className="col-sm-10 col-xs-12">
             <div className="row">
-              <SearchBar format="col-xs-12" filter={ this.filter }/>
+              <SearchBar format="col-xs-12" filter={ this.doFilter }/>
             </div>
             <div id="browse" className="row">
               {
@@ -198,7 +149,7 @@ export default injectIntl(React.createClass({
                 <Pagination limit={ this.props.location.query['limit'] ? this.props.location.query['limit'] : DEFAULTS.limit}
                             count={ this.state.total_recipes }
                             offset={ this.props.location.query['offset'] }
-                            filter={ this.filter }
+                            filter={ this.doFilter }
                 />
               </div>
             </div>
