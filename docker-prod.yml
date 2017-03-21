@@ -3,7 +3,7 @@ services:
   api:
     image: openeats/api
     command: ./base/gunicorn_start.sh
-    restart: always
+    restart: on-failure
     volumes:
       - static-files:/code/static-files
       - site-media:/code/site-media
