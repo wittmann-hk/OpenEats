@@ -134,9 +134,8 @@ ROOT_URLCONF = 'base.urls'
 
 WSGI_APPLICATION = 'base.wsgi.application'
 
-# Local time zone for this installation. Choices can be found here:
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-TIME_ZONE = os.environ.get('DJANGO_TIME_ZONE', 'America/Chicago')
+# Automatically find the correct time zone to use.
+USE_TZ = True
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
