@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Ingredient component test 1`] = `
+<ul
+  className="ingredients"
+>
+  <li
+    className="ingredient"
+  >
+    1
+     
+    dash
+     
+    black pepper
+  </li>
+  <li
+    className="ingredient"
+  >
+    4
+     
+    tablespoons
+     
+    chili powder
+  </li>
+  <li
+    className="ingredient"
+  >
+    1
+     
+    tablespoon
+     
+    cumin
+  </li>
+  <li
+    className="ingredient"
+  >
+    1
+     
+    can
+     
+    dark kidney beans
+  </li>
+  <li
+    className="ingredient"
+  >
+    2
+     
+    cans
+     
+    diced tomatos
+  </li>
+  <li
+    className="ingredient"
+  >
+    1
+     
+    whole
+     
+    green bell pepper
+  </li>
+  <li
+    className="ingredient"
+  >
+    1
+     
+    pound
+     
+    ground pork
+  </li>
+  <li
+    className="ingredient"
+  >
+    1
+     
+    pound
+     
+    ground sirloin
+  </li>
+  <li
+    className="ingredient"
+  >
+    1
+     
+    dash
+     
+    kosher salt
+  </li>
+  <li
+    className="ingredient"
+  >
+    1
+     
+    can
+     
+    light kidney beans
+  </li>
+  <li
+    className="ingredient"
+  >
+    1
+     
+    whole
+     
+    serrano pepper 
+  </li>
+  <li
+    className="ingredient"
+  >
+    1
+     
+    whole
+     
+    white onion
+  </li>
+</ul>
+`;

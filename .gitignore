@@ -18,6 +18,7 @@ frontend/.DS_Store
 static-files/
 database/
 frontend/build/
+frontend/jest/
 
 servies/static-files/
 servies/side-media/
