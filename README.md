@@ -10,7 +10,7 @@ The usage for the app is intended for a single user or a small group. For my per
 - Browsing and searching for recipes.
 - Creating grocery lists
 
-### [Read the docs on getting started here!](https://github.com/RyanNoelk/OpenEats/docs/Running_the_App.md)
+### [Read the docs on getting started here!](https://github.com/RyanNoelk/OpenEats/blob/master/docs/Running_the_App.md)
 
 # Contributing
-Please read the [contribution guidelines](https://github.com/RyanNoelk/OpenEats/CONTRIBUTING.md) in order to make the contribution process easy and effective for everyone involved.
+Please read the [contribution guidelines](https://github.com/RyanNoelk/OpenEats/blob/master/CONTRIBUTING.md) in order to make the contribution process easy and effective for everyone involved.
