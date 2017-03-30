@@ -135,6 +135,13 @@ class RecipeActions {
       })
   }
 
+  importRecipe(url) {
+    AppDispatcher.dispatch({
+      actionType: RecipeConstants.IMPORT,
+      recipe: {title: 'asdasd'},
+    });
+  }
+
   init(recipe_id) {
     this.fetchTags();
     this.fetchCuisine();
