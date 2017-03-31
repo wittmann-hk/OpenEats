@@ -66,8 +66,10 @@ class DirectionViewSet(viewsets.ModelViewSet):
 
 class RecipeImportViewSet(APIView):
     """
-    This viewset automatically provides `list`, `create`, `retrieve`,
-    `update` and `destroy` actions for Ingredients.
+    Given a URL this Viewset will mine a website for recipe data.
+    Whatever data is retrieved will be sent back to the UI.
+    
+    Only Post is allowed due to potential URL size issues.
     """
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
