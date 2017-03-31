@@ -119,7 +119,7 @@ RecipeStore.dispatchToken = AppDispatcher.register(action => {
       break;
 
     case RecipeConstants.IMPORT:
-      _formData = action.recipe;
+      _formData = Object.assign(_formData, action.recipe);
       RecipeStore.emitChange();
       break;
 

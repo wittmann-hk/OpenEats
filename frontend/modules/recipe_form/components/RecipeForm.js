@@ -72,12 +72,7 @@ class RecipeForm extends React.Component {
   }
 
   _onChange() {
-    console.log('hi');
-    console.log(this.state.data);
-    console.log(RecipeStore.getForm());
-    // let state = this.getStateFromStore();
-    const state = {data: RecipeStore.getForm()};
-    this.setState(state);
+    this.setState({ data: RecipeStore.getForm() });
   }
 
   setErrors() {
