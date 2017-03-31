@@ -226,20 +226,22 @@ class RecipeForm extends React.Component {
           <div id="recipe" className="col-lg-push-1 col-lg-10">
             <form className="recipe-form">
 
-              <Input
-                name="source"
-                type="text"
-                label={ formatMessage(messages.source_label) }
-                placeholder={ formatMessage(messages.source_placeholder) }
-                change={ this.update }
-                value={ this.state.data.source }
-                errors={ this.getErrors('source') } />
-
-              <button
-                className="btn btn-primary"
-                onClick={ this.ImportRecipe }>
-                  { formatMessage(messages.import) }
-              </button>
+              <div className="row">
+                <Input
+                  name="source"
+                  type="text"
+                  size="col-sm-10 col-xs-12"
+                  label={ formatMessage(messages.source_label) }
+                  placeholder={ formatMessage(messages.source_placeholder) }
+                  change={ this.update }
+                  value={ this.state.data.source }
+                  errors={ this.getErrors('source') } />
+                <button
+                  className="btn btn-primary col-sm-2 col-xs-12"
+                  onClick={ this.ImportRecipe }>
+                    { formatMessage(messages.import) }
+                </button>
+              </div>
 
               <hr/>
 
