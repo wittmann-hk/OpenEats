@@ -136,10 +136,20 @@ class RecipeActions {
   }
 
   importRecipe(url) {
-    AppDispatcher.dispatch({
-      actionType: RecipeConstants.IMPORT,
-      recipe: {title: 'asdasd'},
-    });
+    request
+      .post(serverURLs.import_recipe)
+      .send({ 'url': url })
+      .end((err, res) => {
+        if (!err && res) {
+          console.log('res', res.body);
+          AppDispatcher.dispatch({
+            actionType: RecipeConstants.IMPORT,
+            recipe: res.body,
+          });
+        } else {
+          console.error(err.toString());
+        }
+      });
   }
 
   init(recipe_id) {

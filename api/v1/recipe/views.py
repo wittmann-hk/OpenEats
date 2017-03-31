@@ -3,6 +3,8 @@
 from __future__ import unicode_literals
 
 from rest_framework import permissions, viewsets, filters
+from rest_framework.response import Response
+from rest_framework.views import APIView
 import random
 
 from . import serializers
@@ -60,3 +62,14 @@ class DirectionViewSet(viewsets.ModelViewSet):
                           IsOwnerOrReadOnly)
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('recipe',)
+
+
+class RecipeImportViewSet(APIView):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions for Ingredients.
+    """
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def post(self, request, *args, **kwargs):
+        return Response({'title': 'hi'})
