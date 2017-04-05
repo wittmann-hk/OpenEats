@@ -241,6 +241,9 @@ class RecipeForm extends React.Component {
                   onClick={ this.ImportRecipe }>
                     { formatMessage(messages.import) }
                 </button>
+                <div className="col-xs-12">
+                   import message
+                </div>
               </div>
 
               <hr/>
