@@ -6,7 +6,7 @@ from rest_framework import permissions, viewsets, filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
 import random
-
+from recipe_scrapers import scrap_me
 from . import serializers
 from .models import Recipe, Direction
 from v1.common.permissions import IsOwnerOrReadOnly
@@ -74,4 +74,18 @@ class RecipeImportViewSet(APIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def post(self, request, *args, **kwargs):
-        return Response({'title': 'hi'})
+        url = request.data.get('url')
+        if url:
+            data = scrap_me(url)
+            return Response({
+                'title': data.title(),
+                'servings': data.servings(),
+                'prep_time': data.total_time().get('prep-time'),
+                'cook_time': data.total_time().get('cook-time'),
+                'ingredients': data.ingredients(),
+                'directions': [{'step': i+1, 'title': instruction} for i, instruction in enumerate(data.instructions())],
+                'info': data.description(),
+                'image': data.image(),
+            })
+
+        return Response({'error': 'invalid URL'})
