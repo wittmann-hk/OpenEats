@@ -2,6 +2,11 @@
 # encoding: utf-8
 from __future__ import unicode_literals
 
+import uuid
+import tempfile
+import requests
+from django.core import files
+
 from rest_framework import permissions, viewsets, filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -23,6 +28,36 @@ class RecipeViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend, filters.SearchFilter)
     filter_fields = ('course__slug', 'cuisine__slug', 'course', 'cuisine', 'title')
     search_fields = ('title', 'tags__title')
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+
+        url = request.data.get('image')
+        if url:
+            # Steam the image from the url
+            request_image = requests.get(url, stream=True)
+
+            # Create a temporary file
+            lf = tempfile.NamedTemporaryFile()
+
+            # Read the streamed image in sections
+            for block in request_image.iter_content(1024 * 8):
+
+                # If no more file then stop
+                if not block:
+                    break
+
+                # Write image block to temporary file
+                lf.write(block)
+
+            # Get the recently created recipe and add the image
+            recipe = Recipe.objects.get(pk=serializer.data['id'])
+            recipe.photo.save(str(uuid.uuid4()), files.File(lf))
+            recipe.save()
+
+        return Response(serializer.data)
 
 
 class MiniBrowseViewSet(viewsets.mixins.ListModelMixin,
