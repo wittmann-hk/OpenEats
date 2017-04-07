@@ -141,7 +141,6 @@ class RecipeActions {
       .send({ 'url': url })
       .end((err, res) => {
         if (!err && res) {
-          console.log('res', res.body);
           AppDispatcher.dispatch({
             actionType: RecipeConstants.IMPORT,
             recipe: res.body,
