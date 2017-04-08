@@ -122,7 +122,10 @@ RecipeStore.dispatchToken = AppDispatcher.register(action => {
       _formData = Object.assign(_formData, action.recipe);
       // will need to make sure the API send back 400 for bad URLs and 404 for URLs that are not supported.
       // THen populate a message depending on the status code
-      RecipeStore.emitChange();
+
+      browserHistory.push('/recipe/create');
+      // RecipeStore.emitChange();
+      // _formData = action.recipe;
       break;
 
     case RecipeConstants.SUBMIT:

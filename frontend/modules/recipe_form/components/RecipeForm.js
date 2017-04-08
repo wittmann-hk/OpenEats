@@ -64,7 +64,7 @@ class RecipeForm extends React.Component {
 
     if (Object.keys(state.data).length > 0) {
       const user = this.getAuthUser();
-      if (state.data.author !== user.id) {
+      if (state.data.author !== user.id && state.data.id) {
         browserHistory.replace('/recipe/' + state.data.id);
       }
     }

@@ -13,7 +13,7 @@ class DataList extends React.Component {
     super(props);
 
     this.state = {
-      data: [],
+      data: this.props.data || [],
       errors: this.props.errors || false
     };
 
@@ -58,7 +58,7 @@ class DataList extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.data === undefined && this.props.data != nextProps.data) {
+    if (this.props.data != nextProps.data) {
       this.setState({
         data: nextProps.data
       });
