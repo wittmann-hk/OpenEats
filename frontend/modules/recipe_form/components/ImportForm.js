@@ -16,7 +16,7 @@ import { Input, File, Alert, Select, TextArea } from '../../common/form/FormComp
 
 require("./../css/create.scss");
 
-class RecipeForm extends React.Component {
+class ImportForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getStateFromStore();
@@ -25,6 +25,7 @@ class RecipeForm extends React.Component {
     this._onChange = this._onChange.bind(this);
     this.setErrors = this.setErrors.bind(this);
     this.CreateRecipe = this.CreateRecipe.bind(this);
+    this.ImportRecipe = this.ImportRecipe.bind(this);
   }
 
   getStateFromStore() {
@@ -83,6 +84,11 @@ class RecipeForm extends React.Component {
   CreateRecipe(e) {
     e.preventDefault();
     RecipeActions.submit(this.state.data);
+  }
+
+  ImportRecipe(e) {
+    e.preventDefault();
+    RecipeActions.importRecipe(this.state.data.source);
   }
 
   update(name, value) {
@@ -185,12 +191,17 @@ class RecipeForm extends React.Component {
       source_label: {
         id: 'recipe.create.source_label',
         description: 'Rating source label',
-        defaultMessage: 'Source',
+        defaultMessage: 'Import From Source',
       },
       source_placeholder: {
         id: 'recipe.create.source_placeholder',
         description: 'Rating source placeholder',
-        defaultMessage: 'URL source of the recipe (if any)',
+        defaultMessage: 'Import a recipe from another website.',
+      },
+      import: {
+        id: 'recipe.create.import',
+        description: 'Import',
+        defaultMessage: 'Import',
       },
       photo_label: {
         id: 'recipe.create.photo_label',
@@ -214,6 +225,29 @@ class RecipeForm extends React.Component {
         <div className="row">
           <div id="recipe" className="col-lg-push-1 col-lg-10">
             <form className="recipe-form">
+
+              <div className="row">
+                <Input
+                  name="source"
+                  type="text"
+                  size="col-sm-10 col-xs-12"
+                  label={ formatMessage(messages.source_label) }
+                  placeholder={ formatMessage(messages.source_placeholder) }
+                  change={ this.update }
+                  value={ this.state.data.source }
+                  errors={ this.getErrors('source') } />
+                <button
+                  className="btn btn-primary col-sm-2 col-xs-12"
+                  onClick={ this.ImportRecipe }>
+                    { formatMessage(messages.import) }
+                </button>
+                <div className="col-xs-12">
+                   import message
+                </div>
+              </div>
+
+              <hr/>
+
               <Input
                 name="title"
                 type="text"
@@ -222,6 +256,7 @@ class RecipeForm extends React.Component {
                 change={ this.update }
                 value={ this.state.data.title }
                 errors={ this.getErrors('title') } />
+
               <div className="row">
                 <Select
                   name="course"
@@ -308,14 +343,6 @@ class RecipeForm extends React.Component {
                 change={ this.update }
                 value={ this.state.data.info }
                 errors={ this.getErrors('info') } />
-              <Input
-                name="source"
-                type="text"
-                label={ formatMessage(messages.source_label) }
-                placeholder={ formatMessage(messages.source_placeholder) }
-                change={ this.update }
-                value={ this.state.data.source }
-                errors={ this.getErrors('source') } />
 
               { this.state.data.photo_thumbnail ?
                 <img src={ this.state.data.photo_thumbnail } /> :
@@ -344,4 +371,4 @@ class RecipeForm extends React.Component {
   }
 };
 
-module.exports.RecipeForm = injectIntl(RecipeForm);
+module.exports.ImportForm = injectIntl(ImportForm);
